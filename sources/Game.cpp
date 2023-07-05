@@ -10,7 +10,7 @@ void Game::Init()
 	srand(time(NULL));
 	data->window.create(sf::VideoMode(WIDTH, HEIGHT), title, sf::Style::Close | sf::Style::Titlebar);
 
-	if (!image.loadFromFile("rsc/Icon.png"))
+	if (!image.loadFromFile("resources/Icon.png"))
 	{
 		std::cout << "Error - icon.\n";
 	}

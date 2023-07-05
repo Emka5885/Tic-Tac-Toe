@@ -27,7 +27,6 @@ public:
 	void Run();
 
 private:
-	std::fstream file;
 	sf::Image image;
 
 	std::string title;

@@ -18,6 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sources\AssetManager.cpp" />
+    <ClCompile Include="sources\Game.cpp" />
+    <ClCompile Include="sources\InputManager.cpp" />
+    <ClCompile Include="sources\main.cpp" />
+    <ClCompile Include="sources\MainMenuState.cpp" />
+    <ClCompile Include="sources\StateMachine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sources\AssetManager.h" />
+    <ClInclude Include="sources\Game.h" />
+    <ClInclude Include="sources\InputManager.h" />
+    <ClInclude Include="sources\MainMenuState.h" />
+    <ClInclude Include="sources\State.h" />
+    <ClInclude Include="sources\StateMachine.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -73,26 +89,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>C:\Users\EMI\source\repos\TicTacToe\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\EMI\source\repos\TicTacToe\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\include;$(VC_IncludePath);(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>C:\Users\EMI\source\repos\TicTacToe\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\EMI\source\repos\TicTacToe\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\include;$(VC_IncludePath);(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>C:\Users\EMI\source\repos\TicTacToe\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\EMI\source\repos\TicTacToe\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\include;$(VC_IncludePath);(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>C:\Users\EMI\source\repos\TicTacToe\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\EMI\source\repos\TicTacToe\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\include;$(VC_IncludePath);(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -105,6 +121,8 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,6 +140,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,6 +155,8 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,24 +174,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\AssetManager.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\InputManager.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MainMenuState.cpp" />
-    <ClCompile Include="src\StateMachine.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\AssetManager.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\InputManager.h" />
-    <ClInclude Include="src\MainMenuState.h" />
-    <ClInclude Include="src\State.h" />
-    <ClInclude Include="src\StateMachine.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
