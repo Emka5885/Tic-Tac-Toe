@@ -3,9 +3,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#define WIDTH 800
-#define HEIGHT 800
-
 class AssetManager
 {
 public:

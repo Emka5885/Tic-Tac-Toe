@@ -7,6 +7,9 @@
 #include "AssetManager.h"
 #include "InputManager.h"
 
+#define WIDTH 800
+#define HEIGHT 800
+
 struct GameData
 {
 	StateMachine machine;
