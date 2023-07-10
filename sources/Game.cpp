@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "MainMenuState.h"
+#include "Definitions.h"
 
 Game::Game()
 {

@@ -1,4 +1,5 @@
 #include "AssetManager.h"
+#include "Definitions.h"
 
 AssetManager::AssetManager()
 {
