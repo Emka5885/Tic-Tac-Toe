@@ -1,14 +1,14 @@
 #include "Game.h"
 #include "MainMenuState.h"
 
-Game::Game(std::string title) : title(title)
+Game::Game()
 {
 }
 
 void Game::Init()
 {
 	srand(time(NULL));
-	data->window.create(sf::VideoMode(WIDTH, HEIGHT), title, sf::Style::Close | sf::Style::Titlebar);
+	data->window.create(sf::VideoMode(WIDTH, HEIGHT), TITLE, sf::Style::Close | sf::Style::Titlebar);
 
 	if (!image.loadFromFile("resources/Icon.png"))
 	{

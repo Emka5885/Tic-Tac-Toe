@@ -9,6 +9,7 @@
 
 #define WIDTH 800
 #define HEIGHT 800
+#define TITLE "Tic Tac Toe"
 
 struct GameData
 {
@@ -24,15 +25,13 @@ typedef std::shared_ptr<GameData> GameDataReference;
 class Game
 {
 public:
-	Game(std::string title);
+	Game();
 
 	void Init();
 	void Run();
 
 private:
 	sf::Image image;
-
-	std::string title;
 
 	const float dt = 1.0f / 60.0f;
 	sf::Clock clock;

@@ -2,9 +2,15 @@
 
 AssetManager::AssetManager()
 {
+	InitFonts();
 }
 
-void AssetManager::LoadTexture(std::string name, std::string fileName)
+void AssetManager::InitFonts()
+{
+	LoadFont("defaultFont", "resources/fonts/MilkyNice.ttf");
+}
+
+void AssetManager::LoadTexture(const char* name, const char* fileName)
 {
 	sf::Texture texture;
 
@@ -14,12 +20,12 @@ void AssetManager::LoadTexture(std::string name, std::string fileName)
 	}
 }
 
-sf::Texture* AssetManager::GetTexture(std::string name)
+sf::Texture* AssetManager::GetTexture(const char* name)
 {
 	return &this->textures.at(name);
 }
 
-void AssetManager::LoadFont(std::string name, std::string fileName)
+void AssetManager::LoadFont(const char* name, const char* fileName)
 {
 	sf::Font font;
 
@@ -29,7 +35,7 @@ void AssetManager::LoadFont(std::string name, std::string fileName)
 	}
 }
 
-sf::Font& AssetManager::GetFont(std::string name)
+sf::Font& AssetManager::GetFont(const char* name)
 {
 	return this->fonts.at(name);
 }

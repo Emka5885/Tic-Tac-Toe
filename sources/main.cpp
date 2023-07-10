@@ -2,7 +2,7 @@
 
 int main()
 {
-    Game game("Tic Tac Toe");
+    Game game;
 
     game.Init();
     game.Run();
