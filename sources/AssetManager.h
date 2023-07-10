@@ -2,6 +2,7 @@
 #include <map>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "Definitions.h"
 
 class AssetManager
 {
@@ -10,6 +11,7 @@ public:
 	~AssetManager() { }
 
 	void InitFonts();
+	void InitTextures();
 
 	void LoadTexture(const char* name, const char* fileName);
 	sf::Texture* GetTexture(const char* name);

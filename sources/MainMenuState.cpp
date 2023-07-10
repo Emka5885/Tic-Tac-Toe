@@ -2,12 +2,11 @@
 
 MainMenuState::MainMenuState(GameDataReference data) : data(data)
 {
-	test.restart();
 }
 
 void MainMenuState::Init()
 {
-	title = sf::Text(TITLE, data->assets.GetFont("defaultFont"), 100);
+	title = sf::Text(TITLE, data->assets.GetFont(defaultFont), 100);
 	title.setOrigin(title.getGlobalBounds().width / 2, title.getGlobalBounds().height / 2);
 	title.setPosition({ WIDTH / 2, 100 });
 	title.setFillColor(sf::Color::White);
@@ -17,19 +16,19 @@ void MainMenuState::Init()
 	titleShadow.setFillColor(sf::Color::Black);
 	titleShadow.setPosition({ WIDTH / 2 + 6, 105 });
 
-	sf::Text buttonsText("Play", data->assets.GetFont("defaultFont"), 50);
+	sf::Text buttonsText("Play", data->assets.GetFont(defaultFont), 50);
 	buttonsText.setFillColor(sf::Color(250, 250, 250));
 	buttonsText.setOutlineColor(sf::Color::Black);
 	buttonsText.setOutlineThickness(2);
 	sf::Vector2f buttonsSize(250, 100);
 
-	playButton = Button(buttonsSize, buttonsText, { 115, 115, 115 }, sf::Color::Black, { WIDTH / 2, title.getPosition().y + title.getGlobalBounds().height + 115 }, 10);
+	playButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, title.getPosition().y + title.getGlobalBounds().height + 115 }, 10);
 
 	buttonsText.setString("Options");
-	optionsButton = Button(buttonsSize, buttonsText, { 115, 115, 115 }, sf::Color::Black, { WIDTH / 2, playButton.GetShape().getPosition().y + 165 }, 10);
+	optionsButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, playButton.GetShape().getPosition().y + 165 }, 10);
 
 	buttonsText.setString("Quitt");
-	quittButton = Button(buttonsSize, buttonsText, { 115, 115, 115 }, sf::Color::Black, { WIDTH / 2, optionsButton.GetShape().getPosition().y + 165 }, 10);
+	quittButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, optionsButton.GetShape().getPosition().y + 165 }, 10);
 }
 
 void MainMenuState::HandleInput()

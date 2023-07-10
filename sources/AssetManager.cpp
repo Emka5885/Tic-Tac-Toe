@@ -3,11 +3,17 @@
 AssetManager::AssetManager()
 {
 	InitFonts();
+	InitTextures();
 }
 
 void AssetManager::InitFonts()
 {
-	LoadFont("defaultFont", "resources/fonts/MilkyNice.ttf");
+	LoadFont(defaultFont, defaultFont_path);
+}
+
+void AssetManager::InitTextures()
+{
+	LoadTexture(icon, icon_path);
 }
 
 void AssetManager::LoadTexture(const char* name, const char* fileName)

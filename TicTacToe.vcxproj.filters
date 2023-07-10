@@ -59,5 +59,8 @@
     <ClInclude Include="sources\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sources\Definitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

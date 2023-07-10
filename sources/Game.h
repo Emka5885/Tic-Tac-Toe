@@ -7,10 +7,6 @@
 #include "AssetManager.h"
 #include "InputManager.h"
 
-#define WIDTH 800
-#define HEIGHT 800
-#define TITLE "Tic Tac Toe"
-
 struct GameData
 {
 	StateMachine machine;
@@ -31,7 +27,7 @@ public:
 	void Run();
 
 private:
-	sf::Image image;
+	sf::Image iconImage;
 
 	const float dt = 1.0f / 60.0f;
 	sf::Clock clock;

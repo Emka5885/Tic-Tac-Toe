@@ -23,6 +23,4 @@ private:
 	Button playButton;
 	Button optionsButton;
 	Button quittButton;
-
-	sf::Clock test;
 };

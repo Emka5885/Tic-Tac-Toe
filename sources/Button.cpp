@@ -1,36 +1,18 @@
 #include "Button.h"
-#include <iostream>
 
-Button::Button(sf::Vector2f size, sf::Text text, sf::Color color, sf::Color outlineColor, sf::Vector2f position, float zoom) : text(text), zoom(zoom)
+Button::Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vector2f position, float zoom, sf::Color color) : text(text), zoom(zoom)
 {
-	if (color.r > 255)
-	{
-		color.r = 255;
-	}
-	else if (color.r < 45)
-	{
-		color.r = 45;
-	}
+	unhoverColor.r = std::clamp(int(color.r), 45, 255);
+	unhoverColor.g = std::clamp(int(color.g), 45, 255);
+	unhoverColor.b = std::clamp(int(color.b), 45, 255);
 
-	if (color.g > 255)
-	{
-		color.g = 255;
-	}
-	else if (color.g < 45)
-	{
-		color.g = 45;
-	}
+	hoverColor.r = unhoverColor.r - 25;
+	hoverColor.g = unhoverColor.g - 25;
+	hoverColor.b = unhoverColor.b - 25;
 
-	if (color.b > 255)
-	{
-		color.b = 255;
-	}
-	else if (color.b < 45)
-	{
-		color.b = 45;
-	}
-
-	this->color = color;
+	clickColor.r = unhoverColor.r - 45;
+	clickColor.g = unhoverColor.g - 45;
+	clickColor.b = unhoverColor.b - 45;
 
 	Init(size, position, outlineColor);
 }
@@ -44,7 +26,7 @@ void Button::Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineCol
 	shape = sf::RectangleShape(size);
 	shape.setOrigin(size.x / 2, size.y / 2);
 	shape.setPosition(position);
-	shape.setFillColor(color);
+	shape.setFillColor(unhoverColor);
 	shape.setOutlineColor(outlineColor);
 
 	// default outline thickness
@@ -62,26 +44,37 @@ void Button::Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineCol
 
 void Button::ChangeHover(bool hover)
 {
-	if (hover && type == 0)
+	switch (currentType)
 	{
-		shape.setSize({ shape.getSize().x + zoom, shape.getSize().y + zoom });
-		shape.setPosition(shape.getPosition().x - zoom / 2, shape.getPosition().y - zoom / 2);
-		shape.setFillColor(sf::Color(color.r - 25, color.g - 25, color.b - 25));
-		type = 1;
-	}
-	else if (!hover && type == 1)
-	{
-		shape.setSize({ shape.getSize().x - zoom, shape.getSize().y - zoom });
-		shape.setPosition(shape.getPosition().x + zoom / 2, shape.getPosition().y + zoom / 2);
-		shape.setFillColor(color);
-		type = 0;
+	case unhovered:
+		if (hover)
+		{
+			shape.setSize({ shape.getSize().x + zoom, shape.getSize().y + zoom });
+			shape.setPosition(shape.getPosition().x - zoom / 2, shape.getPosition().y - zoom / 2);
+			shape.setFillColor(hoverColor);
+			currentType = hovered;
+		}
+		break;
+
+	case hovered:
+		if (!hover)
+		{
+			shape.setSize({ shape.getSize().x - zoom, shape.getSize().y - zoom });
+			shape.setPosition(shape.getPosition().x + zoom / 2, shape.getPosition().y + zoom / 2);
+			shape.setFillColor(unhoverColor);
+			currentType = unhovered;
+		}
+		break;
+
+	case clicked:
+		break;
 	}
 }
 
 void Button::Clicked()
 {
-	type = 2;
-	shape.setFillColor(sf::Color(color.r - 45, color.g - 45, color.b - 45));
+	currentType = clicked;
+	shape.setFillColor(clickColor);
 }
 
 void Button::DrawButton(sf::RenderWindow& window)

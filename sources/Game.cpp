@@ -10,11 +10,8 @@ void Game::Init()
 	srand(time(NULL));
 	data->window.create(sf::VideoMode(WIDTH, HEIGHT), TITLE, sf::Style::Close | sf::Style::Titlebar);
 
-	if (!image.loadFromFile("resources/Icon.png"))
-	{
-		std::cout << "Error - icon.\n";
-	}
-	data->window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+	iconImage = data->assets.GetTexture(icon)->copyToImage();
+	data->window.setIcon(iconImage.getSize().x, iconImage.getSize().y, iconImage.getPixelsPtr());
 
 	data->machine.AddState(stateReference(new MainMenuState(data)), true);
 }
