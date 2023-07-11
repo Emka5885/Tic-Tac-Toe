@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\AssetManager.cpp" />
+    <ClCompile Include="sources\BoardSquare.cpp" />
     <ClCompile Include="sources\Button.cpp" />
     <ClCompile Include="sources\Game.cpp" />
     <ClCompile Include="sources\GameState.cpp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\AssetManager.h" />
+    <ClInclude Include="sources\BoardSquare.h" />
     <ClInclude Include="sources\Button.h" />
     <ClInclude Include="sources\Definitions.h" />
     <ClInclude Include="sources\Game.h" />

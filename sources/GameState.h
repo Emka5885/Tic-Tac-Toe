@@ -1,11 +1,12 @@
 #pragma once
 #include "State.h"
 #include "Game.h"
+#include "BoardSquare.h"
 
 class GameState :public State
 {
 public:
-	GameState(GameDataReference data);
+	GameState(GameDataReference data, sf::Text title, sf::Text titleShadow);
 
 	void Init();
 	void HandleInput();
@@ -15,4 +16,8 @@ public:
 private:
 	GameDataReference data;
 
+	sf::Text title;
+	sf::Text titleShadow;
+
+	std::vector<BoardSquare> boardSquares;
 };
