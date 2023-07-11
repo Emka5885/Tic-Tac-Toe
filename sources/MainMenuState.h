@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "Button.h"
 
+enum menuType { defaultMenu, play, options, quitt };
+
 class MainMenuState :public State
 {
 public:
@@ -16,11 +18,11 @@ public:
 private:
 	GameDataReference data;
 
-	bool quitt = false;
-
 	sf::Text title;
 	sf::Text titleShadow;
 	Button playButton;
 	Button optionsButton;
 	Button quittButton;
+
+	menuType type = defaultMenu;
 };

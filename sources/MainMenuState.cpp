@@ -1,4 +1,5 @@
 #include "MainMenuState.h"
+#include "GameState.h"
 #include "Definitions.h"
 
 MainMenuState::MainMenuState(GameDataReference data) : data(data)
@@ -38,16 +39,40 @@ void MainMenuState::HandleInput()
 
 	while (data->window.pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed || quitt)
+		// check menu type
+		if (event.type == sf::Event::Closed || type == 3)
 		{
 			sf::sleep(sf::seconds(1));
 			data->window.close();
 		}
+		else if (type == 1)
+		{
+			sf::sleep(sf::seconds(1));
+			data->machine.RemoveState();
+			data->machine.AddState(stateReference(new GameState(data)), true);
+		}
+		else if (type == 2)
+		{
+			sf::sleep(sf::seconds(1));
+
+		}
+		// clicked
 		if (data->input.isButtonClicked(quittButton.GetShape(), sf::Mouse::Left, data->window))
 		{
 			quittButton.Clicked();
-			quitt = true;
+			type = quitt;
 		}
+		else if (data->input.isButtonClicked(playButton.GetShape(), sf::Mouse::Left, data->window))
+		{
+			playButton.Clicked();
+			type = play;
+		}
+		else if (data->input.isButtonClicked(optionsButton.GetShape(), sf::Mouse::Left, data->window))
+		{
+			optionsButton.Clicked();
+			type = options;
+		}
+		// hovered
 		if (event.type == sf::Event::MouseMoved)
 		{
 			if (data->input.isButtonHovered(playButton.GetShape(), data->window))

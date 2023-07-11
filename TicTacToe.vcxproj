@@ -22,6 +22,7 @@
     <ClCompile Include="sources\AssetManager.cpp" />
     <ClCompile Include="sources\Button.cpp" />
     <ClCompile Include="sources\Game.cpp" />
+    <ClCompile Include="sources\GameState.cpp" />
     <ClCompile Include="sources\InputManager.cpp" />
     <ClCompile Include="sources\main.cpp" />
     <ClCompile Include="sources\MainMenuState.cpp" />
@@ -32,6 +33,7 @@
     <ClInclude Include="sources\Button.h" />
     <ClInclude Include="sources\Definitions.h" />
     <ClInclude Include="sources\Game.h" />
+    <ClInclude Include="sources\GameState.h" />
     <ClInclude Include="sources\InputManager.h" />
     <ClInclude Include="sources\MainMenuState.h" />
     <ClInclude Include="sources\State.h" />
