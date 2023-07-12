@@ -2,11 +2,12 @@
 #include "State.h"
 #include "Game.h"
 #include "BoardSquare.h"
+#include "Widgets.h"
 
 class GameState :public State
 {
 public:
-	GameState(GameDataReference data, sf::Text title, sf::Text titleShadow);
+	GameState(GameDataReference data);
 
 	void Init();
 	void HandleInput();
@@ -16,8 +17,7 @@ public:
 private:
 	GameDataReference data;
 
-	sf::Text title;
-	sf::Text titleShadow;
+	Widgets* widget;
 
 	std::vector<BoardSquare> boardSquares;
 };

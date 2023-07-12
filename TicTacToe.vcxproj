@@ -28,6 +28,7 @@
     <ClCompile Include="sources\main.cpp" />
     <ClCompile Include="sources\MainMenuState.cpp" />
     <ClCompile Include="sources\StateMachine.cpp" />
+    <ClCompile Include="sources\Widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\AssetManager.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="sources\MainMenuState.h" />
     <ClInclude Include="sources\State.h" />
     <ClInclude Include="sources\StateMachine.h" />
+    <ClInclude Include="sources\Widgets.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

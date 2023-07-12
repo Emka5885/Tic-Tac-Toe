@@ -1,8 +1,9 @@
 #include "GameState.h"
 #include "Definitions.h"
 
-GameState::GameState(GameDataReference data, sf::Text title, sf::Text titleShadow) : data(data), title(title), titleShadow(titleShadow)
+GameState::GameState(GameDataReference data) : data(data)
 {
+	widget = new Widgets(data->assets);
 }
 
 void GameState::Init()
@@ -29,8 +30,6 @@ void GameState::Draw()
 {
 	data->window.clear(sf::Color({ 165, 165, 165 }));
 
-	data->window.draw(titleShadow);
-	data->window.draw(title);
 
 	for (int i = 0; i < boardSquares.size(); i++)
 	{
