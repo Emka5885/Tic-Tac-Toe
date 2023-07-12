@@ -30,6 +30,7 @@ void GameState::Draw()
 {
 	data->window.clear(sf::Color({ 165, 165, 165 }));
 
+	widget->Draw(data->window);
 
 	for (int i = 0; i < boardSquares.size(); i++)
 	{
