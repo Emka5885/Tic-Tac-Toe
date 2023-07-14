@@ -3,6 +3,9 @@
 constexpr const int WIDTH = 800;
 constexpr const int HEIGHT = 800;
 
+constexpr const int TEXT_BOX_SIZE_X = 300;
+constexpr const int TEXT_BOX_SIZE_Y = 75;
+
 constexpr const int SCORE_Y_POSITION = 112;
 constexpr const int PLAYER_Y_POSITION = 200;
 
