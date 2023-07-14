@@ -5,19 +5,24 @@
 class Widgets
 {
 private:
-	sf::Text totalsText;
-	sf::Text totalsShadow;
-	sf::Text scoreText;
+	sf::Text totalsText, totalsShadow;
 
-	sf::Text pDashText;
-	sf::Text pDashShadow;
-	sf::Text p1Text;
-	sf::Text p1Shadow;
-	sf::Text p2Text;
-	sf::Text p2Shadow;
+	sf::Text scoreP1Text;
+	sf::Text scoreDashText;
+	sf::Text scoreP2Text;
 
-	std::string p1;
-	std::string p2;
+	sf::Text pDashText, pDashShadow;
+	sf::Text p1Text, p1Shadow;
+	sf::Text p2Text, p2Shadow;
+
+	sf::Text turnText;
+	sf::Text turnShadow;
+
+	std::string p1, p2;
+
+	int scoreP1, scoreP2;
+	bool p1Turn, endOfRound;
+
 
 	AssetManager& assets;
 
@@ -26,5 +31,9 @@ public:
 	~Widgets();
 
 	void Init();
+
+	void ChangeScore(int scoreP1, int scoreP2);
+	void ChangeTurn();
+
 	void Draw(sf::RenderWindow& window);
 };

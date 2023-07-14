@@ -20,6 +20,15 @@ void GameState::Init()
 
 void GameState::HandleInput()
 {
+	sf::Event event;
+
+	while (data->window.pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+		{
+			widget->ChangeTurn();
+		}
+	}
 }
 
 void GameState::Update()
