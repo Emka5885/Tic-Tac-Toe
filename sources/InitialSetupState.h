@@ -1,13 +1,14 @@
 #pragma once
 #include "State.h"
 #include "Game.h"
+#include "Button.h"
 
 enum textBoxTypes {none, player1, player2};
 
-class PlayersState :public State
+class InitialSetupState :public State
 {
 public:
-	PlayersState(GameDataReference data);
+	InitialSetupState(GameDataReference data);
 
 	void Init();
 	void HandleInput();
@@ -22,6 +23,10 @@ private:
 
 	sf::RectangleShape p1Box, p2Box;
 	sf::RectangleShape blackLine;
+	Button acceptButton;
+
+	std::pair<int, sf::RectangleShape> x;
+	std::pair<int, sf::RectangleShape> o;
 
 	sf::Clock blackLineTimer;
 	bool drawBlackLine = true;
@@ -33,6 +38,7 @@ private:
 	sf::Text p1Text, p2Text;
 	sf::Text enterTextP1, enterTextP2;
 	sf::Text initialSetup, initialSetupShadow;
+	sf::Text messageP1, messageP2;
 
 	textBoxTypes textBoxType = player1;
 };

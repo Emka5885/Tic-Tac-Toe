@@ -27,5 +27,6 @@ public:
 	void Clicked();
 	void DrawButton(sf::RenderWindow& window);
 
+	void SetShapePosition(sf::Vector2f position);
 	sf::RectangleShape GetShape();
 };

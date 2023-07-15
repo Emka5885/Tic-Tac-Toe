@@ -88,3 +88,10 @@ sf::RectangleShape Button::GetShape()
 {
 	return shape;
 }
+
+void Button::SetShapePosition(sf::Vector2f position)
+{
+	shape.setPosition(position);
+	textShadow.setPosition(position.x + 4, position.y + 3);
+	text.setPosition(position);
+}
