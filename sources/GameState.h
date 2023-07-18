@@ -7,7 +7,7 @@
 class GameState :public State
 {
 public:
-	GameState(GameDataReference data);
+	GameState(GameDataReference data, std::string p1, std::string p2);
 
 	void Init();
 	void HandleInput();
@@ -18,6 +18,10 @@ private:
 	GameDataReference data;
 
 	Widgets* widget;
+
+	sf::RectangleShape disappearingShape;
+	sf::Clock cleaningClock;
+	bool screenCleaning = true;
 
 	std::vector<BoardSquare> boardSquares;
 };

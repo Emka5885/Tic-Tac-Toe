@@ -1,4 +1,5 @@
 #include "InitialSetupState.h"
+#include "GameState.h"
 #include "Definitions.h"
 
 InitialSetupState::InitialSetupState(GameDataReference data) : data(data)
@@ -241,9 +242,12 @@ void InitialSetupState::HandleInput()
 			}
 		}
 		// clicked
-		if (data->input.isButtonClicked(acceptButton.GetShape(), sf::Mouse::Left, data->window))
+		if (data->input.isButtonClicked(acceptButton.GetShape(), sf::Mouse::Left, data->window) && p1String.length() <= 8 && p2String.length() <= 8)
 		{
 			acceptButton.Clicked();
+			sf::sleep(sf::seconds(1));
+			data->machine.RemoveState();
+			data->machine.AddState(stateReference(new GameState(data, p1Text.getString(), p2Text.getString())), true);
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)

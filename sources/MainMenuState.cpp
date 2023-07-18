@@ -1,5 +1,4 @@
 #include "MainMenuState.h"
-#include "GameState.h"
 #include "InitialSetupState.h"
 #include "Definitions.h"
 
@@ -50,7 +49,6 @@ void MainMenuState::HandleInput()
 		{
 			sf::sleep(sf::seconds(1));
 			data->machine.RemoveState();
-			//data->machine.AddState(stateReference(new GameState(data)), true);
 			data->machine.AddState(stateReference(new InitialSetupState(data)), true);
 		}
 		else if (type == 2)

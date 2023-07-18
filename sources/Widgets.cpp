@@ -14,7 +14,7 @@ void Widgets::Init()
 {
 	ChangeScore(0, 0);
 	p1Turn = rand()%2;
-	endOfRound = false;
+	endOfRound = true;
 
 	totalsText.setString("Game Totals");
 	totalsText.setFont(assets.GetFont(defaultFont));
