@@ -22,6 +22,10 @@ private:
 	sf::RectangleShape disappearingShape;
 	sf::Clock cleaningClock;
 	bool screenCleaning = true;
+	bool disappear = true;
+	bool done = false;
+
+	sf::Clock helperClock;
 
 	std::vector<BoardSquare> boardSquares;
 };

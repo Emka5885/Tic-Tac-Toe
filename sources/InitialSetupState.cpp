@@ -22,57 +22,57 @@ void InitialSetupState::Init()
 	enterTextP1.setOutlineColor(sf::Color::Black);
 	enterTextP1.setOutlineThickness(2);
 	enterTextP1.setOrigin(enterTextP1.getGlobalBounds().width / 2, enterTextP1.getGlobalBounds().height / 2);
-	enterTextP1.setPosition(WIDTH / 4, HEIGHT / 2 - TEXT_BOX_SIZE_Y - 50);
+	enterTextP1.setPosition(WIDTH / 4, HEIGHT / 2 - TEXT_BOX_SIZE_Y - 75);
 	enterTextP2 = enterTextP1;
 	enterTextP2.setString("Enter new player 2 nickname:");
 	enterTextP2.setOrigin(enterTextP2.getGlobalBounds().width / 2, enterTextP2.getGlobalBounds().height / 2);
-	enterTextP2.setPosition(WIDTH / 2 + WIDTH / 4, HEIGHT / 2 - TEXT_BOX_SIZE_Y - 50);
+	enterTextP2.setPosition(WIDTH / 2 + WIDTH / 4, HEIGHT / 2 - TEXT_BOX_SIZE_Y - 75);
 
 	p1Box.setSize({ TEXT_BOX_SIZE_X, TEXT_BOX_SIZE_Y });
 	p1Box.setOrigin(TEXT_BOX_SIZE_X / 2, TEXT_BOX_SIZE_Y / 2);
-	p1Box.setPosition(WIDTH / 4, HEIGHT / 2 - 50);
+	p1Box.setPosition(WIDTH / 4, HEIGHT / 2 - 75);
 	p1Box.setOutlineColor(sf::Color::Black);
 	p1Box.setOutlineThickness(4);
 
 	p2Box = p1Box;
-	p2Box.setPosition(WIDTH / 2 + WIDTH / 4, HEIGHT / 2 - 50);
+	p2Box.setPosition(WIDTH / 2 + WIDTH / 4, HEIGHT / 2 - 75);
 
 	p1Text = sf::Text("Player 1", data->assets.GetFont(defaultFont), 40);
 	p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
-	p1Text.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - p1Text.getGlobalBounds().height / 4 - 50);
+	p1Text.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - p1Text.getGlobalBounds().height / 4 - 75);
 	p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
 
 	p2Text = p1Text;
 	p2Text.setString("Player 2");
 	p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
-	p2Text.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - p2Text.getGlobalBounds().height / 4 - 50);
+	p2Text.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - p2Text.getGlobalBounds().height / 4 - 75);
 
 	blackLine.setSize({ 3, 50 });
 	blackLine.setFillColor(sf::Color::Black);
 	blackLine.setOrigin(blackLine.getSize().x / 2, blackLine.getSize().y / 2);
-	blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - 50);
+	blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - 75);
 
 	messageP1 = sf::Text("maximum character length is 8", data->assets.GetFont(defaultFont), 15);
 	messageP1.setOrigin(messageP1.getGlobalBounds().width / 2, messageP1.getGlobalBounds().height / 2);
-	messageP1.setPosition(WIDTH / 4 - 2, HEIGHT / 2 + 10);
+	messageP1.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - 18);
 	messageP1.setFillColor(sf::Color::Red);
 	messageP1.setOutlineColor(sf::Color::Black);
 	messageP1.setOutlineThickness(1);
 
 	messageP2 = messageP1;
-	messageP2.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 + 10);
+	messageP2.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - 18);
 
 	x.first = 1;
 	x.second.setTexture(data->assets.GetTexture("x"));
-	x.second.setSize({ 100, 100 });
+	x.second.setSize({ 150, 150 });
 	x.second.setOrigin({ x.second.getSize().x / 2 , x.second.getSize().y / 2 });
-	x.second.setPosition({ WIDTH / 4, HEIGHT / 2 + 100 });
+	x.second.setPosition({ WIDTH / 4, HEIGHT / 2 + 75 });
 
 	o.first = 2;
 	o.second.setTexture(data->assets.GetTexture("o"));
-	o.second.setSize({ 100, 100 });
+	o.second.setSize({ 150, 150 });
 	o.second.setOrigin({ o.second.getSize().x / 2 , o.second.getSize().y / 2});
-	o.second.setPosition({ WIDTH / 2 + WIDTH / 4, HEIGHT / 2 + 100 });
+	o.second.setPosition({ WIDTH / 2 + WIDTH / 4, HEIGHT / 2 + 75 });
 
 	sf::Text acceptText("Accept", data->assets.GetFont(defaultFont), 40);
 	acceptText.setOutlineColor(sf::Color::Black);
@@ -101,7 +101,7 @@ void InitialSetupState::HandleInput()
 				if (textBoxType != 1)
 				{
 					textBoxType = player1;
-					blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 50);
+					blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
 
 					if (p2Input.getSize() <= 0)
 					{
@@ -111,7 +111,7 @@ void InitialSetupState::HandleInput()
 					}
 					if (p1Input.getSize() <= 0)
 					{
-						blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - 50);
+						blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - 75);
 					}
 				}
 			}
@@ -121,7 +121,7 @@ void InitialSetupState::HandleInput()
 				if (textBoxType != 2)
 				{
 					textBoxType = player2;
-					blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 50);
+					blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
 
 					if (p1Input.getSize() <= 0)
 					{
@@ -131,7 +131,7 @@ void InitialSetupState::HandleInput()
 					}
 					if (p2Input.getSize() <= 0)
 					{
-						blackLine.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - 50);
+						blackLine.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - 75);
 					}
 				}
 			}
@@ -359,7 +359,7 @@ void InitialSetupState::ChangeP1Text()
 	p1Text.setFillColor(sf::Color::Black);
 	p1Text.setString(p1Input);
 	p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
-	blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 50);
+	blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
 }
 
 void InitialSetupState::ChangeP2Text()
@@ -367,5 +367,5 @@ void InitialSetupState::ChangeP2Text()
 	p2Text.setFillColor(sf::Color::Black);
 	p2Text.setString(p2Input);
 	p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
-	blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 50);
+	blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
 }

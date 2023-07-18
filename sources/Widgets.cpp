@@ -14,7 +14,6 @@ void Widgets::Init()
 {
 	ChangeScore(0, 0);
 	p1Turn = rand()%2;
-	endOfRound = true;
 
 	totalsText.setString("Game Totals");
 	totalsText.setFont(assets.GetFont(defaultFont));
@@ -105,9 +104,21 @@ void Widgets::ChangeTurn()
 	p1Turn = !p1Turn;
 }
 
+void Widgets::ChangeWidgetType()
+{
+	if (type == 1)
+	{
+		type = gameTotals;
+	}
+	else
+	{
+		type = turns;
+	}
+}
+
 void Widgets::Draw(sf::RenderWindow& window)
 {
-	if (!endOfRound)
+	if (type == 1)
 	{
 		window.draw(turnShadow);
 		window.draw(turnText);

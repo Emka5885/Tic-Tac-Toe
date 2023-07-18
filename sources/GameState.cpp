@@ -40,17 +40,47 @@ void GameState::Update()
 {
 	if (cleaningClock.getElapsedTime().asSeconds() >= 0.3 && screenCleaning)
 	{
-		if (disappearingShape.getSize().x < 25)
+		if (!disappear)
 		{
-			disappearingShape.setSize({ 0,0 });
-			screenCleaning = false;
+			if (disappearingShape.getSize().x > WIDTH - 25)
+			{
+				disappearingShape.setSize({ WIDTH, HEIGHT });
+				disappearingShape.setOrigin(WIDTH / 2, HEIGHT / 2);
+				disappear = true;
+				done = false;
+			}
+			else
+			{
+				disappearingShape.setSize({ disappearingShape.getSize().x + 25, disappearingShape.getSize().y + 25 });
+				disappearingShape.setOrigin(disappearingShape.getSize().x / 2, disappearingShape.getSize().y / 2);
+			}
 		}
 		else
 		{
-			disappearingShape.setSize({ disappearingShape.getSize().x - 25, disappearingShape.getSize().y - 25 });
-			disappearingShape.setOrigin(disappearingShape.getSize().x / 2, disappearingShape.getSize().y / 2);
+			if (disappearingShape.getSize().x < 25)
+			{
+				disappearingShape.setSize({ 0,0 });
+				screenCleaning = false;
+				disappear = false;
+			}
+			else
+			{
+				if (!done)
+				{
+					widget->ChangeWidgetType();
+					helperClock.restart();
+					done = true;
+				}
+				disappearingShape.setSize({ disappearingShape.getSize().x - 25, disappearingShape.getSize().y - 25 });
+				disappearingShape.setOrigin(disappearingShape.getSize().x / 2, disappearingShape.getSize().y / 2);
+			}
 		}
 	}
+
+	/*if (helperClock.getElapsedTime().asSeconds() >= 3 && !screenCleaning)
+	{
+		screenCleaning = true;
+	}*/
 }
 
 void GameState::Draw()
