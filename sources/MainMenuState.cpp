@@ -40,18 +40,18 @@ void MainMenuState::HandleInput()
 	while (data->window.pollEvent(event))
 	{
 		// check menu type
-		if (event.type == sf::Event::Closed || type == 3)
+		if (event.type == sf::Event::Closed || type == quitt)
 		{
 			sf::sleep(sf::seconds(1));
 			data->window.close();
 		}
-		else if (type == 1)
+		else if (type == play)
 		{
 			sf::sleep(sf::seconds(1));
 			data->machine.RemoveState();
 			data->machine.AddState(stateReference(new InitialSetupState(data)), true);
 		}
-		else if (type == 2)
+		else if (type == options)
 		{
 			sf::sleep(sf::seconds(1));
 

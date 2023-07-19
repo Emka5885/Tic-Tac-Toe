@@ -6,6 +6,10 @@ constexpr const int HEIGHT = 800;
 constexpr const int TEXT_BOX_SIZE_X = 300;
 constexpr const int TEXT_BOX_SIZE_Y = 75;
 
+constexpr const int ENTER_BOX_OFFSET = 75;
+constexpr const int ENTER_BOX_2_X = WIDTH / 2 + WIDTH / 4;
+constexpr const int ACCEPT_OFFSET = 200;
+
 constexpr const int SCORE_Y_POSITION = 112;
 constexpr const int PLAYER_Y_POSITION = 200;
 

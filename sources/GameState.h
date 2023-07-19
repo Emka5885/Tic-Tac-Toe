@@ -7,7 +7,7 @@
 class GameState :public State
 {
 public:
-	GameState(GameDataReference data, std::string p1, std::string p2);
+	GameState(GameDataReference data, std::string& p1, std::string& p2);
 
 	void Init();
 	void HandleInput();
@@ -19,13 +19,11 @@ private:
 
 	Widgets* widget;
 
-	sf::RectangleShape disappearingShape;
+	sf::RectangleShape transitionShape;
 	sf::Clock cleaningClock;
 	bool screenCleaning = true;
-	bool disappear = true;
-	bool done = false;
-
-	sf::Clock helperClock;
+	bool shapeDisappeared = false;
+	bool shapeAppeared = true;
 
 	std::vector<BoardSquare> boardSquares;
 };

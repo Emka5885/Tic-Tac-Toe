@@ -18,6 +18,9 @@ public:
 	void ChangeP1Text();
 	void ChangeP2Text();
 
+	void CheckBoxClicked();
+	void CheckHovered();
+
 private:
 	GameDataReference data;
 
@@ -25,8 +28,8 @@ private:
 	sf::RectangleShape blackLine;
 	Button acceptButton;
 
-	std::pair<int, sf::RectangleShape> x;
-	std::pair<int, sf::RectangleShape> o;
+	sf::RectangleShape x_previewImage;
+	sf::RectangleShape o_previewImage;
 
 	sf::Clock blackLineTimer;
 	bool drawBlackLine = true;

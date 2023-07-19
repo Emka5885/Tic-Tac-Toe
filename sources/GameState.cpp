@@ -1,7 +1,7 @@
 #include "GameState.h"
 #include "Definitions.h"
 
-GameState::GameState(GameDataReference data, std::string p1, std::string p2) : data(data)
+GameState::GameState(GameDataReference data, std::string& p1, std::string& p2) : data(data)
 {
 	widget = new Widgets(data->assets, p1, p2);
 }
@@ -17,10 +17,10 @@ void GameState::Init()
 		}
 	}
 
-	disappearingShape.setFillColor(sf::Color({ 165, 165, 165 }));
-	disappearingShape.setSize({ WIDTH, HEIGHT });
-	disappearingShape.setOrigin(WIDTH / 2, HEIGHT / 2);
-	disappearingShape.setPosition(WIDTH / 2, HEIGHT / 2);
+	transitionShape.setFillColor(sf::Color({ 165, 165, 165 }));
+	transitionShape.setSize({ WIDTH, HEIGHT });
+	transitionShape.setOrigin(WIDTH / 2, HEIGHT / 2);
+	transitionShape.setPosition(WIDTH / 2, HEIGHT / 2);
 }
 
 void GameState::HandleInput()
@@ -31,56 +31,57 @@ void GameState::HandleInput()
 	{
 		if (event.type == sf::Event::Closed)
 		{
-			widget->ChangeTurn();
+			//widget->ChangeTurn();
+			if (!screenCleaning)
+			{
+				screenCleaning = true;
+			}
 		}
 	}
 }
 
 void GameState::Update()
 {
+	// transition
 	if (cleaningClock.getElapsedTime().asSeconds() >= 0.3 && screenCleaning)
 	{
-		if (!disappear)
+		// appearance
+		if (shapeDisappeared)
 		{
-			if (disappearingShape.getSize().x > WIDTH - 25)
+			if (transitionShape.getSize().x > WIDTH - 25)
 			{
-				disappearingShape.setSize({ WIDTH, HEIGHT });
-				disappearingShape.setOrigin(WIDTH / 2, HEIGHT / 2);
-				disappear = true;
-				done = false;
+				transitionShape.setSize({ WIDTH, HEIGHT });
+				transitionShape.setOrigin(WIDTH / 2, HEIGHT / 2);
+				shapeDisappeared = false;
+				shapeAppeared = true;
 			}
 			else
 			{
-				disappearingShape.setSize({ disappearingShape.getSize().x + 25, disappearingShape.getSize().y + 25 });
-				disappearingShape.setOrigin(disappearingShape.getSize().x / 2, disappearingShape.getSize().y / 2);
+				transitionShape.setSize({ transitionShape.getSize().x + 25, transitionShape.getSize().y + 25 });
+				transitionShape.setOrigin(transitionShape.getSize().x / 2, transitionShape.getSize().y / 2);
 			}
 		}
+		// disappearance
 		else
 		{
-			if (disappearingShape.getSize().x < 25)
+			if (transitionShape.getSize().x < 25)
 			{
-				disappearingShape.setSize({ 0,0 });
+				transitionShape.setSize({ 0,0 });
 				screenCleaning = false;
-				disappear = false;
+				shapeDisappeared = true;
 			}
 			else
 			{
-				if (!done)
+				if (shapeAppeared)
 				{
 					widget->ChangeWidgetType();
-					helperClock.restart();
-					done = true;
+					shapeAppeared = false;
 				}
-				disappearingShape.setSize({ disappearingShape.getSize().x - 25, disappearingShape.getSize().y - 25 });
-				disappearingShape.setOrigin(disappearingShape.getSize().x / 2, disappearingShape.getSize().y / 2);
+				transitionShape.setSize({ transitionShape.getSize().x - 25, transitionShape.getSize().y - 25 });
+				transitionShape.setOrigin(transitionShape.getSize().x / 2, transitionShape.getSize().y / 2);
 			}
 		}
 	}
-
-	/*if (helperClock.getElapsedTime().asSeconds() >= 3 && !screenCleaning)
-	{
-		screenCleaning = true;
-	}*/
 }
 
 void GameState::Draw()
@@ -96,7 +97,7 @@ void GameState::Draw()
 
 	if (screenCleaning)
 	{
-		data->window.draw(disappearingShape);
+		data->window.draw(transitionShape);
 	}
 
 	data->window.display();

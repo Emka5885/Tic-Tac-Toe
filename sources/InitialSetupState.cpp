@@ -22,35 +22,35 @@ void InitialSetupState::Init()
 	enterTextP1.setOutlineColor(sf::Color::Black);
 	enterTextP1.setOutlineThickness(2);
 	enterTextP1.setOrigin(enterTextP1.getGlobalBounds().width / 2, enterTextP1.getGlobalBounds().height / 2);
-	enterTextP1.setPosition(WIDTH / 4, HEIGHT / 2 - TEXT_BOX_SIZE_Y - 75);
+	enterTextP1.setPosition(WIDTH / 4, HEIGHT / 2 - TEXT_BOX_SIZE_Y - ENTER_BOX_OFFSET);
 	enterTextP2 = enterTextP1;
 	enterTextP2.setString("Enter new player 2 nickname:");
 	enterTextP2.setOrigin(enterTextP2.getGlobalBounds().width / 2, enterTextP2.getGlobalBounds().height / 2);
-	enterTextP2.setPosition(WIDTH / 2 + WIDTH / 4, HEIGHT / 2 - TEXT_BOX_SIZE_Y - 75);
+	enterTextP2.setPosition(ENTER_BOX_2_X, HEIGHT / 2 - TEXT_BOX_SIZE_Y - ENTER_BOX_OFFSET);
 
 	p1Box.setSize({ TEXT_BOX_SIZE_X, TEXT_BOX_SIZE_Y });
 	p1Box.setOrigin(TEXT_BOX_SIZE_X / 2, TEXT_BOX_SIZE_Y / 2);
-	p1Box.setPosition(WIDTH / 4, HEIGHT / 2 - 75);
+	p1Box.setPosition(WIDTH / 4, HEIGHT / 2 - ENTER_BOX_OFFSET);
 	p1Box.setOutlineColor(sf::Color::Black);
 	p1Box.setOutlineThickness(4);
 
 	p2Box = p1Box;
-	p2Box.setPosition(WIDTH / 2 + WIDTH / 4, HEIGHT / 2 - 75);
+	p2Box.setPosition(ENTER_BOX_2_X, HEIGHT / 2 - ENTER_BOX_OFFSET);
 
 	p1Text = sf::Text("Player 1", data->assets.GetFont(defaultFont), 40);
 	p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
-	p1Text.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - p1Text.getGlobalBounds().height / 4 - 75);
+	p1Text.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - p1Text.getGlobalBounds().height / 4 - ENTER_BOX_OFFSET);
 	p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
 
 	p2Text = p1Text;
 	p2Text.setString("Player 2");
 	p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
-	p2Text.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - p2Text.getGlobalBounds().height / 4 - 75);
+	p2Text.setPosition(ENTER_BOX_2_X - 2, HEIGHT / 2 - p2Text.getGlobalBounds().height / 4 - ENTER_BOX_OFFSET);
 
 	blackLine.setSize({ 3, 50 });
 	blackLine.setFillColor(sf::Color::Black);
 	blackLine.setOrigin(blackLine.getSize().x / 2, blackLine.getSize().y / 2);
-	blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - 75);
+	blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - ENTER_BOX_OFFSET);
 
 	messageP1 = sf::Text("maximum character length is 8", data->assets.GetFont(defaultFont), 15);
 	messageP1.setOrigin(messageP1.getGlobalBounds().width / 2, messageP1.getGlobalBounds().height / 2);
@@ -60,19 +60,17 @@ void InitialSetupState::Init()
 	messageP1.setOutlineThickness(1);
 
 	messageP2 = messageP1;
-	messageP2.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - 18);
+	messageP2.setPosition(ENTER_BOX_2_X - 2, HEIGHT / 2 - 18);
 
-	x.first = 1;
-	x.second.setTexture(data->assets.GetTexture("x"));
-	x.second.setSize({ 150, 150 });
-	x.second.setOrigin({ x.second.getSize().x / 2 , x.second.getSize().y / 2 });
-	x.second.setPosition({ WIDTH / 4, HEIGHT / 2 + 75 });
+	x_previewImage.setTexture(data->assets.GetTexture("x"));
+	x_previewImage.setSize({ 150, 150 });
+	x_previewImage.setOrigin({ x_previewImage.getSize().x / 2 , x_previewImage.getSize().y / 2 });
+	x_previewImage.setPosition({ WIDTH / 4, HEIGHT / 2 + ENTER_BOX_OFFSET });
 
-	o.first = 2;
-	o.second.setTexture(data->assets.GetTexture("o"));
-	o.second.setSize({ 150, 150 });
-	o.second.setOrigin({ o.second.getSize().x / 2 , o.second.getSize().y / 2});
-	o.second.setPosition({ WIDTH / 2 + WIDTH / 4, HEIGHT / 2 + 75 });
+	o_previewImage.setTexture(data->assets.GetTexture("o"));
+	o_previewImage.setSize({ 150, 150 });
+	o_previewImage.setOrigin({ o_previewImage.getSize().x / 2 , o_previewImage.getSize().y / 2});
+	o_previewImage.setPosition({ ENTER_BOX_2_X, HEIGHT / 2 + ENTER_BOX_OFFSET });
 
 	sf::Text acceptText("Accept", data->assets.GetFont(defaultFont), 40);
 	acceptText.setOutlineColor(sf::Color::Black);
@@ -94,66 +92,9 @@ void InitialSetupState::HandleInput()
 		// check which text box was clicked
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
-			checkBlackLineTimer = true;
-			// p1Box
-			if ((data->input.isButtonClicked(p1Box, sf::Mouse::Left, data->window)))
+			if (event.key.code == sf::Mouse::Left)
 			{
-				if (textBoxType != 1)
-				{
-					textBoxType = player1;
-					blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
-
-					if (p2Input.getSize() <= 0)
-					{
-						p2Text.setString("Player 2");
-						p2Text.setFillColor(sf::Color({ 120, 120, 120 }));
-						p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
-					}
-					if (p1Input.getSize() <= 0)
-					{
-						blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - 75);
-					}
-				}
-			}
-			// p2Box
-			else if ((data->input.isButtonClicked(p2Box, sf::Mouse::Left, data->window)))
-			{
-				if (textBoxType != 2)
-				{
-					textBoxType = player2;
-					blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
-
-					if (p1Input.getSize() <= 0)
-					{
-						p1Text.setString("Player 1");
-						p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
-						p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
-					}
-					if (p2Input.getSize() <= 0)
-					{
-						blackLine.setPosition(WIDTH / 2 + WIDTH / 4 - 2, HEIGHT / 2 - 75);
-					}
-				}
-			}
-			// none
-			else if (event.key.code == sf::Mouse::Left)
-			{
-				textBoxType = none;
-				checkBlackLineTimer = false;
-				drawBlackLine = false;
-
-				if (p1Input.getSize() <= 0)
-				{
-					p1Text.setString("Player 1");
-					p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
-					p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
-				}
-				if (p2Input.getSize() <= 0)
-				{
-					p2Text.setString("Player 2");
-					p2Text.setFillColor(sf::Color({ 120, 120, 120 }));
-					p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
-				}
+				CheckBoxClicked();
 			}
 		}
 		// check text box type
@@ -247,64 +188,14 @@ void InitialSetupState::HandleInput()
 			acceptButton.Clicked();
 			sf::sleep(sf::seconds(1));
 			data->machine.RemoveState();
-			data->machine.AddState(stateReference(new GameState(data, p1Text.getString(), p2Text.getString())), true);
+			p1String = p1Text.getString();
+			p2String = p2Text.getString();
+			data->machine.AddState(stateReference(new GameState(data, p1String, p2String)), true);
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)
 		{
-			if (data->input.isButtonHovered(acceptButton.GetShape(), data->window) && (p1String.length() > 8 || p2String.length() > 8))
-			{
-				if (data->input.GetMousePosition(data->window).x <= 275)
-				{
-					acceptButton.SetShapePosition({ float(data->input.GetMousePosition(data->window).x + 200),  acceptButton.GetShape().getPosition().y });
-				}
-				else if(data->input.GetMousePosition(data->window).x >= 525)
-				{
-					acceptButton.SetShapePosition({ float(data->input.GetMousePosition(data->window).x - 200),  acceptButton.GetShape().getPosition().y });
-				}
-				else
-				{
-					if (rand() % 2)
-					{
-						acceptButton.SetShapePosition({ float(data->input.GetMousePosition(data->window).x + 200),  acceptButton.GetShape().getPosition().y });
-					}
-					else
-					{
-						acceptButton.SetShapePosition({ float(data->input.GetMousePosition(data->window).x - 200),  acceptButton.GetShape().getPosition().y });
-					}
-				}
-
-				if (acceptButton.GetShape().getPosition().y < HEIGHT - 200)
-				{
-					acceptButton.SetShapePosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - 75 });
-				}
-				else if(acceptButton.GetShape().getPosition().y > HEIGHT - 75)
-				{
-					acceptButton.SetShapePosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - 200 });
-				}
-				else
-				{
-					if (rand() % 2)
-					{
-						acceptButton.SetShapePosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y - 25) });
-					}
-					else
-					{
-						acceptButton.SetShapePosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y + 25) });
-					}
-				}
-			}
-			else
-			{
-				if (data->input.isButtonHovered(acceptButton.GetShape(), data->window))
-				{
-					acceptButton.ChangeHover(true);
-				}
-				else
-				{
-					acceptButton.ChangeHover(false);
-				}
-			}
+			CheckHovered();
 		}
 	}
 }
@@ -346,8 +237,8 @@ void InitialSetupState::Draw()
 		data->window.draw(blackLine);
 	}
 
-	data->window.draw(x.second);
-	data->window.draw(o.second);
+	data->window.draw(x_previewImage);
+	data->window.draw(o_previewImage);
 
 	acceptButton.DrawButton(data->window);
 
@@ -359,7 +250,7 @@ void InitialSetupState::ChangeP1Text()
 	p1Text.setFillColor(sf::Color::Black);
 	p1Text.setString(p1Input);
 	p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
-	blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
+	blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - ENTER_BOX_OFFSET);
 }
 
 void InitialSetupState::ChangeP2Text()
@@ -367,5 +258,128 @@ void InitialSetupState::ChangeP2Text()
 	p2Text.setFillColor(sf::Color::Black);
 	p2Text.setString(p2Input);
 	p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
-	blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - 75);
+	blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - ENTER_BOX_OFFSET);
+}
+
+void InitialSetupState::CheckBoxClicked()
+{
+	checkBlackLineTimer = true;
+	// p1Box
+	if ((data->input.isButtonClicked(p1Box, sf::Mouse::Left, data->window)))
+	{
+		if (textBoxType != player1)
+		{
+			textBoxType = player1;
+			blackLine.setPosition(p1Text.getPosition().x + p1Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - ENTER_BOX_OFFSET);
+
+			if (p2Input.getSize() <= 0)
+			{
+				p2Text.setString("Player 2");
+				p2Text.setFillColor(sf::Color({ 120, 120, 120 }));
+				p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
+			}
+			if (p1Input.getSize() <= 0)
+			{
+				blackLine.setPosition(WIDTH / 4 - 2, HEIGHT / 2 - ENTER_BOX_OFFSET);
+			}
+		}
+	}
+	// p2Box
+	else if ((data->input.isButtonClicked(p2Box, sf::Mouse::Left, data->window)))
+	{
+		if (textBoxType != player2)
+		{
+			textBoxType = player2;
+			blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - ENTER_BOX_OFFSET);
+
+			if (p1Input.getSize() <= 0)
+			{
+				p1Text.setString("Player 1");
+				p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
+				p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
+			}
+			if (p2Input.getSize() <= 0)
+			{
+				blackLine.setPosition(ENTER_BOX_2_X - 2, HEIGHT / 2 - ENTER_BOX_OFFSET);
+			}
+		}
+	}
+	// none
+	else
+	{
+		textBoxType = none;
+		checkBlackLineTimer = false;
+		drawBlackLine = false;
+
+		if (p1Input.getSize() <= 0)
+		{
+			p1Text.setString("Player 1");
+			p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
+			p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
+		}
+		if (p2Input.getSize() <= 0)
+		{
+			p2Text.setString("Player 2");
+			p2Text.setFillColor(sf::Color({ 120, 120, 120 }));
+			p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
+		}
+	}
+}
+
+void InitialSetupState::CheckHovered()
+{
+	if (data->input.isButtonHovered(acceptButton.GetShape(), data->window) && (p1String.length() > 8 || p2String.length() > 8))
+	{
+		// accept button - move x
+		if (data->input.GetMousePosition(data->window).x <= 275)
+		{
+			acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x + ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+		}
+		else if (data->input.GetMousePosition(data->window).x >= 525)
+		{
+			acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x - ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+		}
+		else
+		{
+			if (rand() % 2)
+			{
+				acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x + ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+			}
+			else
+			{
+				acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x - ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+			}
+		}
+		// accept button - move y
+		if (acceptButton.GetShape().getPosition().y < HEIGHT - ACCEPT_OFFSET)
+		{
+			acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - ENTER_BOX_OFFSET });
+		}
+		else if (acceptButton.GetShape().getPosition().y > HEIGHT - ENTER_BOX_OFFSET)
+		{
+			acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - ACCEPT_OFFSET });
+		}
+		else
+		{
+			if (rand() % 2)
+			{
+				acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y - 25) });
+			}
+			else
+			{
+				acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y + 25) });
+			}
+		}
+	}
+	else
+	{
+		if (data->input.isButtonHovered(acceptButton.GetShape(), data->window))
+		{
+			acceptButton.ChangeHover(true);
+		}
+		else
+		{
+			acceptButton.ChangeHover(false);
+		}
+	}
 }

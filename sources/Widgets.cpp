@@ -106,7 +106,7 @@ void Widgets::ChangeTurn()
 
 void Widgets::ChangeWidgetType()
 {
-	if (type == 1)
+	if (type == turns)
 	{
 		type = gameTotals;
 	}
