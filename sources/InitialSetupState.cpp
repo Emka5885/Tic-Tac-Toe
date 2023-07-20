@@ -62,12 +62,12 @@ void InitialSetupState::Init()
 	messageP2 = messageP1;
 	messageP2.setPosition(ENTER_BOX_2_X - 2, HEIGHT / 2 - 18);
 
-	x_previewImage.setTexture(data->assets.GetTexture("x"));
+	x_previewImage.setTexture(data->assets.GetTexture("x_image"));
 	x_previewImage.setSize({ 150, 150 });
 	x_previewImage.setOrigin({ x_previewImage.getSize().x / 2 , x_previewImage.getSize().y / 2 });
 	x_previewImage.setPosition({ WIDTH / 4, HEIGHT / 2 + ENTER_BOX_OFFSET });
 
-	o_previewImage.setTexture(data->assets.GetTexture("o"));
+	o_previewImage.setTexture(data->assets.GetTexture("o_image"));
 	o_previewImage.setSize({ 150, 150 });
 	o_previewImage.setOrigin({ o_previewImage.getSize().x / 2 , o_previewImage.getSize().y / 2});
 	o_previewImage.setPosition({ ENTER_BOX_2_X, HEIGHT / 2 + ENTER_BOX_OFFSET });

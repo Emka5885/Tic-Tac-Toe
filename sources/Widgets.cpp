@@ -13,7 +13,6 @@ Widgets::~Widgets()
 void Widgets::Init()
 {
 	ChangeScore(0, 0);
-	p1Turn = rand()%2;
 
 	totalsText.setString("Game Totals");
 	totalsText.setFont(assets.GetFont(defaultFont));
@@ -78,6 +77,8 @@ void Widgets::Init()
 	p2Shadow = p2Text;
 	p2Shadow.setFillColor(sf::Color::Black);
 	p2Shadow.setPosition(p2Text.getPosition().x + 2, p2Text.getPosition().y + 2);
+
+	type = gameTotals;
 }
 
 void Widgets::ChangeScore(int scoreP1, int scoreP2)
@@ -88,37 +89,51 @@ void Widgets::ChangeScore(int scoreP1, int scoreP2)
 
 void Widgets::ChangeTurn()
 {
-	if (p1Turn)
+	if (type == turnP2)
 	{
 		turnText.setString(p1 + "'s turn");
 		turnShadow.setString(p1 + "'s turn");
+		type = turnP1;
 	}
 	else
 	{
 		turnText.setString(p2 + "'s turn");
 		turnShadow.setString(p2 + "'s turn");
+		type = turnP2;
 	}
 
 	turnText.setOrigin(turnText.getGlobalBounds().width / 2, turnText.getGlobalBounds().height / 2);
 	turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, turnShadow.getGlobalBounds().height / 2);
-	p1Turn = !p1Turn;
 }
 
 void Widgets::ChangeWidgetType()
 {
-	if (type == turns)
+	if (type == gameTotals)
 	{
-		type = gameTotals;
+		if (rand() % 2)
+		{
+			type = turnP1;
+			turnText.setString(p1 + "'s turn");
+			turnShadow.setString(p1 + "'s turn");
+		}
+		else
+		{
+			type = turnP2;
+			turnText.setString(p2 + "'s turn");
+			turnShadow.setString(p2 + "'s turn");
+		}
+		turnText.setOrigin(turnText.getGlobalBounds().width / 2, turnText.getGlobalBounds().height / 2);
+		turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, turnShadow.getGlobalBounds().height / 2);
 	}
 	else
 	{
-		type = turns;
+		type = gameTotals;
 	}
 }
 
 void Widgets::Draw(sf::RenderWindow& window)
 {
-	if (type == 1)
+	if (type != gameTotals)
 	{
 		window.draw(turnShadow);
 		window.draw(turnText);
@@ -139,4 +154,9 @@ void Widgets::Draw(sf::RenderWindow& window)
 		window.draw(p2Shadow);
 		window.draw(p2Text);
 	}
+}
+
+widgetTypes Widgets::GetWidgetType()
+{
+	return type;
 }

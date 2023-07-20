@@ -1,8 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "AssetManager.h"
-
-enum widgetTypes {gameTotals, turns};
+#include "Definitions.h"
 
 class Widgets
 {
@@ -23,8 +22,7 @@ private:
 	std::string p1, p2;
 
 	int scoreP1, scoreP2;
-	bool p1Turn;
-	widgetTypes type = gameTotals;
+	widgetTypes type;
 
 	AssetManager& assets;
 
@@ -39,4 +37,6 @@ public:
 	void ChangeWidgetType();
 
 	void Draw(sf::RenderWindow& window);
+
+	widgetTypes GetWidgetType();
 };

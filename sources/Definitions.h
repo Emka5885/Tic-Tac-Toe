@@ -1,5 +1,8 @@
 #pragma once
 
+enum boardTypes { empty, x, o };
+enum widgetTypes { gameTotals, turnP1, turnP2 };
+
 constexpr const int WIDTH = 800;
 constexpr const int HEIGHT = 800;
 

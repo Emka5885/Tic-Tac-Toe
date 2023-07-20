@@ -4,6 +4,8 @@
 #include "BoardSquare.h"
 #include "Widgets.h"
 
+enum GameTypes { inProgress, p1Wins, p2Wins, draw};
+
 class GameState :public State
 {
 public:
@@ -14,9 +16,16 @@ public:
 	void Update();
 	void Draw();
 
+	void CheckBoardSquares_Clicked();
+	void CheckToPlayOn();
+	bool CheckWinCondition(boardTypes boardType);
+
 private:
 	GameDataReference data;
 
+	GameTypes gameType = inProgress;
+
+	sf::RectangleShape board;
 	Widgets* widget;
 
 	sf::RectangleShape transitionShape;
@@ -24,6 +33,9 @@ private:
 	bool screenCleaning = true;
 	bool shapeDisappeared = false;
 	bool shapeAppeared = true;
+
+	bool changeOfTurn = false;
+	bool backToMainMenu = false;
 
 	std::vector<BoardSquare> boardSquares;
 };

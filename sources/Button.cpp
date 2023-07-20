@@ -84,7 +84,7 @@ void Button::DrawButton(sf::RenderWindow& window)
 	window.draw(text);
 }
 
-sf::RectangleShape Button::GetShape()
+sf::RectangleShape& Button::GetShape()
 {
 	return shape;
 }

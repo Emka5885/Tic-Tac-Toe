@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "MainMenuState.h"
 #include "Definitions.h"
 
 GameState::GameState(GameDataReference data, std::string& p1, std::string& p2) : data(data)
@@ -8,11 +9,15 @@ GameState::GameState(GameDataReference data, std::string& p1, std::string& p2) :
 
 void GameState::Init()
 {
+	board.setFillColor(sf::Color(200, 200, 200));
+	board.setSize({ 474,474 });
+	board.setPosition(163, 238);
+
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			BoardSquare boardSquare({ float(j) * 150 + 175, float(i) * 150 + 250 });
+			BoardSquare boardSquare(data->assets, { float(j) * 158 + 242, float(i) * 158 + 317 });
 			boardSquares.emplace_back(boardSquare);
 		}
 	}
@@ -31,11 +36,19 @@ void GameState::HandleInput()
 	{
 		if (event.type == sf::Event::Closed)
 		{
-			//widget->ChangeTurn();
 			if (!screenCleaning)
 			{
 				screenCleaning = true;
 			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+		{
+			screenCleaning = true;
+			backToMainMenu = true;
+		}
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			CheckBoardSquares_Clicked();
 		}
 	}
 }
@@ -64,29 +77,41 @@ void GameState::Update()
 		// disappearance
 		else
 		{
-			if (transitionShape.getSize().x < 25)
+			if (backToMainMenu)
 			{
-				transitionShape.setSize({ 0,0 });
-				screenCleaning = false;
-				shapeDisappeared = true;
+				data->machine.RemoveState();
+				data->machine.AddState(stateReference(new MainMenuState(data)), true);
 			}
 			else
 			{
-				if (shapeAppeared)
+				if (transitionShape.getSize().x < 25)
 				{
-					widget->ChangeWidgetType();
-					shapeAppeared = false;
+					transitionShape.setSize({ 0,0 });
+					screenCleaning = false;
+					shapeDisappeared = true;
 				}
-				transitionShape.setSize({ transitionShape.getSize().x - 25, transitionShape.getSize().y - 25 });
-				transitionShape.setOrigin(transitionShape.getSize().x / 2, transitionShape.getSize().y / 2);
+				else
+				{
+					if (shapeAppeared)
+					{
+						widget->ChangeWidgetType();
+						shapeAppeared = false;
+					}
+					transitionShape.setSize({ transitionShape.getSize().x - 25, transitionShape.getSize().y - 25 });
+					transitionShape.setOrigin(transitionShape.getSize().x / 2, transitionShape.getSize().y / 2);
+				}
 			}
 		}
 	}
+
+	CheckToPlayOn();
 }
 
 void GameState::Draw()
 {
 	data->window.clear(sf::Color({ 165, 165, 165 }));
+
+	data->window.draw(board);
 
 	widget->Draw(data->window);
 
@@ -101,4 +126,69 @@ void GameState::Draw()
 	}
 
 	data->window.display();
+
+	if (changeOfTurn)
+	{
+		changeOfTurn = false;
+		sf::sleep(sf::seconds(1));
+	}
+}
+
+void GameState::CheckBoardSquares_Clicked()
+{
+	for (int i = 0; i < boardSquares.size(); i++)
+	{
+		if (data->input.isButtonClicked(boardSquares[i].GetShape(), sf::Mouse::Left, data->window))
+		{
+			if (boardSquares[i].GetBoardType() == empty)
+			{
+				if (widget->GetWidgetType() == turnP1)
+				{
+					boardSquares[i].ChangeBoardType(x);
+				}
+				else
+				{
+					boardSquares[i].ChangeBoardType(o);
+				}
+				widget->ChangeTurn();
+				changeOfTurn = true;
+			}
+			break;
+		}
+	}
+}
+
+void GameState::CheckToPlayOn()
+{
+	if (!CheckWinCondition(x) && !CheckWinCondition(o))
+	{
+		for (int i = 0; i < boardSquares.size(); i++)
+		{
+			if (boardSquares[i].GetBoardType() != empty)
+			{
+				break;
+			}
+		}
+		gameType = draw;
+	}
+}
+
+bool GameState::CheckWinCondition(boardTypes boardType)
+{
+	
+
+	if (false)
+	{
+		if (boardType == x)
+		{
+			gameType = p1Wins;
+		}
+		else
+		{
+			gameType = p2Wins;
+		}
+		return true;
+	}
+
+	return false;
 }
