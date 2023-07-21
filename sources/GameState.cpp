@@ -130,7 +130,7 @@ void GameState::Draw()
 	if (changeOfTurn)
 	{
 		changeOfTurn = false;
-		sf::sleep(sf::seconds(1));
+		sf::sleep(sf::seconds(0.5));
 	}
 }
 
@@ -162,22 +162,75 @@ void GameState::CheckToPlayOn()
 {
 	if (!CheckWinCondition(x) && !CheckWinCondition(o))
 	{
+		gameType = draw;
 		for (int i = 0; i < boardSquares.size(); i++)
 		{
-			if (boardSquares[i].GetBoardType() != empty)
+			if (boardSquares[i].GetBoardType() == empty)
 			{
+				gameType = inProgress;
 				break;
 			}
 		}
-		gameType = draw;
+	}
+
+	if (gameType != inProgress)
+	{
+		std::cout << gameType << "\n";
 	}
 }
 
 bool GameState::CheckWinCondition(boardTypes boardType)
 {
-	
+	bool win = false;
 
-	if (false)
+	for (int i = 0; i < 3; i++)
+	{
+		// horizontal
+		int counter = 0;
+		for (int j = 0; j < 3; j++)
+		{
+			if (boardSquares[i * 3 + j].GetBoardType() != boardType)
+			{
+				break;
+			}
+			counter++;
+		}
+		if (counter == 3)
+		{
+			win = true;
+			break;
+		}
+
+		// vertically
+		counter = 0;
+		for (int j = 0; j < 3; j++)
+		{
+			if (boardSquares[i + j * 3].GetBoardType() != boardType)
+			{
+				break;
+			}
+			counter++;
+		}
+		if (counter == 3)
+		{
+			win = true;
+			break;
+		}
+	}
+
+	// bias
+	if (boardSquares[0].GetBoardType() == boardType && boardSquares[4].GetBoardType() == boardType && boardSquares[8].GetBoardType() == boardType && !win)
+	{
+		win = true;
+	}
+	else if (boardSquares[2].GetBoardType() == boardType && boardSquares[4].GetBoardType() == boardType && boardSquares[6].GetBoardType() == boardType && !win)
+	{
+		win = true;
+	}
+
+
+
+	if (win)
 	{
 		if (boardType == x)
 		{
