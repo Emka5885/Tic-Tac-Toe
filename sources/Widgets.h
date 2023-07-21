@@ -19,10 +19,15 @@ private:
 	sf::Text turnText;
 	sf::Text turnShadow;
 
+	sf::Text winText;
+	sf::Text winShadow;
+
 	std::string p1, p2;
 
 	int scoreP1, scoreP2;
 	widgetTypes type;
+
+	bool isWinText = false;
 
 	AssetManager& assets;
 
@@ -37,6 +42,7 @@ public:
 	void ChangeWidgetType();
 
 	void Draw(sf::RenderWindow& window);
+	void ChangeText(GameTypes gameType);
 
 	widgetTypes GetWidgetType();
 };

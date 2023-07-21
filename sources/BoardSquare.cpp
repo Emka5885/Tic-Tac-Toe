@@ -32,13 +32,13 @@ void BoardSquare::ChangeBoardType(boardTypes type)
 	{
 		boardType = x;
 		shape.setTexture(assets->GetTexture("x_image"));
-		shape.setFillColor(sf::Color::White);
+		shape.setFillColor(sf::Color(225, 10, 90));
 	}
 	else
 	{
 		boardType = o;
 		shape.setTexture(assets->GetTexture("o_image"));
-		shape.setFillColor(sf::Color::White);
+		shape.setFillColor(sf::Color(50, 150, 225));
 	}
 }
 

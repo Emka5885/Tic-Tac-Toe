@@ -66,11 +66,13 @@ void InitialSetupState::Init()
 	x_previewImage.setSize({ 150, 150 });
 	x_previewImage.setOrigin({ x_previewImage.getSize().x / 2 , x_previewImage.getSize().y / 2 });
 	x_previewImage.setPosition({ WIDTH / 4, HEIGHT / 2 + ENTER_BOX_OFFSET });
+	x_previewImage.setFillColor(sf::Color::Black);
 
 	o_previewImage.setTexture(data->assets.GetTexture("o_image"));
 	o_previewImage.setSize({ 150, 150 });
 	o_previewImage.setOrigin({ o_previewImage.getSize().x / 2 , o_previewImage.getSize().y / 2});
 	o_previewImage.setPosition({ ENTER_BOX_2_X, HEIGHT / 2 + ENTER_BOX_OFFSET });
+	o_previewImage.setFillColor(sf::Color::Black);
 
 	sf::Text acceptText("Accept", data->assets.GetFont(defaultFont), 40);
 	acceptText.setOutlineColor(sf::Color::Black);

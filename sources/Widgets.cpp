@@ -35,6 +35,15 @@ void Widgets::Init()
 	turnText.setPosition({ WIDTH / 2, 112 });
 	turnShadow.setPosition(turnText.getPosition().x + 5, turnText.getPosition().y + 3);
 
+	winText = turnText;
+	winText.setString(p1 + " win!");
+	winText.setOrigin(winText.getGlobalBounds().width / 2, winText.getGlobalBounds().height / 2);
+	winText.setPosition({ WIDTH / 2, 112 });
+	winShadow = winText;
+	winShadow.setOrigin(winShadow.getGlobalBounds().width / 2, winShadow.getGlobalBounds().height / 2);
+	winShadow.setPosition(winText.getPosition().x + 5, winText.getPosition().y + 3);
+	winShadow.setFillColor(sf::Color::Black);
+
 	scoreDashText.setString(" - ");
 	scoreDashText.setFont(assets.GetFont(defaultFont));
 	scoreDashText.setCharacterSize(75);
@@ -93,12 +102,14 @@ void Widgets::ChangeTurn()
 	{
 		turnText.setString(p1 + "'s turn");
 		turnShadow.setString(p1 + "'s turn");
+		turnText.setFillColor(sf::Color(225, 10, 90));
 		type = turnP1;
 	}
 	else
 	{
 		turnText.setString(p2 + "'s turn");
 		turnShadow.setString(p2 + "'s turn");
+		turnText.setFillColor(sf::Color(50, 150, 225));
 		type = turnP2;
 	}
 
@@ -115,15 +126,18 @@ void Widgets::ChangeWidgetType()
 			type = turnP1;
 			turnText.setString(p1 + "'s turn");
 			turnShadow.setString(p1 + "'s turn");
+			turnText.setFillColor(sf::Color(225, 10, 90));
 		}
 		else
 		{
 			type = turnP2;
 			turnText.setString(p2 + "'s turn");
 			turnShadow.setString(p2 + "'s turn");
+			turnText.setFillColor(sf::Color(50,150,225));
 		}
 		turnText.setOrigin(turnText.getGlobalBounds().width / 2, turnText.getGlobalBounds().height / 2);
 		turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, turnShadow.getGlobalBounds().height / 2);
+		isWinText = false;
 	}
 	else
 	{
@@ -135,8 +149,16 @@ void Widgets::Draw(sf::RenderWindow& window)
 {
 	if (type != gameTotals)
 	{
-		window.draw(turnShadow);
-		window.draw(turnText);
+		if (isWinText)
+		{
+			window.draw(winShadow);
+			window.draw(winText);
+		}
+		else
+		{
+			window.draw(turnShadow);
+			window.draw(turnText);
+		}
 	}
 	else
 	{
@@ -154,6 +176,32 @@ void Widgets::Draw(sf::RenderWindow& window)
 		window.draw(p2Shadow);
 		window.draw(p2Text);
 	}
+}
+
+void Widgets::ChangeText(GameTypes gameType)
+{
+	if (gameType == p1Wins)
+	{
+		winText.setString(p1 + " win!");
+		winShadow.setString(p1 + " win!");
+		winText.setFillColor(sf::Color(225, 10, 90));
+	}
+	else if (gameType == p2Wins)
+	{
+		winText.setString(p2 + " win!");
+		winShadow.setString(p2 + " win!");
+		winText.setFillColor(sf::Color(50, 150, 225));
+	}
+	else
+	{
+		winText.setString("Draw!");
+		winShadow.setString("Draw!");
+		winText.setFillColor(sf::Color::White);
+	}
+
+	winText.setOrigin(winText.getGlobalBounds().width / 2, winText.getGlobalBounds().height / 2);
+	winShadow.setOrigin(winShadow.getGlobalBounds().width / 2, winShadow.getGlobalBounds().height / 2);
+	isWinText = true;
 }
 
 widgetTypes Widgets::GetWidgetType()

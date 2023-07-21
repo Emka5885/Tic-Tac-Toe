@@ -27,16 +27,16 @@ void GameState::Init()
 	transitionShape.setOrigin(WIDTH / 2, HEIGHT / 2);
 	transitionShape.setPosition(WIDTH / 2, HEIGHT / 2);
 
-	slantLine.setFillColor(sf::Color::Red);
-	slantLine.setOutlineColor(sf::Color::Black);
-	slantLine.setOutlineThickness(2);
+	slantLine.setFillColor(sf::Color(75, 75, 75, 0));
+	slantLine.setOutlineColor(sf::Color(0,0,0,0));
+	slantLine.setOutlineThickness(3);
 
 	line = slantLine;
-	line.setSize({ 458, 8 });
+	line.setSize({ 458, 6 });
 	line.setOrigin(line.getSize().x / 2, line.getSize().y / 2);
 	line.setPosition(WIDTH / 2, HEIGHT / 2 + 75);
 
-	slantLine.setSize({ float(458 * sqrt(2)), 8 });
+	slantLine.setSize({ float(458 * sqrt(2)), 6 });
 	slantLine.setOrigin(slantLine.getSize().x / 2, slantLine.getSize().y / 2);
 	slantLine.setPosition(WIDTH / 2, HEIGHT / 2 + 75);
 	slantLine.rotate(45);
@@ -60,7 +60,7 @@ void GameState::HandleInput()
 			screenCleaning = true;
 			backToMainMenu = true;
 		}
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress)
 		{
 			CheckBoardSquares_Clicked();
 		}
@@ -88,6 +88,11 @@ void GameState::Update()
 				}
 				gameType = inProgress;
 				isSlantLine = false;
+				slantLine.setFillColor(sf::Color(75, 75, 75, 0));
+				slantLine.setOutlineColor(sf::Color(0, 0, 0, 0));
+				line.setFillColor(sf::Color(75, 75, 75, 0));
+				line.setOutlineColor(sf::Color(0, 0, 0, 0));
+				board.setFillColor(sf::Color(200, 200, 200));
 			}
 			else
 			{
@@ -122,6 +127,11 @@ void GameState::Update()
 		}
 	}
 
+	if ((drawClock.getElapsedTime().asSeconds() >= 0.8 && gameType == draw) || (winClock.getElapsedTime().asSeconds() >= 1.5 && (gameType == p1Wins || gameType == p2Wins)))
+	{
+		screenCleaning = true;
+	}
+
 	CheckToPlayOn();
 }
 
@@ -142,7 +152,7 @@ void GameState::Draw()
 		}
 	}
 
-	if (gameType != inProgress)
+	if (gameType == p1Wins || gameType == p2Wins)
 	{
 		if (isSlantLine)
 		{
@@ -211,11 +221,50 @@ void GameState::CheckToPlayOn()
 				}
 			}
 		}
+		drawClock.restart();
 	}
 
 	if (gameType != inProgress)
 	{
-		std::cout << gameType << "\n";
+		widget->ChangeText(gameType);
+
+		if (gameType == draw)
+		{
+			int r = std::clamp(int(board.getFillColor().r - 1), 75, 200);
+
+			if (drawClock.getElapsedTime().asSeconds() >= 0.005 && r > 75)
+			{
+				int g = std::clamp(int(board.getFillColor().g - 1), 75, 200);
+				int b = std::clamp(int(board.getFillColor().b - 1), 75, 200);
+
+				board.setFillColor(sf::Color(r, g, b));
+
+				drawClock.restart();
+			}
+		}
+		else
+		{
+			if (isSlantLine)
+			{
+				int a = std::clamp(int(slantLine.getFillColor().a + 4), 0, 255);
+				if (winClock.getElapsedTime().asSeconds() >= 0.01 && a < 255)
+				{
+					slantLine.setFillColor({ slantLine.getFillColor().r, slantLine.getFillColor().g, slantLine.getFillColor().b, sf::Uint8(a) });
+					slantLine.setOutlineColor({ 0, 0, 0, sf::Uint8(a) });
+					winClock.restart();
+				}
+			}
+			else
+			{
+				int a = std::clamp(int(line.getFillColor().a + 4), 0, 255);
+				if (winClock.getElapsedTime().asSeconds() >= 0.01 && a < 255)
+				{
+					line.setFillColor({ line.getFillColor().r, line.getFillColor().g, line.getFillColor().b, sf::Uint8(a) });
+					line.setOutlineColor({ 0, 0, 0, sf::Uint8(a) });
+					winClock.restart();
+				}
+			}
+		}
 	}
 }
 
@@ -312,6 +361,7 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 		{
 			gameType = p2Wins;
 		}
+		winClock.restart();
 		return true;
 	}
 

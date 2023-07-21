@@ -2,6 +2,7 @@
 
 enum boardTypes { empty, x, o };
 enum widgetTypes { gameTotals, turnP1, turnP2 };
+enum GameTypes { inProgress, p1Wins, p2Wins, draw };
 
 constexpr const int WIDTH = 800;
 constexpr const int HEIGHT = 800;

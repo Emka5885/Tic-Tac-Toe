@@ -4,8 +4,6 @@
 #include "BoardSquare.h"
 #include "Widgets.h"
 
-enum GameTypes { inProgress, p1Wins, p2Wins, draw};
-
 class GameState :public State
 {
 public:
@@ -43,4 +41,7 @@ private:
 
 	sf::RectangleShape slantLine;
 	sf::RectangleShape line;
+
+	sf::Clock drawClock;
+	sf::Clock winClock;
 };
