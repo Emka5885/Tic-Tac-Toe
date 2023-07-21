@@ -26,6 +26,20 @@ void GameState::Init()
 	transitionShape.setSize({ WIDTH, HEIGHT });
 	transitionShape.setOrigin(WIDTH / 2, HEIGHT / 2);
 	transitionShape.setPosition(WIDTH / 2, HEIGHT / 2);
+
+	slantLine.setFillColor(sf::Color::Red);
+	slantLine.setOutlineColor(sf::Color::Black);
+	slantLine.setOutlineThickness(2);
+
+	line = slantLine;
+	line.setSize({ 458, 8 });
+	line.setOrigin(line.getSize().x / 2, line.getSize().y / 2);
+	line.setPosition(WIDTH / 2, HEIGHT / 2 + 75);
+
+	slantLine.setSize({ float(458 * sqrt(2)), 8 });
+	slantLine.setOrigin(slantLine.getSize().x / 2, slantLine.getSize().y / 2);
+	slantLine.setPosition(WIDTH / 2, HEIGHT / 2 + 75);
+	slantLine.rotate(45);
 }
 
 void GameState::HandleInput()
@@ -67,6 +81,13 @@ void GameState::Update()
 				transitionShape.setOrigin(WIDTH / 2, HEIGHT / 2);
 				shapeDisappeared = false;
 				shapeAppeared = true;
+
+				for (int i = 0; i < boardSquares.size(); i++)
+				{
+					boardSquares[i].ChangeBoardType(empty);
+				}
+				gameType = inProgress;
+				isSlantLine = false;
 			}
 			else
 			{
@@ -82,24 +103,21 @@ void GameState::Update()
 				data->machine.RemoveState();
 				data->machine.AddState(stateReference(new MainMenuState(data)), true);
 			}
+			else if (transitionShape.getSize().x < 25)
+			{
+				transitionShape.setSize({ 0,0 });
+				screenCleaning = false;
+				shapeDisappeared = true;
+			}
 			else
 			{
-				if (transitionShape.getSize().x < 25)
+				if (shapeAppeared)
 				{
-					transitionShape.setSize({ 0,0 });
-					screenCleaning = false;
-					shapeDisappeared = true;
+					widget->ChangeWidgetType();
+					shapeAppeared = false;
 				}
-				else
-				{
-					if (shapeAppeared)
-					{
-						widget->ChangeWidgetType();
-						shapeAppeared = false;
-					}
-					transitionShape.setSize({ transitionShape.getSize().x - 25, transitionShape.getSize().y - 25 });
-					transitionShape.setOrigin(transitionShape.getSize().x / 2, transitionShape.getSize().y / 2);
-				}
+				transitionShape.setSize({ transitionShape.getSize().x - 25, transitionShape.getSize().y - 25 });
+				transitionShape.setOrigin(transitionShape.getSize().x / 2, transitionShape.getSize().y / 2);
 			}
 		}
 	}
@@ -111,13 +129,29 @@ void GameState::Draw()
 {
 	data->window.clear(sf::Color({ 165, 165, 165 }));
 
-	data->window.draw(board);
 
 	widget->Draw(data->window);
 
-	for (int i = 0; i < boardSquares.size(); i++)
+	if (widget->GetWidgetType() != gameTotals)
 	{
-		boardSquares[i].Draw(data->window);
+		data->window.draw(board);
+
+		for (int i = 0; i < boardSquares.size(); i++)
+		{
+			boardSquares[i].Draw(data->window);
+		}
+	}
+
+	if (gameType != inProgress)
+	{
+		if (isSlantLine)
+		{
+			data->window.draw(slantLine);
+		}
+		else
+		{
+			data->window.draw(line);
+		}
 	}
 
 	if (screenCleaning)
@@ -125,7 +159,10 @@ void GameState::Draw()
 		data->window.draw(transitionShape);
 	}
 
+
 	data->window.display();
+
+
 
 	if (changeOfTurn)
 	{
@@ -160,15 +197,18 @@ void GameState::CheckBoardSquares_Clicked()
 
 void GameState::CheckToPlayOn()
 {
-	if (!CheckWinCondition(x) && !CheckWinCondition(o))
+	if (gameType == inProgress)
 	{
-		gameType = draw;
-		for (int i = 0; i < boardSquares.size(); i++)
+		if (!CheckWinCondition(x) && !CheckWinCondition(o))
 		{
-			if (boardSquares[i].GetBoardType() == empty)
+			gameType = draw;
+			for (int i = 0; i < boardSquares.size(); i++)
 			{
-				gameType = inProgress;
-				break;
+				if (boardSquares[i].GetBoardType() == empty)
+				{
+					gameType = inProgress;
+					break;
+				}
 			}
 		}
 	}
@@ -197,6 +237,20 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 		}
 		if (counter == 3)
 		{
+			line.setRotation(0);
+			switch (i)
+			{
+			case 0:
+				line.setPosition(WIDTH / 2, HEIGHT / 2 + 75 - 158);
+				break;
+			case 1:
+				line.setPosition(WIDTH / 2, HEIGHT / 2 + 75);
+				break;
+			case 2:
+				line.setPosition(WIDTH / 2, HEIGHT / 2 + 75 + 158);
+				break;
+			}
+
 			win = true;
 			break;
 		}
@@ -213,6 +267,20 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 		}
 		if (counter == 3)
 		{
+			line.setRotation(90);
+			switch (i)
+			{
+			case 0:
+				line.setPosition(WIDTH / 2 - 158, HEIGHT / 2 + 75);
+				break;
+			case 1:
+				line.setPosition(WIDTH / 2, HEIGHT / 2 + 75);
+				break;
+			case 2:
+				line.setPosition(WIDTH / 2 + 158, HEIGHT / 2 + 75);
+				break;
+			}
+
 			win = true;
 			break;
 		}
@@ -221,10 +289,14 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 	// bias
 	if (boardSquares[0].GetBoardType() == boardType && boardSquares[4].GetBoardType() == boardType && boardSquares[8].GetBoardType() == boardType && !win)
 	{
+		slantLine.setRotation(45);
+		isSlantLine = true;
 		win = true;
 	}
 	else if (boardSquares[2].GetBoardType() == boardType && boardSquares[4].GetBoardType() == boardType && boardSquares[6].GetBoardType() == boardType && !win)
 	{
+		slantLine.setRotation(135);
+		isSlantLine = true;
 		win = true;
 	}
 

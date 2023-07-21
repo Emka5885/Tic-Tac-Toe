@@ -37,5 +37,10 @@ private:
 	bool changeOfTurn = false;
 	bool backToMainMenu = false;
 
+	bool isSlantLine = false;
+
 	std::vector<BoardSquare> boardSquares;
+
+	sf::RectangleShape slantLine;
+	sf::RectangleShape line;
 };
