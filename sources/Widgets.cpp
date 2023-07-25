@@ -13,6 +13,7 @@ Widgets::~Widgets()
 void Widgets::Init()
 {
 	ChangeScore(0, 0);
+	type = gameTotals;
 
 	totalsText.setString("Game Totals");
 	totalsText.setFont(assets.GetFont(defaultFont));
@@ -86,8 +87,6 @@ void Widgets::Init()
 	p2Shadow = p2Text;
 	p2Shadow.setFillColor(sf::Color::Black);
 	p2Shadow.setPosition(p2Text.getPosition().x + 2, p2Text.getPosition().y + 2);
-
-	type = gameTotals;
 }
 
 void Widgets::ChangeScore(int scoreP1, int scoreP2)
@@ -117,7 +116,7 @@ void Widgets::ChangeTurn()
 	turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, turnShadow.getGlobalBounds().height / 2);
 }
 
-void Widgets::ChangeWidgetType()
+void Widgets::ChangeWidgetType(int p1Win, int p2Win)
 {
 	if (type == gameTotals)
 	{
@@ -142,6 +141,13 @@ void Widgets::ChangeWidgetType()
 	else
 	{
 		type = gameTotals;
+
+		scoreP1 += p1Win;
+		scoreP1Text.setString(std::to_string(scoreP1));
+		scoreP1Text.setOrigin(scoreP1Text.getGlobalBounds().width, scoreDashText.getGlobalBounds().height / 2);
+
+		scoreP2 += p2Win;
+		scoreP2Text.setString(std::to_string(scoreP2));
 	}
 }
 

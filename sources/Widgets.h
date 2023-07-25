@@ -39,7 +39,7 @@ public:
 
 	void ChangeScore(int scoreP1, int scoreP2);
 	void ChangeTurn();
-	void ChangeWidgetType();
+	void ChangeWidgetType(int p1Win = 0, int p2Win = 0);
 
 	void Draw(sf::RenderWindow& window);
 	void ChangeText(GameTypes gameType);

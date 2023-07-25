@@ -86,6 +86,20 @@ void GameState::Update()
 				{
 					boardSquares[i].ChangeBoardType(empty);
 				}
+
+				if (widget->GetWidgetType() != gameTotals && gameType == p1Wins)
+				{
+					widget->ChangeWidgetType(1, 0);
+				}
+				else if (widget->GetWidgetType() != gameTotals && gameType == p2Wins)
+				{
+					widget->ChangeWidgetType(0, 1);
+				}
+				else
+				{
+					widget->ChangeWidgetType();
+				}
+
 				gameType = inProgress;
 				isSlantLine = false;
 				slantLine.setFillColor(sf::Color(75, 75, 75, 0));
@@ -118,7 +132,6 @@ void GameState::Update()
 			{
 				if (shapeAppeared)
 				{
-					widget->ChangeWidgetType();
 					shapeAppeared = false;
 				}
 				transitionShape.setSize({ transitionShape.getSize().x - 25, transitionShape.getSize().y - 25 });
@@ -335,7 +348,7 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 		}
 	}
 
-	// bias
+	// slant
 	if (boardSquares[0].GetBoardType() == boardType && boardSquares[4].GetBoardType() == boardType && boardSquares[8].GetBoardType() == boardType && !win)
 	{
 		slantLine.setRotation(45);
