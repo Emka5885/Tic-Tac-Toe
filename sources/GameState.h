@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "BoardSquare.h"
 #include "Widgets.h"
+#include "Button.h"
 
 class GameState :public State
 {
@@ -17,6 +18,8 @@ public:
 	void CheckBoardSquares_Clicked();
 	void CheckToPlayOn();
 	bool CheckWinCondition(boardTypes boardType);
+
+	void ClearScreen();
 
 private:
 	GameDataReference data;
@@ -44,4 +47,9 @@ private:
 
 	sf::Clock drawClock;
 	sf::Clock winClock;
+
+	Button menuButton;
+	Button nextRoundButton;
+	Button quittButton;
+	bool quitt = false;
 };

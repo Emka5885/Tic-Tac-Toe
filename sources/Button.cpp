@@ -42,11 +42,17 @@ void Button::Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineCol
 	text.setPosition(position);
 }
 
+void Button::SetPosition(sf::Vector2f position)
+{
+	shape.setPosition(position);
+	textShadow.setPosition(position.x + 4, position.y + 3);
+	text.setPosition(position);
+}
+
 void Button::ChangeHover(bool hover)
 {
-	switch (currentType)
+	if (currentType == unhovered)
 	{
-	case unhovered:
 		if (hover)
 		{
 			shape.setSize({ shape.getSize().x + zoom, shape.getSize().y + zoom });
@@ -54,9 +60,9 @@ void Button::ChangeHover(bool hover)
 			shape.setFillColor(hoverColor);
 			currentType = hovered;
 		}
-		break;
-
-	case hovered:
+	}
+	else
+	{
 		if (!hover)
 		{
 			shape.setSize({ shape.getSize().x - zoom, shape.getSize().y - zoom });
@@ -64,17 +70,20 @@ void Button::ChangeHover(bool hover)
 			shape.setFillColor(unhoverColor);
 			currentType = unhovered;
 		}
-		break;
-
-	case clicked:
-		break;
 	}
 }
 
-void Button::Clicked()
+void Button::Clicked(bool isClicked)
 {
-	currentType = clicked;
-	shape.setFillColor(clickColor);
+	if (isClicked)
+	{
+		currentType = clicked;
+		shape.setFillColor(clickColor);
+	}
+	else
+	{
+		ChangeHover(false);
+	}
 }
 
 void Button::DrawButton(sf::RenderWindow& window)
@@ -87,11 +96,4 @@ void Button::DrawButton(sf::RenderWindow& window)
 sf::RectangleShape& Button::GetShape()
 {
 	return shape;
-}
-
-void Button::SetPosition(sf::Vector2f position)
-{
-	shape.setPosition(position);
-	textShadow.setPosition(position.x + 4, position.y + 3);
-	text.setPosition(position);
 }

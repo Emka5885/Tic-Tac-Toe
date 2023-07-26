@@ -15,8 +15,10 @@ void AssetManager::InitFonts()
 void AssetManager::InitTextures()
 {
 	LoadTexture(icon, icon_path);
-	LoadTexture("x_image", "resources/x.png");
-	LoadTexture("o_image", "resources/o.png");
+	LoadTexture(xImage, xImage_path);
+	LoadTexture(oImage, oImage_path);
+	LoadTexture(xPreviewImage, xPreviewImage_path);
+	LoadTexture(oPreviewImage, oPreviewImage_path);
 }
 
 void AssetManager::LoadTexture(const char* name, const char* fileName)

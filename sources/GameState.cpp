@@ -40,6 +40,20 @@ void GameState::Init()
 	slantLine.setOrigin(slantLine.getSize().x / 2, slantLine.getSize().y / 2);
 	slantLine.setPosition(WIDTH / 2, HEIGHT / 2 + 75);
 	slantLine.rotate(45);
+
+	sf::Text buttonsText("Next Round", data->assets.GetFont(defaultFont), 50);
+	buttonsText.setFillColor(sf::Color(250, 250, 250));
+	buttonsText.setOutlineColor(sf::Color::Black);
+	buttonsText.setOutlineThickness(2);
+	sf::Vector2f buttonsSize(324, 112);
+
+	nextRoundButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, HEIGHT / 2 - 75 }, 10);
+
+	buttonsText.setString("Main Menu");
+	menuButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2,  HEIGHT / 2 + 90}, 10);
+
+	buttonsText.setString("Quitt");
+	quittButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2,  HEIGHT / 2 + 255 }, 10);
 }
 
 void GameState::HandleInput()
@@ -48,21 +62,70 @@ void GameState::HandleInput()
 
 	while (data->window.pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed)
+		if (event.type == sf::Event::Closed || quitt)
 		{
-			if (!screenCleaning)
-			{
-				screenCleaning = true;
-			}
+			sf::sleep(sf::seconds(1));
+			data->window.close();
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
 			screenCleaning = true;
 			backToMainMenu = true;
 		}
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress)
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress && widget->GetWidgetType() != gameTotals)
 		{
 			CheckBoardSquares_Clicked();
+		}
+
+		if (widget->GetWidgetType() == gameTotals && !screenCleaning)
+		{
+			// clicked
+			if (data->input.isButtonClicked(quittButton.GetShape(), sf::Mouse::Left, data->window))
+			{
+				quittButton.Clicked();
+				quitt = true;
+			}
+			else if (data->input.isButtonClicked(nextRoundButton.GetShape(), sf::Mouse::Left, data->window))
+			{
+				nextRoundButton.Clicked();
+				screenCleaning = true;
+			}
+			else if (data->input.isButtonClicked(menuButton.GetShape(), sf::Mouse::Left, data->window))
+			{
+				menuButton.Clicked();
+				screenCleaning = true;
+				backToMainMenu = true;
+			}
+			// hovered
+			if (event.type == sf::Event::MouseMoved)
+			{
+				if (data->input.isButtonHovered(nextRoundButton.GetShape(), data->window))
+				{
+					nextRoundButton.ChangeHover(true);
+				}
+				else
+				{
+					nextRoundButton.ChangeHover(false);
+				}
+
+				if (data->input.isButtonHovered(menuButton.GetShape(), data->window))
+				{
+					menuButton.ChangeHover(true);
+				}
+				else
+				{
+					menuButton.ChangeHover(false);
+				}
+
+				if (data->input.isButtonHovered(quittButton.GetShape(), data->window))
+				{
+					quittButton.ChangeHover(true);
+				}
+				else
+				{
+					quittButton.ChangeHover(false);
+				}
+			}
 		}
 	}
 }
@@ -81,32 +144,7 @@ void GameState::Update()
 				transitionShape.setOrigin(WIDTH / 2, HEIGHT / 2);
 				shapeDisappeared = false;
 				shapeAppeared = true;
-
-				for (int i = 0; i < boardSquares.size(); i++)
-				{
-					boardSquares[i].ChangeBoardType(empty);
-				}
-
-				if (widget->GetWidgetType() != gameTotals && gameType == p1Wins)
-				{
-					widget->ChangeWidgetType(1, 0);
-				}
-				else if (widget->GetWidgetType() != gameTotals && gameType == p2Wins)
-				{
-					widget->ChangeWidgetType(0, 1);
-				}
-				else
-				{
-					widget->ChangeWidgetType();
-				}
-
-				gameType = inProgress;
-				isSlantLine = false;
-				slantLine.setFillColor(sf::Color(75, 75, 75, 0));
-				slantLine.setOutlineColor(sf::Color(0, 0, 0, 0));
-				line.setFillColor(sf::Color(75, 75, 75, 0));
-				line.setOutlineColor(sf::Color(0, 0, 0, 0));
-				board.setFillColor(sf::Color(200, 200, 200));
+				ClearScreen();
 			}
 			else
 			{
@@ -163,6 +201,12 @@ void GameState::Draw()
 		{
 			boardSquares[i].Draw(data->window);
 		}
+	}
+	else
+	{
+		nextRoundButton.DrawButton(data->window);
+		menuButton.DrawButton(data->window);
+		quittButton.DrawButton(data->window);
 	}
 
 	if (gameType == p1Wins || gameType == p2Wins)
@@ -379,4 +423,35 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 	}
 
 	return false;
+}
+
+void GameState::ClearScreen()
+{
+	nextRoundButton.Clicked(false);
+
+	for (int i = 0; i < boardSquares.size(); i++)
+	{
+		boardSquares[i].ChangeBoardType(empty);
+	}
+
+	if (widget->GetWidgetType() != gameTotals && gameType == p1Wins)
+	{
+		widget->ChangeWidgetType(1, 0);
+	}
+	else if (widget->GetWidgetType() != gameTotals && gameType == p2Wins)
+	{
+		widget->ChangeWidgetType(0, 1);
+	}
+	else
+	{
+		widget->ChangeWidgetType();
+	}
+
+	gameType = inProgress;
+	isSlantLine = false;
+	slantLine.setFillColor(sf::Color(75, 75, 75, 0));
+	slantLine.setOutlineColor(sf::Color(0, 0, 0, 0));
+	line.setFillColor(sf::Color(75, 75, 75, 0));
+	line.setOutlineColor(sf::Color(0, 0, 0, 0));
+	board.setFillColor(sf::Color(200, 200, 200));
 }

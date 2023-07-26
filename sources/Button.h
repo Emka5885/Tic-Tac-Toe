@@ -23,10 +23,10 @@ public:
 
 	void Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineColor);
 
+	void SetPosition(sf::Vector2f position);
 	void ChangeHover(bool hover);
-	void Clicked();
+	void Clicked(bool isClicked = true);
 	void DrawButton(sf::RenderWindow& window);
 
-	void SetPosition(sf::Vector2f position);
 	sf::RectangleShape& GetShape();
 };

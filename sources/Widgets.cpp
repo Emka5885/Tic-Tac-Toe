@@ -33,15 +33,15 @@ void Widgets::Init()
 	turnShadow = turnText;
 	turnShadow.setFillColor(sf::Color::Black);
 	ChangeTurn();
-	turnText.setPosition({ WIDTH / 2, 112 });
+	turnText.setPosition({ WIDTH / 2, 90 });
 	turnShadow.setPosition(turnText.getPosition().x + 5, turnText.getPosition().y + 3);
 
 	winText = turnText;
 	winText.setString(p1 + " win!");
-	winText.setOrigin(winText.getGlobalBounds().width / 2, winText.getGlobalBounds().height / 2);
-	winText.setPosition({ WIDTH / 2, 112 });
+	winText.setOrigin(winText.getGlobalBounds().width / 2, 0);
+	winText.setPosition({ WIDTH / 2, 90 });
 	winShadow = winText;
-	winShadow.setOrigin(winShadow.getGlobalBounds().width / 2, winShadow.getGlobalBounds().height / 2);
+	winShadow.setOrigin(winShadow.getGlobalBounds().width / 2, 0);
 	winShadow.setPosition(winText.getPosition().x + 5, winText.getPosition().y + 3);
 	winShadow.setFillColor(sf::Color::Black);
 
@@ -55,7 +55,7 @@ void Widgets::Init()
 	scoreP1Text = scoreDashText;
 	scoreP1Text.setString(std::to_string(scoreP1));
 	scoreP1Text.setOrigin(scoreP1Text.getGlobalBounds().width, scoreDashText.getGlobalBounds().height / 2);
-	scoreP1Text.setPosition(WIDTH / 2 - scoreDashText.getGlobalBounds().width / 2, SCORE_Y_POSITION);
+	scoreP1Text.setPosition(WIDTH / 2 - scoreDashText.getGlobalBounds().width / 2 - 4, SCORE_Y_POSITION);
 	scoreP2Text = scoreDashText;
 	scoreP2Text.setString(std::to_string(scoreP2));
 	scoreP2Text.setOrigin(0, scoreDashText.getGlobalBounds().height / 2);
@@ -101,19 +101,19 @@ void Widgets::ChangeTurn()
 	{
 		turnText.setString(p1 + "'s turn");
 		turnShadow.setString(p1 + "'s turn");
-		turnText.setFillColor(sf::Color(225, 10, 90));
+		turnText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
 		type = turnP1;
 	}
 	else
 	{
 		turnText.setString(p2 + "'s turn");
 		turnShadow.setString(p2 + "'s turn");
-		turnText.setFillColor(sf::Color(50, 150, 225));
+		turnText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
 		type = turnP2;
 	}
 
-	turnText.setOrigin(turnText.getGlobalBounds().width / 2, turnText.getGlobalBounds().height / 2);
-	turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, turnShadow.getGlobalBounds().height / 2);
+	turnText.setOrigin(turnText.getGlobalBounds().width / 2, 0);
+	turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, 0);
 }
 
 void Widgets::ChangeWidgetType(int p1Win, int p2Win)
@@ -134,8 +134,8 @@ void Widgets::ChangeWidgetType(int p1Win, int p2Win)
 			turnShadow.setString(p2 + "'s turn");
 			turnText.setFillColor(sf::Color(50,150,225));
 		}
-		turnText.setOrigin(turnText.getGlobalBounds().width / 2, turnText.getGlobalBounds().height / 2);
-		turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, turnShadow.getGlobalBounds().height / 2);
+		turnText.setOrigin(turnText.getGlobalBounds().width / 2, 0);
+		turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, 0);
 		isWinText = false;
 	}
 	else
@@ -190,13 +190,13 @@ void Widgets::ChangeText(GameTypes gameType)
 	{
 		winText.setString(p1 + " win!");
 		winShadow.setString(p1 + " win!");
-		winText.setFillColor(sf::Color(225, 10, 90));
+		winText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
 	}
 	else if (gameType == p2Wins)
 	{
 		winText.setString(p2 + " win!");
 		winShadow.setString(p2 + " win!");
-		winText.setFillColor(sf::Color(50, 150, 225));
+		winText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
 	}
 	else
 	{
@@ -205,8 +205,8 @@ void Widgets::ChangeText(GameTypes gameType)
 		winText.setFillColor(sf::Color::White);
 	}
 
-	winText.setOrigin(winText.getGlobalBounds().width / 2, winText.getGlobalBounds().height / 2);
-	winShadow.setOrigin(winShadow.getGlobalBounds().width / 2, winShadow.getGlobalBounds().height / 2);
+	winText.setOrigin(winText.getGlobalBounds().width / 2, 0);
+	winShadow.setOrigin(winShadow.getGlobalBounds().width / 2, 0);
 	isWinText = true;
 }
 

@@ -47,13 +47,13 @@ void MainMenuState::HandleInput()
 		}
 		else if (type == play)
 		{
-			sf::sleep(sf::seconds(1));
+			sf::sleep(sf::seconds(0.5));
 			data->machine.RemoveState();
 			data->machine.AddState(stateReference(new InitialSetupState(data)), true);
 		}
 		else if (type == options)
 		{
-			sf::sleep(sf::seconds(1));
+			sf::sleep(sf::seconds(0.5));
 
 		}
 		// clicked
@@ -69,8 +69,8 @@ void MainMenuState::HandleInput()
 		}
 		else if (data->input.isButtonClicked(optionsButton.GetShape(), sf::Mouse::Left, data->window))
 		{
-			optionsButton.Clicked();
-			type = options;
+			//optionsButton.Clicked();
+			//type = options;
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)
