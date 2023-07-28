@@ -1,4 +1,5 @@
 #include "MainMenuState.h"
+#include "OptionsState.h"
 #include "InitialSetupState.h"
 #include "Definitions.h"
 
@@ -31,6 +32,8 @@ void MainMenuState::Init()
 
 	buttonsText.setString("Quitt");
 	quittButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, optionsButton.GetShape().getPosition().y + 165 }, 10);
+
+	sf::sleep(sf::seconds(0.2));
 }
 
 void MainMenuState::HandleInput()
@@ -47,14 +50,13 @@ void MainMenuState::HandleInput()
 		}
 		else if (type == play)
 		{
-			sf::sleep(sf::seconds(0.5));
 			data->machine.RemoveState();
 			data->machine.AddState(stateReference(new InitialSetupState(data)), true);
 		}
 		else if (type == options)
 		{
-			sf::sleep(sf::seconds(0.5));
-
+			data->machine.RemoveState();
+			data->machine.AddState(stateReference(new OptionsState(data)), true);
 		}
 		// clicked
 		if (data->input.isButtonClicked(quittButton.GetShape(), sf::Mouse::Left, data->window))
@@ -69,8 +71,8 @@ void MainMenuState::HandleInput()
 		}
 		else if (data->input.isButtonClicked(optionsButton.GetShape(), sf::Mouse::Left, data->window))
 		{
-			//optionsButton.Clicked();
-			//type = options;
+			optionsButton.Clicked();
+			type = options;
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)

@@ -28,6 +28,7 @@
     <ClCompile Include="sources\main.cpp" />
     <ClCompile Include="sources\MainMenuState.cpp" />
     <ClCompile Include="sources\InitialSetupState.cpp" />
+    <ClCompile Include="sources\OptionsState.cpp" />
     <ClCompile Include="sources\StateMachine.cpp" />
     <ClCompile Include="sources\Widgets.cpp" />
   </ItemGroup>
@@ -41,6 +42,7 @@
     <ClInclude Include="sources\InputManager.h" />
     <ClInclude Include="sources\MainMenuState.h" />
     <ClInclude Include="sources\InitialSetupState.h" />
+    <ClInclude Include="sources\OptionsState.h" />
     <ClInclude Include="sources\State.h" />
     <ClInclude Include="sources\StateMachine.h" />
     <ClInclude Include="sources\Widgets.h" />

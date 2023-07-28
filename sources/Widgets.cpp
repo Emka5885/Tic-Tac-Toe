@@ -74,16 +74,16 @@ void Widgets::Init()
 
 	p1Text = pDashText;
 	p1Text.setString(p1);
-	p1Text.setOrigin(p1Text.getGlobalBounds().width, pDashText.getGlobalBounds().height / 2);
-	p1Text.setPosition(WIDTH / 2 - pDashText.getGlobalBounds().width / 2, PLAYER_Y_POSITION);
+	p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, pDashText.getGlobalBounds().height / 2);
+	p1Text.setPosition(WIDTH / 2 - pDashText.getGlobalBounds().width / 2 - 50, PLAYER_Y_POSITION);
 	p1Shadow = p1Text;
 	p1Shadow.setFillColor(sf::Color::Black);
 	p1Shadow.setPosition(p1Text.getPosition().x + 2, p1Text.getPosition().y + 2);
 
 	p2Text = pDashText;
 	p2Text.setString(p2);
-	p2Text.setOrigin(0, pDashText.getGlobalBounds().height / 2);
-	p2Text.setPosition(WIDTH / 2 + pDashText.getGlobalBounds().width / 2, PLAYER_Y_POSITION);
+	p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, pDashText.getGlobalBounds().height / 2);
+	p2Text.setPosition(WIDTH / 2 + pDashText.getGlobalBounds().width / 2 + 50, PLAYER_Y_POSITION);
 	p2Shadow = p2Text;
 	p2Shadow.setFillColor(sf::Color::Black);
 	p2Shadow.setPosition(p2Text.getPosition().x + 2, p2Text.getPosition().y + 2);
