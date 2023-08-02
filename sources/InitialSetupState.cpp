@@ -26,7 +26,7 @@ void InitialSetupState::Init()
 	enterTextP2 = enterTextP1;
 	enterTextP2.setString("Enter new player 2 nickname:");
 	enterTextP2.setOrigin(enterTextP2.getGlobalBounds().width / 2, enterTextP2.getGlobalBounds().height / 2);
-	enterTextP2.setPosition(ENTER_BOX_2_X, HEIGHT / 2 - TEXT_BOX_SIZE_Y - ENTER_BOX_OFFSET);
+	enterTextP2.setPosition(ENTER_BOX_2_POSITION_X, HEIGHT / 2 - TEXT_BOX_SIZE_Y - ENTER_BOX_OFFSET);
 
 	p1Box.setSize({ TEXT_BOX_SIZE_X, TEXT_BOX_SIZE_Y });
 	p1Box.setOrigin(TEXT_BOX_SIZE_X / 2, TEXT_BOX_SIZE_Y / 2);
@@ -35,7 +35,7 @@ void InitialSetupState::Init()
 	p1Box.setOutlineThickness(4);
 
 	p2Box = p1Box;
-	p2Box.setPosition(ENTER_BOX_2_X, HEIGHT / 2 - ENTER_BOX_OFFSET);
+	p2Box.setPosition(ENTER_BOX_2_POSITION_X, HEIGHT / 2 - ENTER_BOX_OFFSET);
 
 	p1Text = sf::Text("Player 1", data->assets.GetFont(defaultFont), 40);
 	p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
@@ -45,7 +45,7 @@ void InitialSetupState::Init()
 	p2Text = p1Text;
 	p2Text.setString("Player 2");
 	p2Text.setOrigin(p2Text.getGlobalBounds().width / 2, p2Text.getGlobalBounds().height / 2);
-	p2Text.setPosition(ENTER_BOX_2_X - 2, HEIGHT / 2 - p2Text.getGlobalBounds().height / 4 - ENTER_BOX_OFFSET);
+	p2Text.setPosition(ENTER_BOX_2_POSITION_X - 2, HEIGHT / 2 - p2Text.getGlobalBounds().height / 4 - ENTER_BOX_OFFSET);
 
 	blackLine.setSize({ 3, 50 });
 	blackLine.setFillColor(sf::Color::Black);
@@ -60,7 +60,7 @@ void InitialSetupState::Init()
 	messageP1.setOutlineThickness(1);
 
 	messageP2 = messageP1;
-	messageP2.setPosition(ENTER_BOX_2_X - 2, HEIGHT / 2 - 18);
+	messageP2.setPosition(ENTER_BOX_2_POSITION_X - 2, HEIGHT / 2 - 18);
 
 	x_previewImage.setTexture(data->assets.GetTexture(xPreviewImage));
 	x_previewImage.setSize({ 150, 150 });
@@ -71,7 +71,7 @@ void InitialSetupState::Init()
 	o_previewImage.setTexture(data->assets.GetTexture(oPreviewImage));
 	o_previewImage.setSize({ 150, 150 });
 	o_previewImage.setOrigin({ o_previewImage.getSize().x / 2 , o_previewImage.getSize().y / 2});
-	o_previewImage.setPosition({ ENTER_BOX_2_X, HEIGHT / 2 + ENTER_BOX_OFFSET });
+	o_previewImage.setPosition({ ENTER_BOX_2_POSITION_X, HEIGHT / 2 + ENTER_BOX_OFFSET });
 	o_previewImage.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
 
 	sf::Text acceptText("Accept", data->assets.GetFont(defaultFont), 40);
@@ -302,7 +302,7 @@ void InitialSetupState::CheckBoxClicked()
 			}
 			if (p2Input.getSize() <= 0)
 			{
-				blackLine.setPosition(ENTER_BOX_2_X - 2, HEIGHT / 2 - ENTER_BOX_OFFSET);
+				blackLine.setPosition(ENTER_BOX_2_POSITION_X - 2, HEIGHT / 2 - ENTER_BOX_OFFSET);
 			}
 		}
 	}

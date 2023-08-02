@@ -19,4 +19,7 @@ private:
 	sf::Text options;
 	sf::Text optionsShadow;
 	Button backButton;
+
+	std::vector<std::pair<sf::RectangleShape, sf::Text>> grayRectangles;
+	std::vector<sf::Text> textShadows;
 };

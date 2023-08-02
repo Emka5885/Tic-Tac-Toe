@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "Definitions.h"
 
 Button::Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vector2f position, float zoom, sf::Color color) : text(text), zoom(zoom)
 {
@@ -29,8 +30,7 @@ void Button::Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineCol
 	shape.setFillColor(unhoverColor);
 	shape.setOutlineColor(outlineColor);
 
-	// default outline thickness
-	shape.setOutlineThickness(4);
+	shape.setOutlineThickness(DEFAULT_OUTLINE_THICKNESS);
 
 
 	text.setOrigin(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 1.5);

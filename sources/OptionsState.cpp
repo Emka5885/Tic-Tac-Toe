@@ -18,13 +18,65 @@ void OptionsState::Init()
 	optionsShadow.setFillColor(sf::Color::Black);
 	optionsShadow.setPosition({ WIDTH / 2 + 6, 105 });
 
-	sf::Text buttonsText("Back to Main Menu", data->assets.GetFont(defaultFont), 50);
+	sf::Text grayShapeText("Mode", data->assets.GetFont(defaultFont), 45);
+	grayShapeText.setFillColor(sf::Color(250, 250, 250));
+	grayShapeText.setOutlineColor(sf::Color::Black);
+	grayShapeText.setOutlineThickness(2);
+
+	sf::RectangleShape grayShape({ WIDTH - 300, 70 });
+	grayShape.setFillColor(sf::Color(sf::Color(145, 145, 145)));
+	grayShape.setOutlineColor(sf::Color::Black);
+	grayShape.setOutlineThickness(DEFAULT_OUTLINE_THICKNESS);
+
+	grayShapeText.setPosition(175, 222);
+	grayShape.setPosition(150, 215);
+	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
+	grayRectangles.back().first = grayShape;
+	grayRectangles.back().second = grayShapeText;
+	grayShapeText.setPosition(180, 225);
+	textShadows.emplace_back(grayShapeText);
+
+	grayShapeText.setString("Music");
+	grayShapeText.setPosition(175, 317);
+	grayShape.setPosition(150, 310);
+	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
+	grayRectangles.back().first = grayShape;
+	grayRectangles.back().second = grayShapeText;
+	grayShapeText.setPosition(180, 320);
+	textShadows.emplace_back(grayShapeText);
+
+	grayShape.setSize({ WIDTH - 300, 50 });
+	grayShape.setPosition(150, 395);
+	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
+	grayRectangles.back().first = grayShape;
+
+	grayShapeText.setString("Sounds");
+	grayShapeText.setPosition(175, 472);
+	grayShape.setSize({ WIDTH - 300, 70 });
+	grayShape.setPosition(150, 465);
+	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
+	grayRectangles.back().first = grayShape;
+	grayRectangles.back().second = grayShapeText;
+	grayShapeText.setPosition(180, 475);
+	textShadows.emplace_back(grayShapeText);
+
+	grayShape.setSize({ WIDTH - 300, 50 });
+	grayShape.setPosition(150, 550);
+	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
+	grayRectangles.back().first = grayShape;
+
+	for (int i = 0; i < textShadows.size(); i++)
+	{
+		textShadows[i].setFillColor(sf::Color::Black);
+	}
+
+	sf::Text buttonsText("Back to Main Menu", data->assets.GetFont(defaultFont), 45);
 	buttonsText.setFillColor(sf::Color(250, 250, 250));
 	buttonsText.setOutlineColor(sf::Color::Black);
 	buttonsText.setOutlineThickness(2);
-	sf::Vector2f buttonsSize(WIDTH - 200, 85);
+	sf::Vector2f buttonsSize(WIDTH - 300, 75);
 
-	backButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, HEIGHT - 100 - buttonsSize.y / 2 }, 10);
+	backButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, HEIGHT - 90 - buttonsSize.y / 2 }, 10);
 }
 
 void OptionsState::HandleInput()
@@ -71,6 +123,22 @@ void OptionsState::Draw()
 
 	data->window.draw(optionsShadow);
 	data->window.draw(options);
+
+	for (int i = 0; i < grayRectangles.size(); i++)
+	{
+		data->window.draw(grayRectangles[i].first);
+	}
+
+	for (int i = 0; i < textShadows.size(); i++)
+	{
+		data->window.draw(textShadows[i]);
+	}
+
+	for (int i = 0; i < grayRectangles.size(); i++)
+	{
+		data->window.draw(grayRectangles[i].second);
+	}
+
 	backButton.DrawButton(data->window);
 
 	data->window.display();
