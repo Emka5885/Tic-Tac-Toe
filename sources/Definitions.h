@@ -28,6 +28,9 @@ constexpr const int oColor_r = 50;
 constexpr const int oColor_g = 150;
 constexpr const int oColor_b = 225;
 
+constexpr const float SCROLL_BAR_WIDTH = 450;
+constexpr const float SCROLL_BAR_HEIGHT = 20;
+
 constexpr const char* TITLE = "Tic Tac Toe";
 
 constexpr const char* defaultFont = "defaultFont";
