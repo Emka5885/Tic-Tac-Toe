@@ -24,7 +24,7 @@ void OptionsState::Init()
 	grayShapeText.setOutlineThickness(2);
 
 	sf::RectangleShape grayShape({ WIDTH - 300, 70 });
-	grayShape.setFillColor(sf::Color(sf::Color(145, 145, 145)));
+	grayShape.setFillColor(sf::Color(sf::Color(105, 105, 105)));
 	grayShape.setOutlineColor(sf::Color::Black);
 	grayShape.setOutlineThickness(DEFAULT_OUTLINE_THICKNESS);
 
@@ -77,6 +77,9 @@ void OptionsState::Init()
 	sf::Vector2f buttonsSize(WIDTH - 300, 75);
 
 	backButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, HEIGHT - 90 - buttonsSize.y / 2 }, 10);
+
+	musicScrollBar = ScrollBar({ WIDTH / 2, 420 }, 50);
+	soundsScrollBar = ScrollBar({ WIDTH / 2, 575 }, 50);
 }
 
 void OptionsState::HandleInput()
@@ -98,9 +101,9 @@ void OptionsState::HandleInput()
 			data->machine.RemoveState();
 			data->machine.AddState(stateReference(new MainMenuState(data)), true);
 		}
-		// hovered
 		if (event.type == sf::Event::MouseMoved)
 		{
+			// hovered
 			if (data->input.isButtonHovered(backButton.GetShape(), data->window))
 			{
 				backButton.ChangeHover(true);
@@ -109,6 +112,20 @@ void OptionsState::HandleInput()
 			{
 				backButton.ChangeHover(false);
 			}
+
+			//scroll bars
+			musicScrollBar.Update(moved, sf::Vector2f(data->input.GetMousePosition(data->window)));
+			soundsScrollBar.Update(moved, sf::Vector2f(data->input.GetMousePosition(data->window)));
+		}
+		else if (data->input.isButtonClicked(musicScrollBar.GetHandleShape(), sf::Mouse::Left, data->window))
+		{
+			musicScrollBar.Update(pressed, sf::Vector2f(data->input.GetMousePosition(data->window)));
+			soundsScrollBar.Update(pressed, sf::Vector2f(data->input.GetMousePosition(data->window)));
+		}
+		else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+		{
+			musicScrollBar.Update(released, sf::Vector2f(data->input.GetMousePosition(data->window)));
+			soundsScrollBar.Update(released, sf::Vector2f(data->input.GetMousePosition(data->window)));
 		}
 	}
 }
@@ -128,6 +145,9 @@ void OptionsState::Draw()
 	{
 		data->window.draw(grayRectangles[i].first);
 	}
+
+	musicScrollBar.Draw(data->window);
+	soundsScrollBar.Draw(data->window);
 
 	for (int i = 0; i < textShadows.size(); i++)
 	{

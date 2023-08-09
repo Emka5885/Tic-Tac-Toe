@@ -4,6 +4,7 @@
 enum boardTypes { empty, x, o };
 enum widgetTypes { gameTotals, turnP1, turnP2 };
 enum GameTypes { inProgress, p1Wins, p2Wins, draw };
+enum ScrollBarHandleTypes { pressed, released, moved };
 
 constexpr const int WIDTH = 800;
 constexpr const int HEIGHT = 800;
@@ -29,7 +30,7 @@ constexpr const int oColor_g = 150;
 constexpr const int oColor_b = 225;
 
 constexpr const float SCROLL_BAR_WIDTH = 450;
-constexpr const float SCROLL_BAR_HEIGHT = 20;
+constexpr const float SCROLL_BAR_HEIGHT = 8;
 
 constexpr const char* TITLE = "Tic Tac Toe";
 
