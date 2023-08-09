@@ -12,14 +12,14 @@ private:
 	int numberOfOptions;
 
 	bool isDragging = false;
-	sf::Vector2f dragOffset;
+	float dragOffsetX;
 
 public:
 	ScrollBar() {}
 	ScrollBar(sf::Vector2f position, int numberOfOptions);
 
 	void Init();
-	void Update(ScrollBarHandleTypes type, sf::Vector2f mousePos);
+	void Update(sf::Event event, sf::Vector2f mousePos);
 	void Draw(sf::RenderWindow& window);
 
 	sf::RectangleShape GetHandleShape();

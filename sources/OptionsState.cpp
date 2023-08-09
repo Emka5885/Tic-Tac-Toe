@@ -112,22 +112,12 @@ void OptionsState::HandleInput()
 			{
 				backButton.ChangeHover(false);
 			}
-
-			//scroll bars
-			musicScrollBar.Update(moved, sf::Vector2f(data->input.GetMousePosition(data->window)));
-			soundsScrollBar.Update(moved, sf::Vector2f(data->input.GetMousePosition(data->window)));
-		}
-		else if (data->input.isButtonClicked(musicScrollBar.GetHandleShape(), sf::Mouse::Left, data->window))
-		{
-			musicScrollBar.Update(pressed, sf::Vector2f(data->input.GetMousePosition(data->window)));
-			soundsScrollBar.Update(pressed, sf::Vector2f(data->input.GetMousePosition(data->window)));
-		}
-		else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
-		{
-			musicScrollBar.Update(released, sf::Vector2f(data->input.GetMousePosition(data->window)));
-			soundsScrollBar.Update(released, sf::Vector2f(data->input.GetMousePosition(data->window)));
 		}
 	}
+
+	musicScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
+	soundsScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
+
 }
 
 void OptionsState::Update()
