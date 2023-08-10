@@ -24,7 +24,7 @@ void OptionsState::Init()
 	grayShapeText.setOutlineThickness(2);
 
 	sf::RectangleShape grayShape({ WIDTH - 300, 70 });
-	grayShape.setFillColor(sf::Color(sf::Color(105, 105, 105)));
+	grayShape.setFillColor(sf::Color(105, 105, 105));
 	grayShape.setOutlineColor(sf::Color::Black);
 	grayShape.setOutlineThickness(DEFAULT_OUTLINE_THICKNESS);
 
@@ -49,6 +49,14 @@ void OptionsState::Init()
 	grayShape.setPosition(150, 395);
 	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
 	grayRectangles.back().first = grayShape;
+
+	coverMusic = grayShape;
+	coverMusic.setFillColor(sf::Color(165, 165, 165));
+	coverMusic.setSize({ WIDTH - 290, 60 });
+	coverMusic.setPosition(145, 390);
+	coverMusic.setOutlineThickness(0);
+	coverSounds = coverMusic;
+	coverSounds.setPosition(145, 545);
 
 	grayShapeText.setString("Sounds");
 	grayShapeText.setPosition(175, 472);
@@ -80,6 +88,23 @@ void OptionsState::Init()
 
 	musicScrollBar = ScrollBar({ WIDTH / 2, 420 }, 50);
 	soundsScrollBar = ScrollBar({ WIDTH / 2, 575 }, 50);
+
+	buttonsText.setString("On");
+	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 5);
+	musicOnSwitchButton = SwitchButton({ WIDTH / 2 + 60, 345 }, buttonsText, true);
+	soundsOnSwitchButton = SwitchButton({ WIDTH / 2 + 60, 500 }, buttonsText, true);
+
+	buttonsText.setString("Off");
+	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
+	musicOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 345 }, buttonsText);
+	soundsOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 500 }, buttonsText);
+
+	buttonsText.setString("1p");
+	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
+	onePSwitchButton = SwitchButton({ WIDTH / 2 + 60, 250 }, buttonsText);
+	buttonsText.setString("2p");
+	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
+	twoPSwitchButton = SwitchButton({ WIDTH / 2 + 165, 250 }, buttonsText, true);
 }
 
 void OptionsState::HandleInput()
@@ -94,25 +119,13 @@ void OptionsState::HandleInput()
 			sf::sleep(sf::seconds(1));
 			data->window.close();
 		}
-		// clicked
-		if (data->input.isButtonClicked(backButton.GetShape(), sf::Mouse::Left, data->window))
-		{
-			backButton.Clicked();
-			data->machine.RemoveState();
-			data->machine.AddState(stateReference(new MainMenuState(data)), true);
-		}
+		// hovered
 		if (event.type == sf::Event::MouseMoved)
 		{
-			// hovered
-			if (data->input.isButtonHovered(backButton.GetShape(), data->window))
-			{
-				backButton.ChangeHover(true);
-			}
-			else
-			{
-				backButton.ChangeHover(false);
-			}
+			ChangeButtonsHoverd();
 		}
+		// clicked
+		CheckButtonsClicked();
 	}
 
 	musicScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
@@ -149,7 +162,152 @@ void OptionsState::Draw()
 		data->window.draw(grayRectangles[i].second);
 	}
 
+	musicOnSwitchButton.Draw(data->window);
+	musicOffSwitchButton.Draw(data->window);
+	soundsOnSwitchButton.Draw(data->window);
+	soundsOffSwitchButton.Draw(data->window);
+	onePSwitchButton.Draw(data->window);
+	twoPSwitchButton.Draw(data->window);
+
+	if (!musicOnSwitchButton.GetActive())
+	{
+		data->window.draw(coverMusic);
+	}
+	if (!soundsOnSwitchButton.GetActive())
+	{
+		data->window.draw(coverSounds);
+	}
+
 	backButton.DrawButton(data->window);
 
 	data->window.display();
+}
+
+void OptionsState::ChangeButtonsHoverd()
+{
+	// back
+	if (data->input.isButtonHovered(backButton.GetShape(), data->window))
+	{
+		backButton.ChangeHover(true);
+	}
+	else
+	{
+		backButton.ChangeHover(false);
+	}
+
+	// music
+	if (!musicOnSwitchButton.GetActive())
+	{
+		if (data->input.isButtonHovered(musicOnSwitchButton.GetShape(), data->window))
+		{
+			musicOnSwitchButton.ChangeHover(true);
+		}
+		else
+		{
+			musicOnSwitchButton.ChangeHover(false);
+		}
+	}
+	if (!musicOffSwitchButton.GetActive())
+	{
+		if (data->input.isButtonHovered(musicOffSwitchButton.GetShape(), data->window))
+		{
+			musicOffSwitchButton.ChangeHover(true);
+		}
+		else
+		{
+			musicOffSwitchButton.ChangeHover(false);
+		}
+	}
+
+	// sounds
+	if (!soundsOnSwitchButton.GetActive())
+	{
+		if (data->input.isButtonHovered(soundsOnSwitchButton.GetShape(), data->window))
+		{
+			soundsOnSwitchButton.ChangeHover(true);
+		}
+		else
+		{
+			soundsOnSwitchButton.ChangeHover(false);
+		}
+	}
+	if (!soundsOffSwitchButton.GetActive())
+	{
+		if (data->input.isButtonHovered(soundsOffSwitchButton.GetShape(), data->window))
+		{
+			soundsOffSwitchButton.ChangeHover(true);
+		}
+		else
+		{
+			soundsOffSwitchButton.ChangeHover(false);
+		}
+	}
+
+	// mode
+	if (!onePSwitchButton.GetActive())
+	{
+		if (data->input.isButtonHovered(onePSwitchButton.GetShape(), data->window))
+		{
+			onePSwitchButton.ChangeHover(true);
+		}
+		else
+		{
+			onePSwitchButton.ChangeHover(false);
+		}
+	}
+	if (!twoPSwitchButton.GetActive())
+	{
+		if (data->input.isButtonHovered(twoPSwitchButton.GetShape(), data->window))
+		{
+			twoPSwitchButton.ChangeHover(true);
+		}
+		else
+		{
+			twoPSwitchButton.ChangeHover(false);
+		}
+	}
+}
+
+void OptionsState::CheckButtonsClicked()
+{
+	// back
+	if (data->input.isButtonClicked(backButton.GetShape(), sf::Mouse::Left, data->window))
+	{
+		backButton.Clicked();
+		data->machine.RemoveState();
+		data->machine.AddState(stateReference(new MainMenuState(data)), true);
+	}
+	// music
+	else if (data->input.isButtonClicked(musicOnSwitchButton.GetShape(), sf::Mouse::Left, data->window))
+	{
+		musicOnSwitchButton.ChangeInActivity(true);
+		musicOffSwitchButton.ChangeInActivity(false);
+	}
+	else if (data->input.isButtonClicked(musicOffSwitchButton.GetShape(), sf::Mouse::Left, data->window))
+	{
+		musicOnSwitchButton.ChangeInActivity(false);
+		musicOffSwitchButton.ChangeInActivity(true);
+	}
+	// sounds
+	else if (data->input.isButtonClicked(soundsOnSwitchButton.GetShape(), sf::Mouse::Left, data->window))
+	{
+		soundsOnSwitchButton.ChangeInActivity(true);
+		soundsOffSwitchButton.ChangeInActivity(false);
+	}
+	else if (data->input.isButtonClicked(soundsOffSwitchButton.GetShape(), sf::Mouse::Left, data->window))
+	{
+		soundsOnSwitchButton.ChangeInActivity(false);
+		soundsOffSwitchButton.ChangeInActivity(true);
+	}
+	// mode
+	else if (data->input.isButtonClicked(onePSwitchButton.GetShape(), sf::Mouse::Left, data->window))
+	{
+		onePSwitchButton.ChangeInActivity(true);
+		twoPSwitchButton.ChangeInActivity(false);
+	}
+	else if (data->input.isButtonClicked(twoPSwitchButton.GetShape(), sf::Mouse::Left, data->window))
+	{
+		onePSwitchButton.ChangeInActivity(false);
+		twoPSwitchButton.ChangeInActivity(true);
+	}
 }

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 
-enum types { unhovered, hovered, clicked };
+enum ButtonTypes { unhovered, hovered, clicked };
 
 class Button
 {
@@ -13,7 +13,7 @@ private:
 	sf::Color unhoverColor;
 	sf::Color hoverColor;
 	sf::Color clickColor;
-	types currentType = unhovered;
+	ButtonTypes currentType = unhovered;
 	float zoom;
 
 public:

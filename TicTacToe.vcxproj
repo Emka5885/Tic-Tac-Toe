@@ -31,6 +31,7 @@
     <ClCompile Include="sources\OptionsState.cpp" />
     <ClCompile Include="sources\ScrollBar.cpp" />
     <ClCompile Include="sources\StateMachine.cpp" />
+    <ClCompile Include="sources\SwitchButton.cpp" />
     <ClCompile Include="sources\Widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +48,7 @@
     <ClInclude Include="sources\ScrollBar.h" />
     <ClInclude Include="sources\State.h" />
     <ClInclude Include="sources\StateMachine.h" />
+    <ClInclude Include="sources\SwitchButton.h" />
     <ClInclude Include="sources\Widgets.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
