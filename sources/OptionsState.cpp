@@ -91,8 +91,8 @@ void OptionsState::Init()
 
 	buttonsText.setString("On");
 	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 5);
-	musicOnSwitchButton = SwitchButton({ WIDTH / 2 + 60, 345 }, buttonsText, true);
-	soundsOnSwitchButton = SwitchButton({ WIDTH / 2 + 60, 500 }, buttonsText, true);
+	musicOnSwitchButton = SwitchButton({ WIDTH / 2 + 50, 345 }, buttonsText, true);
+	soundsOnSwitchButton = SwitchButton({ WIDTH / 2 + 50, 500 }, buttonsText, true);
 
 	buttonsText.setString("Off");
 	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
@@ -101,7 +101,7 @@ void OptionsState::Init()
 
 	buttonsText.setString("1p");
 	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
-	onePSwitchButton = SwitchButton({ WIDTH / 2 + 60, 250 }, buttonsText);
+	onePSwitchButton = SwitchButton({ WIDTH / 2 + 50, 250 }, buttonsText);
 	buttonsText.setString("2p");
 	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
 	twoPSwitchButton = SwitchButton({ WIDTH / 2 + 165, 250 }, buttonsText, true);

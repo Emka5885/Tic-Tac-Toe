@@ -19,7 +19,7 @@ void SwitchButton::Init()
 	shape.setOrigin(shape.getSize().x / 2, shape.getSize().y / 2);
 	shape.setPosition(position);
 	shape.setOutlineColor(sf::Color::Black);
-	shape.setOutlineThickness(4);
+	shape.setOutlineThickness(2);
 
 	text.setPosition(position);
 }
