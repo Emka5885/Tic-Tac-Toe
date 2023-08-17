@@ -18,7 +18,7 @@ void OptionsState::Init()
 	optionsShadow.setFillColor(sf::Color::Black);
 	optionsShadow.setPosition({ WIDTH / 2 + 6, 105 });
 
-	sf::Text grayShapeText("Mode", data->assets.GetFont(defaultFont), 45);
+	sf::Text grayShapeText("", data->assets.GetFont(defaultFont), 45);
 	grayShapeText.setFillColor(sf::Color(250, 250, 250));
 	grayShapeText.setOutlineColor(sf::Color::Black);
 	grayShapeText.setOutlineThickness(2);
@@ -28,6 +28,8 @@ void OptionsState::Init()
 	grayShape.setOutlineColor(sf::Color::Black);
 	grayShape.setOutlineThickness(DEFAULT_OUTLINE_THICKNESS);
 
+	// Mode
+	grayShapeText.setString("Mode");
 	grayShapeText.setPosition(175, 222);
 	grayShape.setPosition(150, 215);
 	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
@@ -36,6 +38,7 @@ void OptionsState::Init()
 	grayShapeText.setPosition(180, 225);
 	textShadows.emplace_back(grayShapeText);
 
+	// Music 1
 	grayShapeText.setString("Music");
 	grayShapeText.setPosition(175, 317);
 	grayShape.setPosition(150, 310);
@@ -45,6 +48,7 @@ void OptionsState::Init()
 	grayShapeText.setPosition(180, 320);
 	textShadows.emplace_back(grayShapeText);
 
+	// Music 2
 	grayShape.setSize({ WIDTH - 300, 50 });
 	grayShape.setPosition(150, 395);
 	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
@@ -58,6 +62,7 @@ void OptionsState::Init()
 	coverSounds = coverMusic;
 	coverSounds.setPosition(145, 545);
 
+	// Sounds 1
 	grayShapeText.setString("Sounds");
 	grayShapeText.setPosition(175, 472);
 	grayShape.setSize({ WIDTH - 300, 70 });
@@ -68,6 +73,7 @@ void OptionsState::Init()
 	grayShapeText.setPosition(180, 475);
 	textShadows.emplace_back(grayShapeText);
 
+	// Sounds 2
 	grayShape.setSize({ WIDTH - 300, 50 });
 	grayShape.setPosition(150, 550);
 	grayRectangles.emplace_back(std::pair<sf::RectangleShape, sf::Text>());
@@ -86,26 +92,153 @@ void OptionsState::Init()
 
 	backButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, HEIGHT - 90 - buttonsSize.y / 2 }, 10);
 
-	musicScrollBar = ScrollBar({ WIDTH / 2, 420 }, 50);
-	soundsScrollBar = ScrollBar({ WIDTH / 2, 575 }, 50);
+	std::ifstream file;
+	file.open("options.dat", std::ios_base::out | std::ios_base::binary);
+	// Default options
+	if (!file)
+	{
+		// Mode
+		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
+		optionsFromFile.back().first = mode;
+		optionsFromFile.back().second = 0;
+		// Music
+		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
+		optionsFromFile.back().first = music1;
+		optionsFromFile.back().second = 0;
+		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
+		optionsFromFile.back().first = music2;
+		optionsFromFile.back().second = 40;
+		// Sounds
+		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
+		optionsFromFile.back().first = sounds1;
+		optionsFromFile.back().second = 0;
+		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
+		optionsFromFile.back().first = sounds2;
+		optionsFromFile.back().second = 40;
+	}
+	else if (file.is_open())
+	{
+		optionsFromFile.reserve(NUMBER_OF_OPTIONS);
+		for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+		{
+			file.read((char*)&optionsFromFile[i], sizeof(std::pair<optionsTypes, int>));
+		}
+		file.close();
+	}
 
-	buttonsText.setString("On");
-	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 5);
-	musicOnSwitchButton = SwitchButton({ WIDTH / 2 + 50, 345 }, buttonsText, true);
-	soundsOnSwitchButton = SwitchButton({ WIDTH / 2 + 50, 500 }, buttonsText, true);
-
-	buttonsText.setString("Off");
-	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
-	musicOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 345 }, buttonsText);
-	soundsOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 500 }, buttonsText);
-
-	buttonsText.setString("1p");
-	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
-	onePSwitchButton = SwitchButton({ WIDTH / 2 + 50, 250 }, buttonsText);
-	buttonsText.setString("2p");
-	buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
-	twoPSwitchButton = SwitchButton({ WIDTH / 2 + 165, 250 }, buttonsText, true);
+	// Set options from file
+	for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+	{
+		if (optionsFromFile[i].first == mode)
+		{
+			buttonsText.setString("1p");
+			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
+			onePSwitchButton = SwitchButton({ WIDTH / 2 + 50, 250 }, buttonsText, true);
+			buttonsText.setString("2p");
+			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
+			twoPSwitchButton = SwitchButton({ WIDTH / 2 + 165, 250 }, buttonsText);
+			if (optionsFromFile[i].second == 1)
+			{
+				onePSwitchButton.ChangeInActivity(false);
+				twoPSwitchButton.ChangeInActivity(true);
+			}
+		}
+		else if (optionsFromFile[i].first == music1)
+		{
+			buttonsText.setString("On");
+			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 5);
+			musicOnSwitchButton = SwitchButton({ WIDTH / 2 + 50, 345 }, buttonsText, true);
+			buttonsText.setString("Off");
+			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
+			musicOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 345 }, buttonsText);
+			if (optionsFromFile[i].second == 1)
+			{
+				musicOnSwitchButton.ChangeInActivity(false);
+				musicOffSwitchButton.ChangeInActivity(true);
+			}
+		}
+		else if (optionsFromFile[i].first == music2)
+		{
+			musicScrollBar = ScrollBar({ WIDTH / 2, 420 }, 51, optionsFromFile[i].second);
+		}
+		else if (optionsFromFile[i].first == sounds1)
+		{
+			buttonsText.setString("On");
+			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 5);
+			soundsOnSwitchButton = SwitchButton({ WIDTH / 2 + 50, 500 }, buttonsText, true);
+			buttonsText.setString("Off");
+			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
+			soundsOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 500 }, buttonsText);
+			if (optionsFromFile[i].second == 1)
+			{
+				soundsOnSwitchButton.ChangeInActivity(false);
+				soundsOffSwitchButton.ChangeInActivity(true);
+			}
+		}
+		else if (optionsFromFile[i].first == sounds2)
+		{
+			soundsScrollBar = ScrollBar({ WIDTH / 2, 575 }, 51, optionsFromFile[i].second);
+		}
+	}
 }
+
+void OptionsState::Save()
+{
+	for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+	{
+		if (optionsFromFile[i].first == mode)
+		{
+			if (onePSwitchButton.GetActive())
+			{
+				optionsFromFile[i].second = 0;
+			}
+			else
+			{
+				optionsFromFile[i].second = 1;
+			}
+		}
+		else if (optionsFromFile[i].first == music1)
+		{
+			if (musicOnSwitchButton.GetActive())
+			{
+				optionsFromFile[i].second = 0;
+			}
+			else
+			{
+				optionsFromFile[i].second = 1;
+			}
+		}
+		else if (optionsFromFile[i].first == music2)
+		{
+			optionsFromFile[i].second = musicScrollBar.GetCurrentNumber();
+		}
+		else if (optionsFromFile[i].first == sounds1)
+		{
+			if (soundsOnSwitchButton.GetActive())
+			{
+				optionsFromFile[i].second = 0;
+			}
+			else
+			{
+				optionsFromFile[i].second = 1;
+			}
+		}
+		else if (optionsFromFile[i].first == sounds2)
+		{
+			optionsFromFile[i].second = soundsScrollBar.GetCurrentNumber();
+		}
+	}
+
+	std::ofstream file;
+	file.open("options.dat", std::ios_base::out | std::ios_base::binary);
+
+	for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+	{
+		file.write((char*)&optionsFromFile[i], sizeof(std::pair<optionsTypes, int>));
+	}
+	file.close();
+}
+
 
 void OptionsState::HandleInput()
 {
@@ -116,6 +249,7 @@ void OptionsState::HandleInput()
 		// check menu type
 		if (event.type == sf::Event::Closed)
 		{
+			Save();
 			sf::sleep(sf::seconds(1));
 			data->window.close();
 		}
@@ -125,7 +259,10 @@ void OptionsState::HandleInput()
 			ChangeButtonsHoverd();
 		}
 		// clicked
-		CheckButtonsClicked();
+		else
+		{
+			CheckButtonsClicked();
+		}
 	}
 
 	musicScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
@@ -274,6 +411,7 @@ void OptionsState::CheckButtonsClicked()
 	if (data->input.isButtonClicked(backButton.GetShape(), sf::Mouse::Left, data->window))
 	{
 		backButton.Clicked();
+		Save();
 		data->machine.RemoveState();
 		data->machine.AddState(stateReference(new MainMenuState(data)), true);
 	}

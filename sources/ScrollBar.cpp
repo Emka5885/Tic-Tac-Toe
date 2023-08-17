@@ -1,12 +1,15 @@
 #include "ScrollBar.h"
+#include <iostream>
 
-ScrollBar::ScrollBar(sf::Vector2f position, int numberOfOptions) : position(position), numberOfOptions(numberOfOptions)
+ScrollBar::ScrollBar(sf::Vector2f position, int numberOfOptions, int currentNumber) : position(position), numberOfOptions(numberOfOptions), currentNumber(currentNumber)
 {
 	Init();
 }
 
 void ScrollBar::Init()
 {
+	std::clamp(currentNumber, 0, 100);
+
 	scrollBarBackground.setFillColor(sf::Color(185,185,185));
 	scrollBarBackground.setOutlineColor(sf::Color::Black);
 	scrollBarBackground.setOutlineThickness(2);
@@ -19,7 +22,7 @@ void ScrollBar::Init()
 	scrollBarHandle.setOutlineThickness(2);
 	scrollBarHandle.setSize({ SCROLL_BAR_WIDTH / numberOfOptions, SCROLL_BAR_HEIGHT * 3.5 });
 	scrollBarHandle.setOrigin(scrollBarHandle.getSize().x / 2, scrollBarHandle.getSize().y / 2);
-	scrollBarHandle.setPosition(position.x - SCROLL_BAR_WIDTH / 2, position.y);
+	scrollBarHandle.setPosition(position.x - SCROLL_BAR_WIDTH / 2 + currentNumber / (100 / float(numberOfOptions)) * SCROLL_BAR_WIDTH / numberOfOptions, position.y);
 }
 
 void ScrollBar::Update(sf::Event event, sf::Vector2f mousePos)
@@ -44,6 +47,8 @@ void ScrollBar::Update(sf::Event event, sf::Vector2f mousePos)
 			float newHandleOffset = mousePos.x - dragOffsetX;
 			newHandleOffset = std::max(WIDTH / 2 - SCROLL_BAR_WIDTH / 2, std::min(newHandleOffset, maxHandleOffset));
 			scrollBarHandle.setPosition(newHandleOffset, scrollBarHandle.getPosition().y);
+
+			currentNumber = (newHandleOffset - (WIDTH / 2 - SCROLL_BAR_WIDTH / 2)) * 100 / SCROLL_BAR_WIDTH;
 		}
 	}
 }
@@ -57,4 +62,9 @@ void ScrollBar::Draw(sf::RenderWindow& window)
 sf::RectangleShape ScrollBar::GetHandleShape()
 {
 	return scrollBarHandle;
+}
+
+int& ScrollBar::GetCurrentNumber()
+{
+	return currentNumber;
 }

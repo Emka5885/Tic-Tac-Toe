@@ -8,6 +8,8 @@ enum GameTypes { inProgress, p1Wins, p2Wins, draw };
 constexpr const int WIDTH = 800;
 constexpr const int HEIGHT = 800;
 
+constexpr const int NUMBER_OF_OPTIONS = 5;
+
 constexpr const int TEXT_BOX_SIZE_X = 300;
 constexpr const int TEXT_BOX_SIZE_Y = 75;
 
@@ -28,7 +30,7 @@ constexpr const int oColor_r = 50;
 constexpr const int oColor_g = 150;
 constexpr const int oColor_b = 225;
 
-constexpr const float SCROLL_BAR_WIDTH = 435;
+constexpr const float SCROLL_BAR_WIDTH = 434;
 constexpr const float SCROLL_BAR_HEIGHT = 8;
 
 constexpr const char* TITLE = "Tic Tac Toe";
