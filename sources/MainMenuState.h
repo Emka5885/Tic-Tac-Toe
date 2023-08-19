@@ -4,6 +4,7 @@
 #include "Button.h"
 
 enum menuType { defaultMenu, play, options, quitt };
+enum modeType { onePlayerType, twoPlayerType };
 
 class MainMenuState :public State
 {
@@ -25,4 +26,5 @@ private:
 	Button quittButton;
 
 	menuType type = defaultMenu;
+	modeType mType = onePlayerType;
 };

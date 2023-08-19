@@ -1,30 +1,19 @@
 #pragma once
-#include "State.h"
-#include "Game.h"
 #include "Button.h"
+#include "Definitions.h"
 
-enum textBoxTypes {none, player1, player2};
-
-class InitialSetupState :public State
+class InitialSetupState
 {
 public:
-	InitialSetupState(GameDataReference data);
-
-	void Init();
-	void HandleInput();
-	void Update();
-	void Draw();
-
+	void Create();
 	void ChangeP1Text();
-	void ChangeP2Text();
+	void DrawBlackLine();
 
-	void CheckBoxClicked();
-	void CheckHovered();
+	virtual void CheckBoxClicked() = 0;
+	virtual void CheckHovered() = 0;
 
-private:
-	GameDataReference data;
-
-	sf::RectangleShape p1Box, p2Box;
+protected:
+	sf::RectangleShape p1Box;
 	sf::RectangleShape blackLine;
 	Button acceptButton;
 
@@ -36,12 +25,10 @@ private:
 	bool checkBlackLineTimer = true;
 	bool Backspace = false;
 
-	std::string p1String, p2String;
-	sf::String p1Input, p2Input;
-	sf::Text p1Text, p2Text;
-	sf::Text enterTextP1, enterTextP2;
+	std::string p1String;
+	sf::String p1Input;
+	sf::Text p1Text;
+	sf::Text enterTextP1;
 	sf::Text initialSetup, initialSetupShadow;
-	sf::Text messageP1, messageP2;
-
-	textBoxTypes textBoxType = player1;
+	sf::Text messageP1;
 };

@@ -1,6 +1,7 @@
 #include "MainMenuState.h"
 #include "OptionsState.h"
-#include "InitialSetupState.h"
+#include "InitialSetupState1P.h"
+#include "InitialSetupState2P.h"
 #include "Definitions.h"
 
 MainMenuState::MainMenuState(GameDataReference data) : data(data)
@@ -33,6 +34,28 @@ void MainMenuState::Init()
 	buttonsText.setString("Quitt");
 	quittButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, optionsButton.GetShape().getPosition().y + 165 }, 10);
 
+	std::ifstream file;
+	file.open("options.dat", std::ios_base::out | std::ios_base::binary);
+	if (file.is_open())
+	{
+		std::vector<std::pair<optionsTypes, int>> optionsFromFile(NUMBER_OF_OPTIONS);
+		for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+		{
+			file.read((char*)&optionsFromFile[i], sizeof(std::pair<optionsTypes, int>));
+
+			if (optionsFromFile[i].first == mode)
+			{
+				if (optionsFromFile[i].second == 1)
+				{
+					mType = twoPlayerType;
+				}
+				break;
+			}
+		}
+
+		file.close();
+	}
+
 	sf::sleep(sf::seconds(0.2));
 }
 
@@ -51,7 +74,14 @@ void MainMenuState::HandleInput()
 		else if (type == play)
 		{
 			data->machine.RemoveState();
-			data->machine.AddState(stateReference(new InitialSetupState(data)), true);
+			if (mType == onePlayerType)
+			{
+				data->machine.AddState(stateReference(new InitialSetupState1P(data)), true);
+			}
+			else
+			{
+				data->machine.AddState(stateReference(new InitialSetupState2P(data)), true);
+			}
 		}
 		else if (type == options)
 		{

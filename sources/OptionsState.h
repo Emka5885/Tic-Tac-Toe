@@ -5,8 +5,6 @@
 #include "ScrollBar.h"
 #include "SwitchButton.h"
 
-enum optionsTypes {mode, music1, music2, sounds1, sounds2};
-
 class OptionsState :public State
 {
 public:
