@@ -1,5 +1,5 @@
 #include "InitialSetupState2P.h"
-#include "GameState.h"
+#include "GameState2P.h"
 
 InitialSetupState2P::InitialSetupState2P(GameDataReference data) : data(data)
 {
@@ -181,7 +181,7 @@ void InitialSetupState2P::HandleInput()
 			data->machine.RemoveState();
 			p1String = p1Text.getString();
 			p2String = p2Text.getString();
-			data->machine.AddState(stateReference(new GameState(data, p1String, p2String)), true);
+			data->machine.AddState(stateReference(new GameState2P(data, p1String, p2String)), true);
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)

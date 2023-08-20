@@ -1,29 +1,19 @@
 #pragma once
-#include "State.h"
-#include "Game.h"
 #include "BoardSquare.h"
 #include "Widgets.h"
 #include "Button.h"
+#include "Game.h"
 
-class GameState :public State
+class GameState
 {
 public:
-	GameState(GameDataReference data, std::string& p1, std::string& p2);
-
-	void Init();
-	void HandleInput();
-	void Update();
-	void Draw();
-
-	void CheckBoardSquares_Clicked();
+	void CheckBoardSquares_Clicked(GameDataReference& data);
 	void CheckToPlayOn();
 	bool CheckWinCondition(boardTypes boardType);
 
 	void ClearScreen();
 
-private:
-	GameDataReference data;
-
+protected:
 	GameTypes gameType = inProgress;
 
 	sf::RectangleShape board;

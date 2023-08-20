@@ -24,6 +24,7 @@
     <ClCompile Include="sources\Button.cpp" />
     <ClCompile Include="sources\Game.cpp" />
     <ClCompile Include="sources\GameState.cpp" />
+    <ClCompile Include="sources\GameState2P.cpp" />
     <ClCompile Include="sources\InitialSetupState1P.cpp" />
     <ClCompile Include="sources\InitialSetupState2P.cpp" />
     <ClCompile Include="sources\InputManager.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="sources\Definitions.h" />
     <ClInclude Include="sources\Game.h" />
     <ClInclude Include="sources\GameState.h" />
+    <ClInclude Include="sources\GameState2P.h" />
     <ClInclude Include="sources\InitialSetupState1P.h" />
     <ClInclude Include="sources\InitialSetupState2P.h" />
     <ClInclude Include="sources\InputManager.h" />
