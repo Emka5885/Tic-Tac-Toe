@@ -1,7 +1,7 @@
 #include "Button.h"
 #include "Definitions.h"
 
-Button::Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vector2f position, float zoom, sf::Color color) : text(text), zoom(zoom)
+Button::Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vector2f position, float zoom, sf::Color color) : unhoveredSize(size), text(text), unhoveredPosition(position), zoom(zoom)
 {
 	unhoverColor.r = std::clamp(int(color.r), 45, 255);
 	unhoverColor.g = std::clamp(int(color.g), 45, 255);
@@ -15,18 +15,21 @@ Button::Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vec
 	clickColor.g = unhoverColor.g - 45;
 	clickColor.b = unhoverColor.b - 45;
 
-	Init(size, position, outlineColor);
+	Init(outlineColor);
 }
 
 Button::~Button()
 {
 }
 
-void Button::Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineColor)
+void Button::Init(sf::Color outlineColor)
 {
-	shape = sf::RectangleShape(size);
-	shape.setOrigin(size.x / 2, size.y / 2);
-	shape.setPosition(position);
+	hoveredSize = { unhoveredSize.x + zoom, unhoveredSize.y + zoom };
+	hoveredPosition = { unhoveredPosition.x - zoom / 2, unhoveredPosition.y - zoom / 2 };
+
+	shape = sf::RectangleShape(unhoveredSize);
+	shape.setOrigin(unhoveredSize.x / 2, unhoveredSize.y / 2);
+	shape.setPosition(unhoveredPosition);
 	shape.setFillColor(unhoverColor);
 	shape.setOutlineColor(outlineColor);
 
@@ -37,9 +40,9 @@ void Button::Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineCol
 
 	textShadow = text;
 	textShadow.setFillColor(sf::Color::Black);
-	textShadow.setPosition(position.x + 4, position.y + 3);
+	textShadow.setPosition(unhoveredPosition.x + 4, unhoveredPosition.y + 3);
 
-	text.setPosition(position);
+	text.setPosition(unhoveredPosition);
 }
 
 void Button::SetPosition(sf::Vector2f position)
@@ -55,8 +58,8 @@ void Button::ChangeHover(bool hover)
 	{
 		if (hover)
 		{
-			shape.setSize({ shape.getSize().x + zoom, shape.getSize().y + zoom });
-			shape.setPosition(shape.getPosition().x - zoom / 2, shape.getPosition().y - zoom / 2);
+			shape.setSize(hoveredSize);
+			shape.setPosition(hoveredPosition);
 			shape.setFillColor(hoverColor);
 			currentType = hovered;
 		}
@@ -65,8 +68,8 @@ void Button::ChangeHover(bool hover)
 	{
 		if (!hover)
 		{
-			shape.setSize({ shape.getSize().x - zoom, shape.getSize().y - zoom });
-			shape.setPosition(shape.getPosition().x + zoom / 2, shape.getPosition().y + zoom / 2);
+			shape.setSize(unhoveredSize);
+			shape.setPosition(unhoveredPosition);
 			shape.setFillColor(unhoverColor);
 			currentType = unhovered;
 		}

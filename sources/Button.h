@@ -15,13 +15,17 @@ private:
 	sf::Color clickColor;
 	ButtonTypes currentType = unhovered;
 	float zoom;
+	sf::Vector2f unhoveredSize;
+	sf::Vector2f hoveredSize;
+	sf::Vector2f unhoveredPosition;
+	sf::Vector2f hoveredPosition;
 
 public:
 	Button() {}
 	Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vector2f position, float zoom, sf::Color color = sf::Color({ 115, 115, 115 }));
 	~Button();
 
-	void Init(sf::Vector2f size, sf::Vector2f position, sf::Color outlineColor);
+	void Init(sf::Color outlineColor);
 
 	void SetPosition(sf::Vector2f position);
 	void ChangeHover(bool hover);
