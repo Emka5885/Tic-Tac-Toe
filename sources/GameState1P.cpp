@@ -1,17 +1,16 @@
-#include "GameState2P.h"
-#include "Definitions.h"
+#include "GameState1P.h"
 
-GameState2P::GameState2P(GameDataReference data, std::string& p1, std::string& p2) : data(data)
+GameState1P::GameState1P(GameDataReference data, std::string& player) : data(data)
 {
-	widget = new Widgets(data->assets, p1, p2);
+	widget = new Widgets(data->assets, player, "Computer");
 }
 
-void GameState2P::Init()
+void GameState1P::Init()
 {
 	InitGameState(data);
 }
 
-void GameState2P::HandleInput()
+void GameState1P::HandleInput()
 {
 	sf::Event event;
 
@@ -27,7 +26,7 @@ void GameState2P::HandleInput()
 			screenCleaning = true;
 			backToMainMenu = true;
 		}
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress && widget->GetWidgetType() != gameTotals)
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress && widget->GetWidgetType() != gameTotals && widget->GetWidgetType() == turnP1)
 		{
 			CheckBoardSquares_Clicked(data);
 		}
@@ -85,12 +84,17 @@ void GameState2P::HandleInput()
 	}
 }
 
-void GameState2P::Update()
+void GameState1P::Update()
 {
 	UpdateGameState(data);
+
+	if (widget->GetWidgetType() == turnP2)
+	{
+
+	}
 }
 
-void GameState2P::Draw()
+void GameState1P::Draw()
 {
 	DrawGameState(data);
 }

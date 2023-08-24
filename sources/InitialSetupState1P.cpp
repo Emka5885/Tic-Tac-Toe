@@ -1,4 +1,5 @@
 #include "InitialSetupState1P.h"
+#include "GameState1P.h"
 
 InitialSetupState1P::InitialSetupState1P(GameDataReference data) : data(data)
 {
@@ -29,6 +30,15 @@ void InitialSetupState1P::Init()
 	messageP1.setFont(data->assets.GetFont(defaultFont));
 	messageP1.setOrigin(messageP1.getGlobalBounds().width / 2, messageP1.getGlobalBounds().height / 2);
 	messageP1.setPosition(WIDTH / 2 - 2, HEIGHT / 2 - 18);
+
+	if (rand() % 2 == 0)
+	{
+		playerType = xPlayer;
+	}
+	else
+	{
+		playerType = oPlayer;
+	}
 
 	x_previewImage.setTexture(data->assets.GetTexture(xPreviewImage));
 	x_previewImage.setSize({ 150, 150 });
@@ -123,7 +133,7 @@ void InitialSetupState1P::HandleInput()
 			sf::sleep(sf::seconds(1));
 			data->machine.RemoveState();
 			p1String = p1Text.getString();
-			//data->machine.AddState(stateReference(new GameState1P(data, p1String)), true);
+			data->machine.AddState(stateReference(new GameState1P(data, p1String)), true);
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)
@@ -158,8 +168,14 @@ void InitialSetupState1P::Draw()
 		data->window.draw(blackLine);
 	}
 
-	data->window.draw(x_previewImage);
-	//data->window.draw(o_previewImage);
+	if (playerType == xPlayer)
+	{
+		data->window.draw(x_previewImage);
+	}
+	else
+	{
+		data->window.draw(o_previewImage);
+	}
 
 	acceptButton.DrawButton(data->window);
 

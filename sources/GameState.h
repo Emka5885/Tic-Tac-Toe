@@ -7,9 +7,13 @@
 class GameState
 {
 public:
-	void CheckBoardSquares_Clicked(GameDataReference& data);
+	void InitGameState(GameDataReference& data);
+	void UpdateGameState(GameDataReference& data);
+	void DrawGameState(GameDataReference& data);
+
 	void CheckToPlayOn();
 	bool CheckWinCondition(boardTypes boardType);
+	void CheckBoardSquares_Clicked(GameDataReference& data);
 
 	void ClearScreen();
 

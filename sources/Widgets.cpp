@@ -97,6 +97,14 @@ void Widgets::ChangeScore(int scoreP1, int scoreP2)
 
 void Widgets::ChangeTurn()
 {
+	if (type == gameTotals)
+	{
+		if (rand() % 2 == 0)
+		{
+			type = turnP2;
+		}
+	}
+
 	if (type == turnP2)
 	{
 		turnText.setString(p1 + "'s turn");
