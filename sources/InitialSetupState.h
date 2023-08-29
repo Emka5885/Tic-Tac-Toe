@@ -1,16 +1,17 @@
 #pragma once
 #include "Button.h"
 #include "Definitions.h"
+#include "Game.h"
 
 class InitialSetupState
 {
 public:
-	void Create();
+	void Create(GameDataReference& data);
 	void ChangeP1Text();
 	void DrawBlackLine();
+	void CheckAcceptButtonHovered(GameDataReference& data);
 
 	virtual void CheckBoxClicked() = 0;
-	virtual void CheckHovered() = 0;
 
 protected:
 	sf::RectangleShape p1Box;

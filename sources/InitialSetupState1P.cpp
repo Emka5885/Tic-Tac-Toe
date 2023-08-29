@@ -7,19 +7,9 @@ InitialSetupState1P::InitialSetupState1P(GameDataReference data) : data(data)
 
 void InitialSetupState1P::Init()
 {
-	Create();
-	initialSetup.setFont(data->assets.GetFont(defaultFont));
-	initialSetup.setOrigin(initialSetup.getGlobalBounds().width / 2, initialSetup.getGlobalBounds().height / 2);
-	initialSetup.setPosition({ WIDTH / 2, 100 });
-	initialSetupShadow = initialSetup;
-	initialSetupShadow.setFillColor(sf::Color::Black);
-	initialSetupShadow.setPosition({ WIDTH / 2 + 6, 105 });
+	Create(data);
 
-	enterTextP1.setString("Enter new player nickname:");
-	enterTextP1.setFont(data->assets.GetFont(defaultFont));
-	enterTextP1.setOrigin(enterTextP1.getGlobalBounds().width / 2, enterTextP1.getGlobalBounds().height / 2);
 	enterTextP1.setPosition(WIDTH / 2, HEIGHT / 2 - TEXT_BOX_SIZE_Y - ENTER_BOX_OFFSET);
-
 	p1Box.setPosition(WIDTH / 2, HEIGHT / 2 - ENTER_BOX_OFFSET);
 
 	p1Text = sf::Text("Player", data->assets.GetFont(defaultFont), 40);
@@ -27,9 +17,10 @@ void InitialSetupState1P::Init()
 	p1Text.setPosition(WIDTH / 2 - 2, HEIGHT / 2 - p1Text.getGlobalBounds().height / 4 - ENTER_BOX_OFFSET);
 	p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
 
-	messageP1.setFont(data->assets.GetFont(defaultFont));
-	messageP1.setOrigin(messageP1.getGlobalBounds().width / 2, messageP1.getGlobalBounds().height / 2);
 	messageP1.setPosition(WIDTH / 2 - 2, HEIGHT / 2 - 18);
+
+	x_previewImage.setPosition({ WIDTH / 2, HEIGHT / 2 + ENTER_BOX_OFFSET });
+	o_previewImage.setPosition({ WIDTH / 2, HEIGHT / 2 + ENTER_BOX_OFFSET });
 
 	if (rand() % 2 == 0)
 	{
@@ -39,23 +30,6 @@ void InitialSetupState1P::Init()
 	{
 		playerType = oPlayer;
 	}
-
-	x_previewImage.setTexture(data->assets.GetTexture(xPreviewImage));
-	x_previewImage.setSize({ 150, 150 });
-	x_previewImage.setOrigin({ x_previewImage.getSize().x / 2 , x_previewImage.getSize().y / 2 });
-	x_previewImage.setPosition({ WIDTH / 2, HEIGHT / 2 + ENTER_BOX_OFFSET });
-	x_previewImage.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
-
-	o_previewImage.setTexture(data->assets.GetTexture(oPreviewImage));
-	o_previewImage.setSize({ 150, 150 });
-	o_previewImage.setOrigin({ o_previewImage.getSize().x / 2 , o_previewImage.getSize().y / 2 });
-	o_previewImage.setPosition({ WIDTH / 2, HEIGHT / 2 + ENTER_BOX_OFFSET });
-	o_previewImage.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
-
-	sf::Text acceptText("Accept", data->assets.GetFont(defaultFont), 40);
-	acceptText.setOutlineColor(sf::Color::Black);
-	acceptText.setOutlineThickness(2);
-	acceptButton = Button({ 200, 75 }, acceptText, sf::Color::Black, { WIDTH / 2, HEIGHT - 150 }, 10);
 
 	sf::sleep(sf::seconds(0.2));
 }
@@ -80,7 +54,7 @@ void InitialSetupState1P::HandleInput()
 			}
 		}
 		// check text box type
-		if (textBoxType == 1)
+		if (textBoxType == player)
 		{
 			if (event.type == sf::Event::KeyPressed)
 			{
@@ -138,7 +112,7 @@ void InitialSetupState1P::HandleInput()
 		// hovered
 		if (event.type == sf::Event::MouseMoved)
 		{
-			CheckHovered();
+			CheckAcceptButtonHovered(data);
 		}
 	}
 }
@@ -211,64 +185,6 @@ void InitialSetupState1P::CheckBoxClicked()
 			p1Text.setString("Player");
 			p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
 			p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
-		}
-	}
-}
-
-void InitialSetupState1P::CheckHovered()
-{
-	if (data->input.isButtonHovered(acceptButton.GetShape(), data->window) && p1String.length() > 8)
-	{
-		// accept button - move x
-		if (data->input.GetMousePosition(data->window).x <= 275)
-		{
-			acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x + ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
-		}
-		else if (data->input.GetMousePosition(data->window).x >= 525)
-		{
-			acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x - ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
-		}
-		else
-		{
-			if (rand() % 2)
-			{
-				acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x + ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
-			}
-			else
-			{
-				acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x - ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
-			}
-		}
-		// accept button - move y
-		if (acceptButton.GetShape().getPosition().y < HEIGHT - ACCEPT_OFFSET + 50)
-		{
-			acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - ENTER_BOX_OFFSET });
-		}
-		else if (acceptButton.GetShape().getPosition().y > HEIGHT - ENTER_BOX_OFFSET)
-		{
-			acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - ACCEPT_OFFSET });
-		}
-		else
-		{
-			if (rand() % 2)
-			{
-				acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y - 25) });
-			}
-			else
-			{
-				acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y + 25) });
-			}
-		}
-	}
-	else
-	{
-		if (data->input.isButtonHovered(acceptButton.GetShape(), data->window))
-		{
-			acceptButton.ChangeHover(true);
-		}
-		else
-		{
-			acceptButton.ChangeHover(false);
 		}
 	}
 }

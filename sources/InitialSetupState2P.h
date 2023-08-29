@@ -1,6 +1,5 @@
 #include "InitialSetupState.h"
 #include "State.h"
-#include "Game.h"
 
 enum textBoxesTypes { none, player1, player2 };
 
@@ -30,5 +29,4 @@ public:
 	void ChangeP2Text();
 
 	void CheckBoxClicked();
-	void CheckHovered();
 };
