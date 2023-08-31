@@ -1,8 +1,10 @@
 #include "GameState.h"
 #include "MainMenuState.h"
 
-void GameState::InitGameState(GameDataReference& data)
+void GameState::InitGameState(GameDataReference& data, bool FirstPlayerPlaysX)
 {
+	this->FirstPlayerPlaysX = FirstPlayerPlaysX;
+
 	board.setFillColor(sf::Color(200, 200, 200));
 	board.setSize({ 474,474 });
 	board.setPosition(163, 238);
@@ -305,7 +307,7 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 
 	if (win)
 	{
-		if (boardType == x)
+		if ((boardType == x && FirstPlayerPlaysX) || (boardType == o && !FirstPlayerPlaysX))
 		{
 			gameType = p1Wins;
 		}
@@ -328,11 +330,11 @@ void GameState::CheckBoardSquares_Clicked(GameDataReference& data)
 		{
 			if (boardSquares[i].GetBoardType() == empty)
 			{
-				if (widget->GetWidgetType() == turnP1)
+				if (widget->GetWidgetType() == turnP1 && FirstPlayerPlaysX)
 				{
 					boardSquares[i].ChangeBoardType(x);
 				}
-				else
+				else if(widget->GetWidgetType() == turnP1)
 				{
 					boardSquares[i].ChangeBoardType(o);
 				}

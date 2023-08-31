@@ -1,7 +1,7 @@
 #include "Widgets.h"
 #include "Definitions.h"
 
-Widgets::Widgets(AssetManager& assets, std::string p1, std::string p2) : assets(assets), p1(p1), p2(p2)
+Widgets::Widgets(AssetManager& assets, std::string p1, std::string p2, bool FirstPlayerPlaysX) : assets(assets), p1(p1), p2(p2), FirstPlayerPlaysX(FirstPlayerPlaysX)
 {
 	Init();
 }
@@ -109,14 +109,28 @@ void Widgets::ChangeTurn()
 	{
 		turnText.setString(p1 + "'s turn");
 		turnShadow.setString(p1 + "'s turn");
-		turnText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+		if (FirstPlayerPlaysX)
+		{
+			turnText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+		}
+		else
+		{
+			turnText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+		}
 		type = turnP1;
 	}
 	else
 	{
 		turnText.setString(p2 + "'s turn");
 		turnShadow.setString(p2 + "'s turn");
-		turnText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+		if (FirstPlayerPlaysX)
+		{
+			turnText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+		}
+		else
+		{
+			turnText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+		}
 		type = turnP2;
 	}
 
@@ -133,14 +147,28 @@ void Widgets::ChangeWidgetType(int p1Win, int p2Win)
 			type = turnP1;
 			turnText.setString(p1 + "'s turn");
 			turnShadow.setString(p1 + "'s turn");
-			turnText.setFillColor(sf::Color(225, 10, 90));
+			if (FirstPlayerPlaysX)
+			{
+				turnText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+			}
+			else
+			{
+				turnText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+			}
 		}
 		else
 		{
 			type = turnP2;
 			turnText.setString(p2 + "'s turn");
 			turnShadow.setString(p2 + "'s turn");
-			turnText.setFillColor(sf::Color(50,150,225));
+			if (FirstPlayerPlaysX)
+			{
+				turnText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+			}
+			else
+			{
+				turnText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+			}
 		}
 		turnText.setOrigin(turnText.getGlobalBounds().width / 2, 0);
 		turnShadow.setOrigin(turnShadow.getGlobalBounds().width / 2, 0);
@@ -198,13 +226,27 @@ void Widgets::ChangeText(GameTypes gameType)
 	{
 		winText.setString(p1 + " win!");
 		winShadow.setString(p1 + " win!");
-		winText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+		if(FirstPlayerPlaysX)
+		{
+			winText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+		}
+		else
+		{
+			winText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+		}
 	}
 	else if (gameType == p2Wins)
 	{
 		winText.setString(p2 + " win!");
 		winShadow.setString(p2 + " win!");
-		winText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+		if (FirstPlayerPlaysX)
+		{
+			winText.setFillColor(sf::Color(oColor_r, oColor_g, oColor_b));
+		}
+		else
+		{
+			winText.setFillColor(sf::Color(xColor_r, xColor_g, xColor_b));
+		}
 	}
 	else
 	{

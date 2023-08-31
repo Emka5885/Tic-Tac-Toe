@@ -107,7 +107,7 @@ void InitialSetupState1P::HandleInput()
 			sf::sleep(sf::seconds(1));
 			data->machine.RemoveState();
 			p1String = p1Text.getString();
-			data->machine.AddState(stateReference(new GameState1P(data, p1String)), true);
+			data->machine.AddState(stateReference(new GameState1P(data, p1String, (playerType == xPlayer))), true);
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)

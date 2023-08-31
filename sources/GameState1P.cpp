@@ -1,13 +1,14 @@
 #include "GameState1P.h"
 
-GameState1P::GameState1P(GameDataReference data, std::string& player) : data(data)
+GameState1P::GameState1P(GameDataReference data, std::string& player, bool FirstPlayerPlaysX) : data(data), FirstPlayerPlaysX(FirstPlayerPlaysX)
 {
-	widget = new Widgets(data->assets, player, "Computer");
+	widget = new Widgets(data->assets, player, "Computer", FirstPlayerPlaysX);
 }
 
 void GameState1P::Init()
 {
-	InitGameState(data);
+	InitGameState(data, FirstPlayerPlaysX);
+	startClock.restart();
 }
 
 void GameState1P::HandleInput()
@@ -29,6 +30,7 @@ void GameState1P::HandleInput()
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress && widget->GetWidgetType() != gameTotals && widget->GetWidgetType() == turnP1)
 		{
 			CheckBoardSquares_Clicked(data);
+			waitClock.restart();
 		}
 
 		if (widget->GetWidgetType() == gameTotals && !screenCleaning)
@@ -88,13 +90,56 @@ void GameState1P::Update()
 {
 	UpdateGameState(data);
 
-	if (widget->GetWidgetType() == turnP2)
+	if (screenCleaning)
 	{
+		start = true;
+		startClock.restart();
+	}
+	else
+	{
+		if (widget->GetWidgetType() == turnP1)
+		{
+			start = false;
+		}
 
+		if (gameType == inProgress && widget->GetWidgetType() != gameTotals && widget->GetWidgetType() == turnP2)
+		{
+			if (startClock.getElapsedTime().asSeconds() >= 1.5 && start)
+			{
+				computer.SelectSquare(boardSquares);
+
+				SetComputerSelection();
+			}
+			else if (!start && waitClock.getElapsedTime().asSeconds() >= 1.5)
+			{
+				computer.SelectSquare(boardSquares);
+
+				SetComputerSelection();
+			}
+		}
 	}
 }
 
 void GameState1P::Draw()
 {
 	DrawGameState(data);
+}
+
+void GameState1P::SetComputerSelection()
+{
+	for (int i = 0; i < boardSquares.size(); i++)
+	{
+		if (computer.GetComputerOption() == i && !FirstPlayerPlaysX)
+		{
+			boardSquares[i].ChangeBoardType(x);
+		}
+		else if(computer.GetComputerOption() == i && FirstPlayerPlaysX)
+		{
+			boardSquares[i].ChangeBoardType(o);
+		}
+	}
+	widget->ChangeTurn();
+	changeOfTurn = true;
+
+	CheckToPlayOn();
 }

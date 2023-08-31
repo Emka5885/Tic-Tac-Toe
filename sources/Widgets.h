@@ -28,11 +28,12 @@ private:
 	widgetTypes type;
 
 	bool isWinText = false;
+	bool FirstPlayerPlaysX;
 
 	AssetManager& assets;
 
 public:
-	Widgets(AssetManager& assets, std::string p1 = "Player 1", std::string p2 = "Player 2");
+	Widgets(AssetManager& assets, std::string p1 = "Player 1", std::string p2 = "Player 2", bool FirstPlayerPlaysX = true);
 	~Widgets();
 
 	void Init();

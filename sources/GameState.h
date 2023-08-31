@@ -7,7 +7,7 @@
 class GameState
 {
 public:
-	void InitGameState(GameDataReference& data);
+	void InitGameState(GameDataReference& data, bool FirstPlayerPlaysX = true);
 	void UpdateGameState(GameDataReference& data);
 	void DrawGameState(GameDataReference& data);
 
@@ -46,4 +46,6 @@ protected:
 	Button nextRoundButton;
 	Button quittButton;
 	bool quitt = false;
+
+	bool FirstPlayerPlaysX;
 };
