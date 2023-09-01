@@ -29,7 +29,7 @@ void GameState2P::HandleInput()
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress && widget->GetWidgetType() != gameTotals)
 		{
-			CheckBoardSquares_Clicked(data);
+			CheckBoardSquares_Clicked();
 		}
 
 		if (widget->GetWidgetType() == gameTotals && !screenCleaning)
@@ -93,4 +93,28 @@ void GameState2P::Update()
 void GameState2P::Draw()
 {
 	DrawGameState(data);
+}
+
+void GameState2P::CheckBoardSquares_Clicked()
+{
+	for (int i = 0; i < boardSquares.size(); i++)
+	{
+		if (data->input.isButtonClicked(boardSquares[i].GetShape(), sf::Mouse::Left, data->window))
+		{
+			if (boardSquares[i].GetBoardType() == empty)
+			{
+				if (widget->GetWidgetType() == turnP1)
+				{
+					boardSquares[i].ChangeBoardType(x);
+				}
+				else if (widget->GetWidgetType() == turnP2)
+				{
+					boardSquares[i].ChangeBoardType(o);
+				}
+				widget->ChangeTurn();
+				changeOfTurn = true;
+			}
+			break;
+		}
+	}
 }

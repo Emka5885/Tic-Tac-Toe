@@ -8,7 +8,9 @@ private:
 	GameDataReference data;
 	bool FirstPlayerPlaysX;
 	bool start = true;
+
 	Computer computer;
+
 	sf::Clock startClock;
 	sf::Clock waitClock;
 
@@ -20,5 +22,6 @@ public:
 	void Update();
 	void Draw();
 
+	void CheckBoardSquares_Clicked();
 	void SetComputerSelection();
 };

@@ -13,7 +13,7 @@ public:
 
 	void CheckToPlayOn();
 	bool CheckWinCondition(boardTypes boardType);
-	void CheckBoardSquares_Clicked(GameDataReference& data);
+	virtual void CheckBoardSquares_Clicked() = 0;
 
 	void ClearScreen();
 

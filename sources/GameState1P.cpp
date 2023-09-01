@@ -3,6 +3,7 @@
 GameState1P::GameState1P(GameDataReference data, std::string& player, bool FirstPlayerPlaysX) : data(data), FirstPlayerPlaysX(FirstPlayerPlaysX)
 {
 	widget = new Widgets(data->assets, player, "Computer", FirstPlayerPlaysX);
+	computer = new Computer(FirstPlayerPlaysX);
 }
 
 void GameState1P::Init()
@@ -29,7 +30,7 @@ void GameState1P::HandleInput()
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress && widget->GetWidgetType() != gameTotals && widget->GetWidgetType() == turnP1)
 		{
-			CheckBoardSquares_Clicked(data);
+			CheckBoardSquares_Clicked();
 			waitClock.restart();
 		}
 
@@ -123,6 +124,30 @@ void GameState1P::Update()
 void GameState1P::Draw()
 {
 	DrawGameState(data);
+}
+
+void GameState1P::CheckBoardSquares_Clicked()
+{
+	for (int i = 0; i < boardSquares.size(); i++)
+	{
+		if (data->input.isButtonClicked(boardSquares[i].GetShape(), sf::Mouse::Left, data->window))
+		{
+			if (boardSquares[i].GetBoardType() == empty)
+			{
+				if (widget->GetWidgetType() == turnP1 && FirstPlayerPlaysX)
+				{
+					boardSquares[i].ChangeBoardType(x);
+				}
+				else if (widget->GetWidgetType() == turnP1)
+				{
+					boardSquares[i].ChangeBoardType(o);
+				}
+				widget->ChangeTurn();
+				changeOfTurn = true;
+			}
+			break;
+		}
+	}
 }
 
 void GameState1P::SetComputerSelection()

@@ -13,4 +13,6 @@ public:
 	void HandleInput();
 	void Update();
 	void Draw();
+
+	void CheckBoardSquares_Clicked();
 };

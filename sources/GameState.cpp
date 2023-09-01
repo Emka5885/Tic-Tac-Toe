@@ -322,30 +322,6 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 	return false;
 }
 
-void GameState::CheckBoardSquares_Clicked(GameDataReference& data)
-{
-	for (int i = 0; i < boardSquares.size(); i++)
-	{
-		if (data->input.isButtonClicked(boardSquares[i].GetShape(), sf::Mouse::Left, data->window))
-		{
-			if (boardSquares[i].GetBoardType() == empty)
-			{
-				if (widget->GetWidgetType() == turnP1 && FirstPlayerPlaysX)
-				{
-					boardSquares[i].ChangeBoardType(x);
-				}
-				else if(widget->GetWidgetType() == turnP1)
-				{
-					boardSquares[i].ChangeBoardType(o);
-				}
-				widget->ChangeTurn();
-				changeOfTurn = true;
-			}
-			break;
-		}
-	}
-}
-
 void GameState::ClearScreen()
 {
 	nextRoundButton.Clicked(false);
