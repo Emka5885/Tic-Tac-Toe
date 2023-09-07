@@ -8,7 +8,7 @@
 class OptionsState :public State
 {
 public:
-	OptionsState(GameDataReference data);
+	OptionsState(GameDataReference& data);
 
 	void Init();
 	void HandleInput();
@@ -21,7 +21,7 @@ public:
 	void Save();
 
 private:
-	GameDataReference data;
+	GameDataReference& data;
 
 	sf::Text options;
 	sf::Text optionsShadow;

@@ -7,13 +7,13 @@ enum playerTypes { xPlayer, oPlayer };
 class InitialSetupState1P :public State, InitialSetupState
 {
 private:
-	GameDataReference data;
+	GameDataReference& data;
 
 	textBoxTypes textBoxType = nothing;
 	playerTypes playerType;
 
 public:
-	InitialSetupState1P(GameDataReference data);
+	InitialSetupState1P(GameDataReference& data);
 
 	void Init();
 	void HandleInput();

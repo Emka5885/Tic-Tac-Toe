@@ -6,7 +6,7 @@ enum textBoxesTypes { none, player1, player2 };
 class InitialSetupState2P :public State, InitialSetupState
 {
 private:
-	GameDataReference data;
+	GameDataReference& data;
 
 	sf::RectangleShape p2Box;
 
@@ -19,7 +19,7 @@ private:
 	textBoxesTypes textBoxType = player1;
 
 public:
-	InitialSetupState2P(GameDataReference data);
+	InitialSetupState2P(GameDataReference& data);
 
 	void Init();
 	void HandleInput();

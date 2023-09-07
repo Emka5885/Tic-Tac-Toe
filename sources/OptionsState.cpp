@@ -2,7 +2,7 @@
 #include "MainMenuState.h"
 #include "Definitions.h"
 
-OptionsState::OptionsState(GameDataReference data) : data(data)
+OptionsState::OptionsState(GameDataReference& data) : data(data)
 {
 }
 
@@ -92,26 +92,27 @@ void OptionsState::Init()
 
 	backButton = Button(buttonsSize, buttonsText, sf::Color::Black, { WIDTH / 2, HEIGHT - 90 - buttonsSize.y / 2 }, 10);
 
-	std::ifstream file;
-	file.open("options.dat", std::ios_base::out | std::ios_base::binary);
+	std::fstream file;
+	file.open("options.dat", std::ios_base::in | std::ios_base::binary);
 	// Default options
 	if (!file)
 	{
 		// Mode
 		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
 		optionsFromFile.back().first = mode;
-		optionsFromFile.back().second = 0;
+		//1 or 2 players
+		optionsFromFile.back().second = 1;
 		// Music
 		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
 		optionsFromFile.back().first = music1;
-		optionsFromFile.back().second = 0;
+		optionsFromFile.back().second = 1;
 		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
 		optionsFromFile.back().first = music2;
 		optionsFromFile.back().second = 40;
 		// Sounds
 		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
 		optionsFromFile.back().first = sounds1;
-		optionsFromFile.back().second = 0;
+		optionsFromFile.back().second = 1;
 		optionsFromFile.emplace_back(std::pair<optionsTypes, int>());
 		optionsFromFile.back().first = sounds2;
 		optionsFromFile.back().second = 40;
@@ -133,14 +134,14 @@ void OptionsState::Init()
 		{
 			buttonsText.setString("1p");
 			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
-			onePSwitchButton = SwitchButton({ WIDTH / 2 + 50, 250 }, buttonsText, true);
+			onePSwitchButton = SwitchButton({ WIDTH / 2 + 50, 250 }, buttonsText);
 			buttonsText.setString("2p");
 			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
-			twoPSwitchButton = SwitchButton({ WIDTH / 2 + 165, 250 }, buttonsText);
+			twoPSwitchButton = SwitchButton({ WIDTH / 2 + 165, 250 }, buttonsText, true);
 			if (optionsFromFile[i].second == 1)
 			{
-				onePSwitchButton.ChangeInActivity(false);
-				twoPSwitchButton.ChangeInActivity(true);
+				onePSwitchButton.ChangeInActivity(true);
+				twoPSwitchButton.ChangeInActivity(false);
 			}
 		}
 		else if (optionsFromFile[i].first == music1)
@@ -151,7 +152,7 @@ void OptionsState::Init()
 			buttonsText.setString("Off");
 			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
 			musicOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 345 }, buttonsText);
-			if (optionsFromFile[i].second == 1)
+			if (optionsFromFile[i].second == 0)
 			{
 				musicOnSwitchButton.ChangeInActivity(false);
 				musicOffSwitchButton.ChangeInActivity(true);
@@ -169,7 +170,7 @@ void OptionsState::Init()
 			buttonsText.setString("Off");
 			buttonsText.setOrigin(buttonsText.getGlobalBounds().width / 2, buttonsText.getGlobalBounds().height - buttonsText.getGlobalBounds().height / 3);
 			soundsOffSwitchButton = SwitchButton({ WIDTH / 2 + 165, 500 }, buttonsText);
-			if (optionsFromFile[i].second == 1)
+			if (optionsFromFile[i].second == 0)
 			{
 				soundsOnSwitchButton.ChangeInActivity(false);
 				soundsOffSwitchButton.ChangeInActivity(true);
@@ -180,6 +181,8 @@ void OptionsState::Init()
 			soundsScrollBar = ScrollBar({ WIDTH / 2, 575 }, 51, optionsFromFile[i].second);
 		}
 	}
+
+	data->gameAudio.Update();
 }
 
 void OptionsState::Save()
@@ -190,22 +193,22 @@ void OptionsState::Save()
 		{
 			if (onePSwitchButton.GetActive())
 			{
-				optionsFromFile[i].second = 0;
+				optionsFromFile[i].second = 1;
 			}
 			else
 			{
-				optionsFromFile[i].second = 1;
+				optionsFromFile[i].second = 2;
 			}
 		}
 		else if (optionsFromFile[i].first == music1)
 		{
 			if (musicOnSwitchButton.GetActive())
 			{
-				optionsFromFile[i].second = 0;
+				optionsFromFile[i].second = 1;
 			}
 			else
 			{
-				optionsFromFile[i].second = 1;
+				optionsFromFile[i].second = 0;
 			}
 		}
 		else if (optionsFromFile[i].first == music2)
@@ -216,11 +219,11 @@ void OptionsState::Save()
 		{
 			if (soundsOnSwitchButton.GetActive())
 			{
-				optionsFromFile[i].second = 0;
+				optionsFromFile[i].second = 1;
 			}
 			else
 			{
-				optionsFromFile[i].second = 1;
+				optionsFromFile[i].second = 0;
 			}
 		}
 		else if (optionsFromFile[i].first == sounds2)
@@ -229,7 +232,7 @@ void OptionsState::Save()
 		}
 	}
 
-	std::ofstream file;
+	std::fstream file;
 	file.open("options.dat", std::ios_base::out | std::ios_base::binary);
 
 	for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
@@ -237,6 +240,8 @@ void OptionsState::Save()
 		file.write((char*)&optionsFromFile[i], sizeof(std::pair<optionsTypes, int>));
 	}
 	file.close();
+
+	data->gameAudio.Update();
 }
 
 
@@ -268,6 +273,14 @@ void OptionsState::HandleInput()
 	musicScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
 	soundsScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
 
+	if (data->gameAudio.GetMusicVolume() != musicScrollBar.GetCurrentNumber())
+	{
+		data->gameAudio.Update();
+	}
+	if (data->gameAudio.GetSoundVolume() != soundsScrollBar.GetCurrentNumber())
+	{
+		data->gameAudio.Update();
+	}
 }
 
 void OptionsState::Update()
@@ -420,22 +433,26 @@ void OptionsState::CheckButtonsClicked()
 	{
 		musicOnSwitchButton.ChangeInActivity(true);
 		musicOffSwitchButton.ChangeInActivity(false);
+		data->gameAudio.Update();
 	}
 	else if (data->input.isButtonClicked(musicOffSwitchButton.GetShape(), sf::Mouse::Left, data->window))
 	{
 		musicOnSwitchButton.ChangeInActivity(false);
 		musicOffSwitchButton.ChangeInActivity(true);
+		data->gameAudio.Update();
 	}
 	// sounds
 	else if (data->input.isButtonClicked(soundsOnSwitchButton.GetShape(), sf::Mouse::Left, data->window))
 	{
 		soundsOnSwitchButton.ChangeInActivity(true);
 		soundsOffSwitchButton.ChangeInActivity(false);
+		data->gameAudio.Update();
 	}
 	else if (data->input.isButtonClicked(soundsOffSwitchButton.GetShape(), sf::Mouse::Left, data->window))
 	{
 		soundsOnSwitchButton.ChangeInActivity(false);
 		soundsOffSwitchButton.ChangeInActivity(true);
+		data->gameAudio.Update();
 	}
 	// mode
 	else if (data->input.isButtonClicked(onePSwitchButton.GetShape(), sf::Mouse::Left, data->window))

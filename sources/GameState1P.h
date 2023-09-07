@@ -5,7 +5,7 @@
 class GameState1P :public State, GameState
 {
 private:
-	GameDataReference data;
+	GameDataReference& data;
 	bool FirstPlayerPlaysX;
 	bool start = true;
 
@@ -15,7 +15,7 @@ private:
 	sf::Clock waitClock;
 
 public:
-	GameState1P(GameDataReference data, std::string& player, bool FirstPlayerPlaysX);
+	GameState1P(GameDataReference& data, std::string& player, bool FirstPlayerPlaysX);
 
 	void Init();
 	void HandleInput();

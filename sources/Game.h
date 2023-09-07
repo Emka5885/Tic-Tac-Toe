@@ -6,6 +6,7 @@
 #include "StateMachine.h"
 #include "AssetManager.h"
 #include "InputManager.h"
+#include "Audio.h"
 
 struct GameData
 {
@@ -14,6 +15,7 @@ struct GameData
 	AssetManager assets;
 	InputManager input;
 	sf::Text name;
+	Audio gameAudio;
 };
 
 typedef std::shared_ptr<GameData> GameDataReference;

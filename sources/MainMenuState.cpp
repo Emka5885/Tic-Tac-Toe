@@ -4,7 +4,7 @@
 #include "InitialSetupState2P.h"
 #include "Definitions.h"
 
-MainMenuState::MainMenuState(GameDataReference data) : data(data)
+MainMenuState::MainMenuState(GameDataReference& data) : data(data)
 {
 }
 
@@ -45,7 +45,7 @@ void MainMenuState::Init()
 
 			if (optionsFromFile[i].first == mode)
 			{
-				if (optionsFromFile[i].second == 1)
+				if (optionsFromFile[i].second == 2)
 				{
 					mType = twoPlayerType;
 				}

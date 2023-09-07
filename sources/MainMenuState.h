@@ -9,7 +9,7 @@ enum modeType { onePlayerType, twoPlayerType };
 class MainMenuState :public State
 {
 public:
-	MainMenuState(GameDataReference data);
+	MainMenuState(GameDataReference& data);
 
 	void Init();
 	void HandleInput();
@@ -17,7 +17,7 @@ public:
 	void Draw();
 
 private:
-	GameDataReference data;
+	GameDataReference& data;
 
 	sf::Text title;
 	sf::Text titleShadow;

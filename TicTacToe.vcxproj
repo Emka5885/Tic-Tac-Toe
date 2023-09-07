@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\AssetManager.cpp" />
+    <ClCompile Include="sources\Audio.cpp" />
     <ClCompile Include="sources\BoardSquare.cpp" />
     <ClCompile Include="sources\Button.cpp" />
     <ClCompile Include="sources\Computer.cpp" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\AssetManager.h" />
+    <ClInclude Include="sources\Audio.h" />
     <ClInclude Include="sources\BoardSquare.h" />
     <ClInclude Include="sources\Button.h" />
     <ClInclude Include="sources\Computer.h" />
