@@ -1,6 +1,6 @@
 #include "GameState1P.h"
 
-GameState1P::GameState1P(GameDataReference data, std::string& player, bool FirstPlayerPlaysX) : data(data), FirstPlayerPlaysX(FirstPlayerPlaysX)
+GameState1P::GameState1P(GameDataReference& data, std::string& player, bool FirstPlayerPlaysX) : data(data), FirstPlayerPlaysX(FirstPlayerPlaysX)
 {
 	widget = new Widgets(data->assets, player, "Computer", FirstPlayerPlaysX);
 	computer = new Computer(FirstPlayerPlaysX);

@@ -1,7 +1,7 @@
 #include "InitialSetupState2P.h"
 #include "GameState2P.h"
 
-InitialSetupState2P::InitialSetupState2P(GameDataReference data) : data(data)
+InitialSetupState2P::InitialSetupState2P(GameDataReference& data) : data(data)
 {
 }
 

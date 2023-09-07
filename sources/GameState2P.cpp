@@ -1,7 +1,7 @@
 #include "GameState2P.h"
 #include "Definitions.h"
 
-GameState2P::GameState2P(GameDataReference data, std::string& p1, std::string& p2) : data(data)
+GameState2P::GameState2P(GameDataReference& data, std::string& p1, std::string& p2) : data(data)
 {
 	widget = new Widgets(data->assets, p1, p2);
 }

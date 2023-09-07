@@ -425,6 +425,7 @@ void OptionsState::CheckButtonsClicked()
 	{
 		backButton.Clicked();
 		Save();
+		data->gameAudio.PlaySound();
 		data->machine.RemoveState();
 		data->machine.AddState(stateReference(new MainMenuState(data)), true);
 	}
