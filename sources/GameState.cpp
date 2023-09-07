@@ -155,7 +155,7 @@ void GameState::DrawGameState(GameDataReference& data)
 	if (changeOfTurn)
 	{
 		changeOfTurn = false;
-		sf::sleep(sf::seconds(0.5));
+		sf::sleep(sf::seconds(0.2));
 	}
 }
 

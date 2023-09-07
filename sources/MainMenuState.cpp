@@ -93,16 +93,19 @@ void MainMenuState::HandleInput()
 		{
 			quittButton.Clicked();
 			type = quitt;
+			data->gameAudio.PlaySound();
 		}
 		else if (data->input.isButtonClicked(playButton.GetShape(), sf::Mouse::Left, data->window))
 		{
 			playButton.Clicked();
 			type = play;
+			data->gameAudio.PlaySound();
 		}
 		else if (data->input.isButtonClicked(optionsButton.GetShape(), sf::Mouse::Left, data->window))
 		{
 			optionsButton.Clicked();
 			type = options;
+			data->gameAudio.PlaySound();
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)

@@ -252,28 +252,28 @@ void Computer::SelectSquare(std::vector<BoardSquare>& boardSquares)
 	{
 		return;
 	}
-
-	if (CheckIfComputerCanWin(boardSquares))
+	else if (CheckIfComputerCanWin(boardSquares))
 	{
 		return;
 	}
-
-	if (CheckIfPlayerCanWin(boardSquares))
+	else if (CheckIfPlayerCanWin(boardSquares))
 	{
 		return;
 	}
-
-	std::vector<int> possibleMovements;
-	for (int i = 0; i < boardSquares.size(); i++)
+	else
 	{
-		if (boardSquares[i].GetBoardType() == empty)
+		std::vector<int> possibleMovements;
+		for (int i = 0; i < boardSquares.size(); i++)
 		{
-			possibleMovements.emplace_back(i);
+			if (boardSquares[i].GetBoardType() == empty)
+			{
+				possibleMovements.emplace_back(i);
+			}
 		}
-	}
 
-	int index = rand() % possibleMovements.size();
-	SetComputerOption(possibleMovements[index]);
+		int index = rand() % possibleMovements.size();
+		SetComputerOption(possibleMovements[index]);
+	}
 }
 
 void Computer::SetComputerOption(int number)

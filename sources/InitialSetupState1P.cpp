@@ -104,9 +104,10 @@ void InitialSetupState1P::HandleInput()
 		if (data->input.isButtonClicked(acceptButton.GetShape(), sf::Mouse::Left, data->window) && p1String.length() <= 8)
 		{
 			acceptButton.Clicked();
+			data->gameAudio.PlaySound();
 			sf::sleep(sf::seconds(1));
-			data->machine.RemoveState();
 			p1String = p1Text.getString();
+			data->machine.RemoveState();
 			data->machine.AddState(stateReference(new GameState1P(data, p1String, (playerType == xPlayer))), true);
 		}
 		// hovered
