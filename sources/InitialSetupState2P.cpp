@@ -201,6 +201,8 @@ void InitialSetupState2P::Draw()
 
 	acceptButton.DrawButton(data->window);
 
+	data->window.draw(data->name);
+
 	data->window.display();
 }
 

@@ -14,8 +14,8 @@ struct GameData
 	sf::RenderWindow window;
 	AssetManager assets;
 	InputManager input;
-	sf::Text name;
 	Audio gameAudio;
+	sf::Text name;
 };
 
 typedef std::shared_ptr<GameData> GameDataReference;

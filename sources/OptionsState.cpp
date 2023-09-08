@@ -330,6 +330,8 @@ void OptionsState::Draw()
 
 	backButton.DrawButton(data->window);
 
+	data->window.draw(data->name);
+
 	data->window.display();
 }
 

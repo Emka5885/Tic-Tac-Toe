@@ -14,6 +14,12 @@ void Game::Init()
 	iconImage = data->assets.GetTexture(icon)->copyToImage();
 	data->window.setIcon(iconImage.getSize().x, iconImage.getSize().y, iconImage.getPixelsPtr());
 
+	data->name.setFont(data->assets.GetFont(defaultFont));
+	data->name.setCharacterSize(15);
+	data->name.setFillColor(sf::Color(150,150,150));
+	data->name.setString("© Emilia Masiak");
+	data->name.setPosition(WIDTH - 10 - data->name.getGlobalBounds().width, HEIGHT - 10 - data->name.getGlobalBounds().height);
+
 	data->machine.AddState(stateReference(new MainMenuState(data, true)), true);
 }
 

@@ -129,6 +129,8 @@ void GameState1P::Update()
 void GameState1P::Draw()
 {
 	DrawGameState(data);
+
+	ChangeOfTurn();
 }
 
 void GameState1P::CheckBoardSquares_Clicked()

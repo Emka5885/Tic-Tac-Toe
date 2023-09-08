@@ -147,11 +147,13 @@ void GameState::DrawGameState(GameDataReference& data)
 		data->window.draw(transitionShape);
 	}
 
+	data->window.draw(data->name);
 
 	data->window.display();
+}
 
-
-
+void GameState::ChangeOfTurn()
+{
 	if (changeOfTurn)
 	{
 		changeOfTurn = false;

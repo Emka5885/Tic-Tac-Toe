@@ -159,5 +159,7 @@ void MainMenuState::Draw()
 	optionsButton.DrawButton(data->window);
 	quittButton.DrawButton(data->window);
 
+	data->window.draw(data->name);
+
 	data->window.display();
 }

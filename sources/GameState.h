@@ -11,6 +11,8 @@ public:
 	void UpdateGameState(GameDataReference& data);
 	void DrawGameState(GameDataReference& data);
 
+	void ChangeOfTurn();
+
 	void CheckToPlayOn();
 	bool CheckWinCondition(boardTypes boardType);
 	virtual void CheckBoardSquares_Clicked() = 0;

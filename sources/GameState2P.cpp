@@ -98,6 +98,8 @@ void GameState2P::Update()
 void GameState2P::Draw()
 {
 	DrawGameState(data);
+
+	ChangeOfTurn();
 }
 
 void GameState2P::CheckBoardSquares_Clicked()
