@@ -8,6 +8,7 @@ GameState1P::GameState1P(GameDataReference& data, std::string& player, bool Firs
 
 void GameState1P::Init()
 {
+	data->gameAudio.PlayMusic();
 	InitGameState(data, FirstPlayerPlaysX);
 	startClock.restart();
 }
@@ -55,6 +56,7 @@ void GameState1P::HandleInput()
 				screenCleaning = true;
 				backToMainMenu = true;
 				data->gameAudio.PlaySound();
+				data->gameAudio.StopMusic();
 			}
 			// hovered
 			if (event.type == sf::Event::MouseMoved)

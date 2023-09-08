@@ -8,6 +8,7 @@ GameState2P::GameState2P(GameDataReference& data, std::string& p1, std::string& 
 
 void GameState2P::Init()
 {
+	data->gameAudio.PlayMusic();
 	InitGameState(data);
 }
 
@@ -53,6 +54,7 @@ void GameState2P::HandleInput()
 				screenCleaning = true;
 				backToMainMenu = true;
 				data->gameAudio.PlaySound();
+				data->gameAudio.StopMusic();
 			}
 			// hovered
 			if (event.type == sf::Event::MouseMoved)

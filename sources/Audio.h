@@ -13,8 +13,7 @@ private:
 	sf::SoundBuffer buttonsSoundBuffer;
 	sf::Sound buttonsSound;
 
-	sf::Music menuBackgroundMusic;
-	sf::Music gameBackgroundMusic;
+	sf::Music backgroundMusic;
 
 	bool enableSounds = true;
 	bool enableMusic = true;
@@ -27,7 +26,8 @@ public:
 
 	void Update();
 
-	void PlayMusic(bool menuMusic = true);
+	void PlayMusic();
+	void StopMusic();
 	void PlaySound();
 
 	int& GetMusicVolume();

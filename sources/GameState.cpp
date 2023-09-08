@@ -80,7 +80,7 @@ void GameState::UpdateGameState(GameDataReference& data)
 			if (backToMainMenu)
 			{
 				data->machine.RemoveState();
-				data->machine.AddState(stateReference(new MainMenuState(data)), true);
+				data->machine.AddState(stateReference(new MainMenuState(data, true)), true);
 			}
 			else if (transitionShape.getSize().x < 25)
 			{

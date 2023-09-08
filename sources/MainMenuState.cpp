@@ -4,8 +4,12 @@
 #include "InitialSetupState2P.h"
 #include "Definitions.h"
 
-MainMenuState::MainMenuState(GameDataReference& data) : data(data)
+MainMenuState::MainMenuState(GameDataReference& data, bool startMusic) : data(data)
 {
+	if (startMusic)
+	{
+		data->gameAudio.PlayMusic();
+	}
 }
 
 void MainMenuState::Init()
@@ -73,6 +77,7 @@ void MainMenuState::HandleInput()
 		}
 		else if (type == play)
 		{
+			data->gameAudio.StopMusic();
 			data->machine.RemoveState();
 			if (mType == onePlayerType)
 			{

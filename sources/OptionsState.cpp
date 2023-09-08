@@ -275,11 +275,11 @@ void OptionsState::HandleInput()
 
 	if (data->gameAudio.GetMusicVolume() != musicScrollBar.GetCurrentNumber())
 	{
-		data->gameAudio.Update();
+		Save();
 	}
 	if (data->gameAudio.GetSoundVolume() != soundsScrollBar.GetCurrentNumber())
 	{
-		data->gameAudio.Update();
+		Save();
 	}
 }
 
@@ -434,26 +434,27 @@ void OptionsState::CheckButtonsClicked()
 	{
 		musicOnSwitchButton.ChangeInActivity(true);
 		musicOffSwitchButton.ChangeInActivity(false);
-		data->gameAudio.Update();
+		Save();
+		data->gameAudio.PlayMusic();
 	}
 	else if (data->input.isButtonClicked(musicOffSwitchButton.GetShape(), sf::Mouse::Left, data->window))
 	{
 		musicOnSwitchButton.ChangeInActivity(false);
 		musicOffSwitchButton.ChangeInActivity(true);
-		data->gameAudio.Update();
+		Save();
 	}
 	// sounds
 	else if (data->input.isButtonClicked(soundsOnSwitchButton.GetShape(), sf::Mouse::Left, data->window))
 	{
 		soundsOnSwitchButton.ChangeInActivity(true);
 		soundsOffSwitchButton.ChangeInActivity(false);
-		data->gameAudio.Update();
+		Save();
 	}
 	else if (data->input.isButtonClicked(soundsOffSwitchButton.GetShape(), sf::Mouse::Left, data->window))
 	{
 		soundsOnSwitchButton.ChangeInActivity(false);
 		soundsOffSwitchButton.ChangeInActivity(true);
-		data->gameAudio.Update();
+		Save();
 	}
 	// mode
 	else if (data->input.isButtonClicked(onePSwitchButton.GetShape(), sf::Mouse::Left, data->window))

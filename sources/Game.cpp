@@ -14,7 +14,7 @@ void Game::Init()
 	iconImage = data->assets.GetTexture(icon)->copyToImage();
 	data->window.setIcon(iconImage.getSize().x, iconImage.getSize().y, iconImage.getPixelsPtr());
 
-	data->machine.AddState(stateReference(new MainMenuState(data)), true);
+	data->machine.AddState(stateReference(new MainMenuState(data, true)), true);
 }
 
 

@@ -9,7 +9,7 @@ enum modeType { onePlayerType, twoPlayerType };
 class MainMenuState :public State
 {
 public:
-	MainMenuState(GameDataReference& data);
+	MainMenuState(GameDataReference& data, bool startMusic = false);
 
 	void Init();
 	void HandleInput();
