@@ -51,7 +51,7 @@
     <ClCompile Include="sources\OptionsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\ScrollBar.cpp">
+    <ClCompile Include="sources\Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\SwitchButton.cpp">
@@ -116,7 +116,7 @@
     <ClInclude Include="sources\OptionsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\ScrollBar.h">
+    <ClInclude Include="sources\Slider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sources\SwitchButton.h">

@@ -96,21 +96,18 @@ void MainMenuState::HandleInput()
 		// clicked
 		if (data->input.isButtonClicked(quittButton.GetShape(), sf::Mouse::Left, data->window))
 		{
-			quittButton.Clicked();
+			quittButton.Clicked(data);
 			type = quitt;
-			data->gameAudio.PlaySound();
 		}
 		else if (data->input.isButtonClicked(playButton.GetShape(), sf::Mouse::Left, data->window))
 		{
-			playButton.Clicked();
+			playButton.Clicked(data);
 			type = play;
-			data->gameAudio.PlaySound();
 		}
 		else if (data->input.isButtonClicked(optionsButton.GetShape(), sf::Mouse::Left, data->window))
 		{
-			optionsButton.Clicked();
+			optionsButton.Clicked(data);
 			type = options;
-			data->gameAudio.PlaySound();
 		}
 		// hovered
 		if (event.type == sf::Event::MouseMoved)

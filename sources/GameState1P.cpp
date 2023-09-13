@@ -40,22 +40,19 @@ void GameState1P::HandleInput()
 			// clicked
 			if (data->input.isButtonClicked(quittButton.GetShape(), sf::Mouse::Left, data->window))
 			{
-				quittButton.Clicked();
+				quittButton.Clicked(data);
 				quitt = true;
-				data->gameAudio.PlaySound();
 			}
 			else if (data->input.isButtonClicked(nextRoundButton.GetShape(), sf::Mouse::Left, data->window))
 			{
-				nextRoundButton.Clicked();
+				nextRoundButton.Clicked(data);
 				screenCleaning = true;
-				data->gameAudio.PlaySound();
 			}
 			else if (data->input.isButtonClicked(menuButton.GetShape(), sf::Mouse::Left, data->window))
 			{
-				menuButton.Clicked();
+				menuButton.Clicked(data);
 				screenCleaning = true;
 				backToMainMenu = true;
-				data->gameAudio.PlaySound();
 				data->gameAudio.StopMusic();
 			}
 			// hovered

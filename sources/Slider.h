@@ -2,11 +2,11 @@
 #include <SFML/Graphics.hpp>
 #include "Definitions.h"
 
-class ScrollBar
+class Slider
 {
 private:
-	sf::RectangleShape scrollBarBackground;
-	sf::RectangleShape scrollBarHandle;
+	sf::RectangleShape sliderBackground;
+	sf::RectangleShape sliderHandle;
 
 	sf::Vector2f position;
 	int numberOfOptions;
@@ -16,8 +16,8 @@ private:
 	float dragOffsetX;
 
 public:
-	ScrollBar() {}
-	ScrollBar(sf::Vector2f position, int numberOfOptions, int currentNumber);
+	Slider() {}
+	Slider(sf::Vector2f position, int numberOfOptions, int currentNumber);
 
 	void Init();
 	void Update(sf::Event event, sf::Vector2f mousePos);

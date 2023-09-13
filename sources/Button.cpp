@@ -76,12 +76,14 @@ void Button::ChangeHover(bool hover)
 	}
 }
 
-void Button::Clicked(bool isClicked)
+void Button::Clicked(GameDataReference& data, bool isClicked)
 {
 	if (isClicked)
 	{
 		currentType = clicked;
 		shape.setFillColor(clickColor);
+
+		data->gameAudio.PlaySound();
 	}
 	else
 	{

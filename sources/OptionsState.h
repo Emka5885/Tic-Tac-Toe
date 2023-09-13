@@ -2,7 +2,7 @@
 #include "State.h"
 #include "Game.h"
 #include "Button.h"
-#include "ScrollBar.h"
+#include "Slider.h"
 #include "SwitchButton.h"
 
 class OptionsState :public State
@@ -27,7 +27,7 @@ private:
 	sf::Text optionsShadow;
 	Button backButton;
 
-	ScrollBar musicScrollBar, soundsScrollBar;
+	Slider musicSlider, soundsSlider;
 	SwitchButton musicOnSwitchButton, musicOffSwitchButton;
 	SwitchButton soundsOnSwitchButton, soundsOffSwitchButton;
 	SwitchButton onePSwitchButton, twoPSwitchButton;

@@ -103,8 +103,7 @@ void InitialSetupState1P::HandleInput()
 		// clicked
 		if (data->input.isButtonClicked(acceptButton.GetShape(), sf::Mouse::Left, data->window) && p1String.length() <= 8)
 		{
-			acceptButton.Clicked();
-			data->gameAudio.PlaySound();
+			acceptButton.Clicked(data);
 			sf::sleep(sf::seconds(1));
 			p1String = p1Text.getString();
 			data->machine.RemoveState();

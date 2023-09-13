@@ -35,7 +35,7 @@
     <ClCompile Include="sources\MainMenuState.cpp" />
     <ClCompile Include="sources\InitialSetupState.cpp" />
     <ClCompile Include="sources\OptionsState.cpp" />
-    <ClCompile Include="sources\ScrollBar.cpp" />
+    <ClCompile Include="sources\Slider.cpp" />
     <ClCompile Include="sources\StateMachine.cpp" />
     <ClCompile Include="sources\SwitchButton.cpp" />
     <ClCompile Include="sources\Widgets.cpp" />
@@ -57,7 +57,7 @@
     <ClInclude Include="sources\MainMenuState.h" />
     <ClInclude Include="sources\InitialSetupState.h" />
     <ClInclude Include="sources\OptionsState.h" />
-    <ClInclude Include="sources\ScrollBar.h" />
+    <ClInclude Include="sources\Slider.h" />
     <ClInclude Include="sources\State.h" />
     <ClInclude Include="sources\StateMachine.h" />
     <ClInclude Include="sources\SwitchButton.h" />

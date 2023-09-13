@@ -160,7 +160,7 @@ void OptionsState::Init()
 		}
 		else if (optionsFromFile[i].first == music2)
 		{
-			musicScrollBar = ScrollBar({ WIDTH / 2, 420 }, 51, optionsFromFile[i].second);
+			musicSlider = Slider({ WIDTH / 2, 420 }, 51, optionsFromFile[i].second);
 		}
 		else if (optionsFromFile[i].first == sounds1)
 		{
@@ -178,7 +178,7 @@ void OptionsState::Init()
 		}
 		else if (optionsFromFile[i].first == sounds2)
 		{
-			soundsScrollBar = ScrollBar({ WIDTH / 2, 575 }, 51, optionsFromFile[i].second);
+			soundsSlider = Slider({ WIDTH / 2, 575 }, 51, optionsFromFile[i].second);
 		}
 	}
 
@@ -213,7 +213,7 @@ void OptionsState::Save()
 		}
 		else if (optionsFromFile[i].first == music2)
 		{
-			optionsFromFile[i].second = musicScrollBar.GetCurrentNumber();
+			optionsFromFile[i].second = musicSlider.GetCurrentNumber();
 		}
 		else if (optionsFromFile[i].first == sounds1)
 		{
@@ -228,7 +228,7 @@ void OptionsState::Save()
 		}
 		else if (optionsFromFile[i].first == sounds2)
 		{
-			optionsFromFile[i].second = soundsScrollBar.GetCurrentNumber();
+			optionsFromFile[i].second = soundsSlider.GetCurrentNumber();
 		}
 	}
 
@@ -270,14 +270,14 @@ void OptionsState::HandleInput()
 		}
 	}
 
-	musicScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
-	soundsScrollBar.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
+	musicSlider.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
+	soundsSlider.Update(event, sf::Vector2f(data->input.GetMousePosition(data->window)));
 
-	if (data->gameAudio.GetMusicVolume() != musicScrollBar.GetCurrentNumber())
+	if (data->gameAudio.GetMusicVolume() != musicSlider.GetCurrentNumber())
 	{
 		Save();
 	}
-	if (data->gameAudio.GetSoundVolume() != soundsScrollBar.GetCurrentNumber())
+	if (data->gameAudio.GetSoundVolume() != soundsSlider.GetCurrentNumber())
 	{
 		Save();
 	}
@@ -299,8 +299,8 @@ void OptionsState::Draw()
 		data->window.draw(grayRectangles[i].first);
 	}
 
-	musicScrollBar.Draw(data->window);
-	soundsScrollBar.Draw(data->window);
+	musicSlider.Draw(data->window);
+	soundsSlider.Draw(data->window);
 
 	for (int i = 0; i < textShadows.size(); i++)
 	{
@@ -425,9 +425,8 @@ void OptionsState::CheckButtonsClicked()
 	// back
 	if (data->input.isButtonClicked(backButton.GetShape(), sf::Mouse::Left, data->window))
 	{
-		backButton.Clicked();
+		backButton.Clicked(data);
 		Save();
-		data->gameAudio.PlaySound();
 		data->machine.RemoveState();
 		data->machine.AddState(stateReference(new MainMenuState(data)), true);
 	}

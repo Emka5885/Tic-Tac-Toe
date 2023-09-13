@@ -66,7 +66,7 @@ void GameState::UpdateGameState(GameDataReference& data)
 				transitionShape.setOrigin(WIDTH / 2, HEIGHT / 2);
 				shapeDisappeared = false;
 				shapeAppeared = true;
-				ClearScreen();
+				ClearScreen(data);
 			}
 			else
 			{
@@ -324,9 +324,9 @@ bool GameState::CheckWinCondition(boardTypes boardType)
 	return false;
 }
 
-void GameState::ClearScreen()
+void GameState::ClearScreen(GameDataReference& data)
 {
-	nextRoundButton.Clicked(false);
+	nextRoundButton.Clicked(data, false);
 
 	for (int i = 0; i < boardSquares.size(); i++)
 	{

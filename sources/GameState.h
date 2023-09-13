@@ -17,7 +17,7 @@ public:
 	bool CheckWinCondition(boardTypes boardType);
 	virtual void CheckBoardSquares_Clicked() = 0;
 
-	void ClearScreen();
+	void ClearScreen(GameDataReference& data);
 
 protected:
 	GameTypes gameType = inProgress;

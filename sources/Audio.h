@@ -30,6 +30,6 @@ public:
 	void StopMusic();
 	void PlaySound();
 
-	int& GetMusicVolume();
-	int& GetSoundVolume();
+	int GetMusicVolume();
+	int GetSoundVolume();
 };

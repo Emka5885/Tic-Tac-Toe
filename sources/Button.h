@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Game.h"
 #include <algorithm>
 
 enum ButtonTypes { unhovered, hovered, clicked };
@@ -29,7 +30,7 @@ public:
 
 	void SetPosition(sf::Vector2f position);
 	void ChangeHover(bool hover);
-	void Clicked(bool isClicked = true);
+	void Clicked(GameDataReference& data, bool isClicked = true);
 	void DrawButton(sf::RenderWindow& window);
 
 	sf::RectangleShape& GetShape();

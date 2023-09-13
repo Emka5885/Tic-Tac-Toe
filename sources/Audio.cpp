@@ -94,12 +94,12 @@ void Audio::PlaySound()
 	}
 }
 
-int& Audio::GetMusicVolume()
+int Audio::GetMusicVolume()
 {
 	return musicVolume;
 }
 
-int& Audio::GetSoundVolume()
+int Audio::GetSoundVolume()
 {
 	return soundVolume;
 }
