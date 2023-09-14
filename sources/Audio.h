@@ -17,6 +17,8 @@ private:
 
 	bool enableSounds = true;
 	bool enableMusic = true;
+	bool musicFileExist = true;
+	bool soundFileExist = true;
 
 	int musicVolume = 40;
 	int soundVolume = 40;

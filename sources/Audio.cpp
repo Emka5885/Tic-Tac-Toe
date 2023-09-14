@@ -5,74 +5,103 @@ Audio::Audio()
 	if (!backgroundMusic.openFromFile("resources/music&sounds/my-trip-153903.wav"))
 	{
 		std::cout << "Error - background music" << std::endl;
+		musicFileExist = false;
 	}
-	backgroundMusic.setLoop(true);
+	else
+	{
+		backgroundMusic.setLoop(true);
+	}
 
 	if (!buttonsSoundBuffer.loadFromFile("resources/music&sounds/menu-button-88360.wav"))
 	{
 		std::cout << "Error - sound" << std::endl;
+		soundFileExist = false;
 	}
-	buttonsSound.setBuffer(buttonsSoundBuffer);
+	else
+	{
+		buttonsSound.setBuffer(buttonsSoundBuffer);
+	}
 
 	Update();
 }
 
 void Audio::Update()
 {
-	file.open("options.dat", std::ios_base::in | std::ios_base::binary);
-	if (file.is_open())
+	if (musicFileExist)
 	{
-		optionsFromFile.reserve(NUMBER_OF_OPTIONS);
-		for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+		file.open("options.dat", std::ios_base::in | std::ios_base::binary);
+		if (file.is_open())
 		{
-			file.read((char*)&optionsFromFile[i], sizeof(std::pair<optionsTypes, int>));
-		}
-		file.close();
+			optionsFromFile.reserve(NUMBER_OF_OPTIONS);
+			for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+			{
+				file.read((char*)&optionsFromFile[i], sizeof(std::pair<optionsTypes, int>));
+			}
+			file.close();
 
-		for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
-		{
-			if (optionsFromFile[i].first == music1)
+			for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
 			{
-				if (optionsFromFile[i].second == 0)
+				if (optionsFromFile[i].first == music1)
 				{
-					enableMusic = false;
-					backgroundMusic.stop();
+					if (optionsFromFile[i].second == 0)
+					{
+						enableMusic = false;
+						backgroundMusic.stop();
+					}
+					else
+					{
+						enableMusic = true;
+					}
 				}
-				else
-				{
-					enableMusic = true;
-				}
-			}
-			else if (optionsFromFile[i].first == sounds1)
-			{
-				if (optionsFromFile[i].second == 0)
-				{
-					enableSounds = false;
-				}
-				else
-				{
-					enableSounds = true;
-				}
-			}
 
-			if (optionsFromFile[i].first == music2)
-			{
-				musicVolume = optionsFromFile[i].second;
-			}
-			else if (optionsFromFile[i].first == sounds2)
-			{
-				soundVolume = optionsFromFile[i].second;
+				if (optionsFromFile[i].first == music2)
+				{
+					musicVolume = optionsFromFile[i].second;
+				}
 			}
 		}
+		backgroundMusic.setVolume(musicVolume);
 	}
 
-	backgroundMusic.setVolume(musicVolume);
-	buttonsSound.setVolume(soundVolume);
+	if (soundFileExist)
+	{
+		file.open("options.dat", std::ios_base::in | std::ios_base::binary);
+		if (file.is_open())
+		{
+			optionsFromFile.reserve(NUMBER_OF_OPTIONS);
+			for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+			{
+				file.read((char*)&optionsFromFile[i], sizeof(std::pair<optionsTypes, int>));
+			}
+			file.close();
+
+			for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
+			{
+				if (optionsFromFile[i].first == sounds1)
+				{
+					if (optionsFromFile[i].second == 0)
+					{
+						enableSounds = false;
+					}
+					else
+					{
+						enableSounds = true;
+					}
+				}
+
+				if (optionsFromFile[i].first == sounds2)
+				{
+					soundVolume = optionsFromFile[i].second;
+				}
+			}
+		}
+		buttonsSound.setVolume(soundVolume);
+	}
 }
 
 void Audio::PlayMusic()
 {
-	if (enableMusic)
+	if (enableMusic && musicFileExist)
 	{
 		backgroundMusic.play();
 	}
@@ -80,7 +109,7 @@ void Audio::PlayMusic()
 
 void Audio::StopMusic()
 {
-	if (enableMusic)
+	if (enableMusic && musicFileExist)
 	{
 		backgroundMusic.stop();
 	}
@@ -88,7 +117,7 @@ void Audio::StopMusic()
 
 void Audio::PlaySound()
 {
-	if (enableSounds)
+	if (enableSounds && soundFileExist)
 	{
 		buttonsSound.play();
 	}
