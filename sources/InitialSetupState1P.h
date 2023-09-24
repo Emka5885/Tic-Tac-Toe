@@ -9,7 +9,7 @@ class InitialSetupState1P :public State, InitialSetupState
 private:
 	GameDataReference& data;
 
-	textBoxTypes textBoxType = nothing;
+	textBoxTypes textBoxType = player;
 	playerTypes playerType;
 
 public:

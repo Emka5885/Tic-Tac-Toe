@@ -16,6 +16,8 @@ void InitialSetupState1P::Init()
 	p1Text.setOrigin(p1Text.getGlobalBounds().width / 2, p1Text.getGlobalBounds().height / 2);
 	p1Text.setPosition(WIDTH / 2 - 2, HEIGHT / 2 - p1Text.getGlobalBounds().height / 4 - ENTER_BOX_OFFSET);
 	p1Text.setFillColor(sf::Color({ 120, 120, 120 }));
+	
+	blackLine.setPosition(WIDTH / 2 - 2, HEIGHT / 2 - ENTER_BOX_OFFSET);
 
 	messageP1.setPosition(WIDTH / 2 - 2, HEIGHT / 2 - 18);
 
