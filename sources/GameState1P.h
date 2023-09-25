@@ -9,7 +9,7 @@ private:
 	bool FirstPlayerPlaysX;
 	bool start = true;
 
-	Computer computer;
+	Computer* computer = nullptr;
 
 	sf::Clock startClock;
 	sf::Clock waitClock;

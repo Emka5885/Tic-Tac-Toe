@@ -7,7 +7,7 @@ class Computer
 {
 private:
 	computerOptions computerOption;
-	bool PlayerPlaysX;
+	bool PlayerPlaysX = false;
 
 protected:
 	bool CheckIfBoardIsEmpty(std::vector<BoardSquare>& boardSquares);
@@ -19,7 +19,8 @@ protected:
 	void SetComputerOption(int number);
 
 public:
-	Computer(bool PlayerPlaysX = true);
+	Computer() {}
+	Computer(bool PlayerPlaysX);
 
 	void SelectSquare(std::vector<BoardSquare>& boardSquares);
 	computerOptions& GetComputerOption();

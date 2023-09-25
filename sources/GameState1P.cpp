@@ -3,7 +3,10 @@
 GameState1P::GameState1P(GameDataReference& data, std::string& player, bool FirstPlayerPlaysX) : data(data), FirstPlayerPlaysX(FirstPlayerPlaysX)
 {
 	widget = new Widgets(data->assets, player, "Computer", FirstPlayerPlaysX);
-	computer = new Computer(FirstPlayerPlaysX);
+	if (!computer)
+	{
+		computer = new Computer(FirstPlayerPlaysX);
+	}
 }
 
 void GameState1P::Init()
@@ -28,6 +31,8 @@ void GameState1P::HandleInput()
 		{
 			screenCleaning = true;
 			backToMainMenu = true;
+
+			delete computer;
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && gameType == inProgress && widget->GetWidgetType() != gameTotals && widget->GetWidgetType() == turnP1)
 		{
@@ -54,6 +59,8 @@ void GameState1P::HandleInput()
 				screenCleaning = true;
 				backToMainMenu = true;
 				data->gameAudio.StopMusic();
+
+				delete computer;
 			}
 			// hovered
 			if (event.type == sf::Event::MouseMoved)
@@ -109,13 +116,13 @@ void GameState1P::Update()
 		{
 			if (startClock.getElapsedTime().asSeconds() >= 1.5 && start)
 			{
-				computer.SelectSquare(boardSquares);
+				computer->SelectSquare(boardSquares);
 
 				SetComputerSelection();
 			}
 			else if (!start && waitClock.getElapsedTime().asSeconds() >= 1.5)
 			{
-				computer.SelectSquare(boardSquares);
+				computer->SelectSquare(boardSquares);
 
 				SetComputerSelection();
 			}
@@ -158,11 +165,11 @@ void GameState1P::SetComputerSelection()
 {
 	for (int i = 0; i < boardSquares.size(); i++)
 	{
-		if (computer.GetComputerOption() == i && !FirstPlayerPlaysX)
+		if (computer->GetComputerOption() == i && !FirstPlayerPlaysX)
 		{
 			boardSquares[i].ChangeBoardType(x);
 		}
-		else if(computer.GetComputerOption() == i && FirstPlayerPlaysX)
+		else if(computer->GetComputerOption() == i && FirstPlayerPlaysX)
 		{
 			boardSquares[i].ChangeBoardType(o);
 		}
