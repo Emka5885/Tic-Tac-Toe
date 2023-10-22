@@ -14,7 +14,7 @@ private:
 	AssetManager* assets;
 
 public:
-	BoardSquare() { }
+	BoardSquare();
 	BoardSquare(AssetManager& assets, sf::Vector2f position, sf::Color color = { 120, 120, 120 });
 	~BoardSquare() { }
 

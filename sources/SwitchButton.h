@@ -22,7 +22,7 @@ private:
 	SwitchButtonTypes currentType = unhoveredSW;
 
 public:
-	SwitchButton() {}
+	SwitchButton();
 	SwitchButton(sf::Vector2f position, sf::Text text, bool active = false);
 
 	void Init();

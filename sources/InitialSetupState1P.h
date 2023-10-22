@@ -20,5 +20,6 @@ public:
 	void Update();
 	void Draw();
 
+	void CheckAcceptButtonHovered(GameDataReference& data);
 	void CheckBoxClicked();
 };

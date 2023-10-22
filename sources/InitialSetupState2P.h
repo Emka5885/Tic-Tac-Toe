@@ -28,5 +28,6 @@ public:
 
 	void ChangeP2Text();
 
+	void CheckAcceptButtonHovered(GameDataReference& data);
 	void CheckBoxClicked();
 };

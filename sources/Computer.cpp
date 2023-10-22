@@ -1,5 +1,9 @@
 #include "Computer.h"
 
+Computer::Computer()
+{
+}
+
 Computer::Computer(bool PlayerPlaysX) : PlayerPlaysX(PlayerPlaysX)
 {
 }

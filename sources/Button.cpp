@@ -1,6 +1,10 @@
 #include "Button.h"
 #include "Definitions.h"
 
+Button::Button()
+{
+}
+
 Button::Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vector2f position, float zoom, sf::Color color) : unhoveredSize(size), text(text), unhoveredPosition(position), zoom(zoom)
 {
 	unhoverColor.r = std::clamp(int(color.r), 45, 255);
@@ -50,6 +54,8 @@ void Button::SetPosition(sf::Vector2f position)
 	shape.setPosition(position);
 	textShadow.setPosition(position.x + 4, position.y + 3);
 	text.setPosition(position);
+	unhoveredPosition = position;
+	hoveredPosition = { unhoveredPosition.x - zoom / 2, unhoveredPosition.y - zoom / 2 };
 }
 
 void Button::ChangeHover(bool hover)

@@ -1,6 +1,10 @@
 #include "Slider.h"
 #include <iostream>
 
+Slider::Slider()
+{
+}
+
 Slider::Slider(sf::Vector2f position, int numberOfOptions, int currentNumber) : position(position), numberOfOptions(numberOfOptions), currentNumber(currentNumber)
 {
 	Init();

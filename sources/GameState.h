@@ -23,7 +23,7 @@ protected:
 	GameTypes gameType = inProgress;
 
 	sf::RectangleShape board;
-	Widgets* widget;
+	Widgets* widget = NULL;
 
 	sf::RectangleShape transitionShape;
 	sf::Clock cleaningClock;
@@ -49,5 +49,5 @@ protected:
 	Button quittButton;
 	bool quitt = false;
 
-	bool FirstPlayerPlaysX;
+	bool FirstPlayerPlaysX = true;
 };

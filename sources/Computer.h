@@ -6,7 +6,7 @@
 class Computer
 {
 private:
-	computerOptions computerOption;
+	computerOptions computerOption = defaultOption;
 	bool PlayerPlaysX = false;
 
 protected:
@@ -19,7 +19,7 @@ protected:
 	void SetComputerOption(int number);
 
 public:
-	Computer() {}
+	Computer();
 	Computer(bool PlayerPlaysX);
 
 	void SelectSquare(std::vector<BoardSquare>& boardSquares);

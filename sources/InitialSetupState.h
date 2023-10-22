@@ -9,7 +9,7 @@ public:
 	void Create(GameDataReference& data);
 	void ChangeP1Text();
 	void DrawBlackLine();
-	void CheckAcceptButtonHovered(GameDataReference& data);
+	virtual void CheckAcceptButtonHovered(GameDataReference& data) = 0;
 
 	virtual void CheckBoxClicked() = 0;
 

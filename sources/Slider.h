@@ -9,14 +9,14 @@ private:
 	sf::RectangleShape sliderHandle;
 
 	sf::Vector2f position;
-	int numberOfOptions;
-	int currentNumber;
+	int numberOfOptions = 0;
+	int currentNumber = 0;
 
 	bool isDragging = false;
-	float dragOffsetX;
+	float dragOffsetX = 0;
 
 public:
-	Slider() {}
+	Slider();
 	Slider(sf::Vector2f position, int numberOfOptions, int currentNumber);
 
 	void Init();

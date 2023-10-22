@@ -213,6 +213,64 @@ void InitialSetupState2P::ChangeP2Text()
 	blackLine.setPosition(p2Text.getPosition().x + p2Text.getGlobalBounds().width / 2 + 4, HEIGHT / 2 - ENTER_BOX_OFFSET);
 }
 
+void InitialSetupState2P::CheckAcceptButtonHovered(GameDataReference& data)
+{
+	if (data->input.isButtonHovered(acceptButton.GetShape(), data->window) && (p1String.length() > 8 || p2String.length() > 8))
+	{
+		// accept button - move x
+		if (data->input.GetMousePosition(data->window).x <= 275)
+		{
+			acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x + ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+		}
+		else if (data->input.GetMousePosition(data->window).x >= 525)
+		{
+			acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x - ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+		}
+		else
+		{
+			if (rand() % 2)
+			{
+				acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x + ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+			}
+			else
+			{
+				acceptButton.SetPosition({ float(data->input.GetMousePosition(data->window).x - ACCEPT_OFFSET),  acceptButton.GetShape().getPosition().y });
+			}
+		}
+		// accept button - move y
+		if (acceptButton.GetShape().getPosition().y < HEIGHT - ACCEPT_OFFSET + 50)
+		{
+			acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - ENTER_BOX_OFFSET });
+		}
+		else if (acceptButton.GetShape().getPosition().y > HEIGHT - ENTER_BOX_OFFSET)
+		{
+			acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  HEIGHT - ACCEPT_OFFSET });
+		}
+		else
+		{
+			if (rand() % 2)
+			{
+				acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y - 25) });
+			}
+			else
+			{
+				acceptButton.SetPosition({ acceptButton.GetShape().getPosition().x,  float(data->input.GetMousePosition(data->window).y + 25) });
+			}
+		}
+	}
+	else
+	{
+		if (data->input.isButtonHovered(acceptButton.GetShape(), data->window))
+		{
+			acceptButton.ChangeHover(true);
+		}
+		else
+		{
+			acceptButton.ChangeHover(false);
+		}
+	}
+}
+
 void InitialSetupState2P::CheckBoxClicked()
 {
 	checkBlackLineTimer = true;

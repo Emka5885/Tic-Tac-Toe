@@ -1,5 +1,9 @@
 #include "BoardSquare.h"
 
+BoardSquare::BoardSquare()
+{
+}
+
 BoardSquare::BoardSquare(AssetManager& assets, sf::Vector2f position, sf::Color color) : assets(&assets), color(color)
 {
 	Init(position);

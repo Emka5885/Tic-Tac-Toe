@@ -1,5 +1,9 @@
 #include "SwitchButton.h"
 
+SwitchButton::SwitchButton()
+{
+}
+
 SwitchButton::SwitchButton(sf::Vector2f position, sf::Text text, bool active) : position(position), text(text), active(active)
 {
 	Init();

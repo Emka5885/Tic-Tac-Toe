@@ -22,7 +22,7 @@ private:
 	sf::Vector2f hoveredPosition;
 
 public:
-	Button() {}
+	Button();
 	Button(sf::Vector2f size, sf::Text text, sf::Color outlineColor, sf::Vector2f position, float zoom, sf::Color color = sf::Color({ 115, 115, 115 }));
 	~Button();
 
