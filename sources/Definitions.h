@@ -5,7 +5,7 @@ enum boardTypes { empty, x, o };
 enum widgetTypes { gameTotals, turnP1, turnP2 };
 enum GameTypes { inProgress, p1Wins, p2Wins, draw };
 enum optionsTypes { mode, music1, music2, sounds1, sounds2 };
-enum computerOptions { defaultOption, firstSquare, secondSquare, thirdSquare, fourthSquare, fifthSquare, sixthSquare, seventhSquare, eighthSquare, ninthSquare };
+enum computerOptions { firstSquare, secondSquare, thirdSquare, fourthSquare, fifthSquare, sixthSquare, seventhSquare, eighthSquare, ninthSquare, defaultOption};
 
 constexpr const int WIDTH = 800;
 constexpr const int HEIGHT = 800;
