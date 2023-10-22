@@ -10,7 +10,7 @@ It offers you simple gameplay, an aesthetically pleasing design and the ability 
 
 
 
-[![Tic Tac Toe](https://github.com/Emka5885/Tic-Tac-Toe/assets/90275335/1bc22d80-4535-481d-923a-d06e0fa17eb1)](https://youtu.be/JvHbKYaogcg_channel=Emka5885)
+[![Tic Tac Toe](./resources/TicTacToe.png)](https://youtu.be/JvHbKYaogcg_channel=Emka5885)
 
 
 
