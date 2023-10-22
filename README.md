@@ -5,6 +5,14 @@
 This project is a classic game of tic-tac-toe only that in a modern twist.
 It offers you simple gameplay, an aesthetically pleasing design and the ability to play with friends or with the computer.
 
+<h2></h2>
+<h3>Trailer :clapper:</h3>
+
+
+
+[![Tic Tac Toe](https://github.com/Emka5885/Tic-Tac-Toe/assets/90275335/1bc22d80-4535-481d-923a-d06e0fa17eb1)](https://youtu.be/JvHbKYaogcg_channel=Emka5885)
+
+
 
 <h2></h2>
 <h3>Instruction :mag:</h3>
