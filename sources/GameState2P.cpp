@@ -8,7 +8,6 @@ GameState2P::GameState2P(GameDataReference& data, std::string& p1, std::string& 
 
 void GameState2P::Init()
 {
-	data->gameAudio.PlayMusic();
 	InitGameState(data);
 }
 

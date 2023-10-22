@@ -8,7 +8,6 @@ GameState1P::GameState1P(GameDataReference& data, std::string& player, bool Firs
 
 void GameState1P::Init()
 {
-	data->gameAudio.PlayMusic();
 	InitGameState(data, FirstPlayerPlaysX);
 	startClock.restart();
 }
